@@ -457,13 +457,27 @@ class cuser_profile_list extends cuser_profile {
 		$this->staff_id->SetVisibility();
 		$this->last_name->SetVisibility();
 		$this->first_name->SetVisibility();
-		$this->gender->SetVisibility();
-		$this->date_of_birth->SetVisibility();
 		$this->_email->SetVisibility();
+		$this->gender->SetVisibility();
+		$this->marital_status->SetVisibility();
+		$this->date_of_birth->SetVisibility();
+		$this->username->SetVisibility();
 		$this->mobile->SetVisibility();
 		$this->company->SetVisibility();
 		$this->department->SetVisibility();
-		$this->username->SetVisibility();
+		$this->home_address->SetVisibility();
+		$this->town_city->SetVisibility();
+		$this->state_origin->SetVisibility();
+		$this->local_gra->SetVisibility();
+		$this->next_kin->SetVisibility();
+		$this->resident_nxt_kin->SetVisibility();
+		$this->nearest_bus_stop->SetVisibility();
+		$this->town_city_nxt_kin->SetVisibility();
+		$this->email_nxt_kin->SetVisibility();
+		$this->phone_nxt_kin->SetVisibility();
+		$this->qualification_level->SetVisibility();
+		$this->qualification_grade->SetVisibility();
+		$this->upload_of_credentcial->SetVisibility();
 		$this->password->SetVisibility();
 		$this->accesslevel->SetVisibility();
 		$this->status->SetVisibility();
@@ -830,13 +844,27 @@ class cuser_profile_list extends cuser_profile {
 		$sFilterList = ew_Concat($sFilterList, $this->staff_id->AdvancedSearch->ToJson(), ","); // Field staff_id
 		$sFilterList = ew_Concat($sFilterList, $this->last_name->AdvancedSearch->ToJson(), ","); // Field last_name
 		$sFilterList = ew_Concat($sFilterList, $this->first_name->AdvancedSearch->ToJson(), ","); // Field first_name
-		$sFilterList = ew_Concat($sFilterList, $this->gender->AdvancedSearch->ToJson(), ","); // Field gender
-		$sFilterList = ew_Concat($sFilterList, $this->date_of_birth->AdvancedSearch->ToJson(), ","); // Field date_of_birth
 		$sFilterList = ew_Concat($sFilterList, $this->_email->AdvancedSearch->ToJson(), ","); // Field email
+		$sFilterList = ew_Concat($sFilterList, $this->gender->AdvancedSearch->ToJson(), ","); // Field gender
+		$sFilterList = ew_Concat($sFilterList, $this->marital_status->AdvancedSearch->ToJson(), ","); // Field marital_status
+		$sFilterList = ew_Concat($sFilterList, $this->date_of_birth->AdvancedSearch->ToJson(), ","); // Field date_of_birth
+		$sFilterList = ew_Concat($sFilterList, $this->username->AdvancedSearch->ToJson(), ","); // Field username
 		$sFilterList = ew_Concat($sFilterList, $this->mobile->AdvancedSearch->ToJson(), ","); // Field mobile
 		$sFilterList = ew_Concat($sFilterList, $this->company->AdvancedSearch->ToJson(), ","); // Field company
 		$sFilterList = ew_Concat($sFilterList, $this->department->AdvancedSearch->ToJson(), ","); // Field department
-		$sFilterList = ew_Concat($sFilterList, $this->username->AdvancedSearch->ToJson(), ","); // Field username
+		$sFilterList = ew_Concat($sFilterList, $this->home_address->AdvancedSearch->ToJson(), ","); // Field home_address
+		$sFilterList = ew_Concat($sFilterList, $this->town_city->AdvancedSearch->ToJson(), ","); // Field town_city
+		$sFilterList = ew_Concat($sFilterList, $this->state_origin->AdvancedSearch->ToJson(), ","); // Field state_origin
+		$sFilterList = ew_Concat($sFilterList, $this->local_gra->AdvancedSearch->ToJson(), ","); // Field local_gra
+		$sFilterList = ew_Concat($sFilterList, $this->next_kin->AdvancedSearch->ToJson(), ","); // Field next_kin
+		$sFilterList = ew_Concat($sFilterList, $this->resident_nxt_kin->AdvancedSearch->ToJson(), ","); // Field resident_nxt_kin
+		$sFilterList = ew_Concat($sFilterList, $this->nearest_bus_stop->AdvancedSearch->ToJson(), ","); // Field nearest_bus_stop
+		$sFilterList = ew_Concat($sFilterList, $this->town_city_nxt_kin->AdvancedSearch->ToJson(), ","); // Field town_city_nxt_kin
+		$sFilterList = ew_Concat($sFilterList, $this->email_nxt_kin->AdvancedSearch->ToJson(), ","); // Field email_nxt_kin
+		$sFilterList = ew_Concat($sFilterList, $this->phone_nxt_kin->AdvancedSearch->ToJson(), ","); // Field phone_nxt_kin
+		$sFilterList = ew_Concat($sFilterList, $this->qualification_level->AdvancedSearch->ToJson(), ","); // Field qualification_level
+		$sFilterList = ew_Concat($sFilterList, $this->qualification_grade->AdvancedSearch->ToJson(), ","); // Field qualification_grade
+		$sFilterList = ew_Concat($sFilterList, $this->upload_of_credentcial->AdvancedSearch->ToJson(), ","); // Field upload_of_credentcial
 		$sFilterList = ew_Concat($sFilterList, $this->password->AdvancedSearch->ToJson(), ","); // Field password
 		$sFilterList = ew_Concat($sFilterList, $this->accesslevel->AdvancedSearch->ToJson(), ","); // Field accesslevel
 		$sFilterList = ew_Concat($sFilterList, $this->status->AdvancedSearch->ToJson(), ","); // Field status
@@ -917,6 +945,14 @@ class cuser_profile_list extends cuser_profile {
 		$this->first_name->AdvancedSearch->SearchOperator2 = @$filter["w_first_name"];
 		$this->first_name->AdvancedSearch->Save();
 
+		// Field email
+		$this->_email->AdvancedSearch->SearchValue = @$filter["x__email"];
+		$this->_email->AdvancedSearch->SearchOperator = @$filter["z__email"];
+		$this->_email->AdvancedSearch->SearchCondition = @$filter["v__email"];
+		$this->_email->AdvancedSearch->SearchValue2 = @$filter["y__email"];
+		$this->_email->AdvancedSearch->SearchOperator2 = @$filter["w__email"];
+		$this->_email->AdvancedSearch->Save();
+
 		// Field gender
 		$this->gender->AdvancedSearch->SearchValue = @$filter["x_gender"];
 		$this->gender->AdvancedSearch->SearchOperator = @$filter["z_gender"];
@@ -924,6 +960,14 @@ class cuser_profile_list extends cuser_profile {
 		$this->gender->AdvancedSearch->SearchValue2 = @$filter["y_gender"];
 		$this->gender->AdvancedSearch->SearchOperator2 = @$filter["w_gender"];
 		$this->gender->AdvancedSearch->Save();
+
+		// Field marital_status
+		$this->marital_status->AdvancedSearch->SearchValue = @$filter["x_marital_status"];
+		$this->marital_status->AdvancedSearch->SearchOperator = @$filter["z_marital_status"];
+		$this->marital_status->AdvancedSearch->SearchCondition = @$filter["v_marital_status"];
+		$this->marital_status->AdvancedSearch->SearchValue2 = @$filter["y_marital_status"];
+		$this->marital_status->AdvancedSearch->SearchOperator2 = @$filter["w_marital_status"];
+		$this->marital_status->AdvancedSearch->Save();
 
 		// Field date_of_birth
 		$this->date_of_birth->AdvancedSearch->SearchValue = @$filter["x_date_of_birth"];
@@ -933,13 +977,13 @@ class cuser_profile_list extends cuser_profile {
 		$this->date_of_birth->AdvancedSearch->SearchOperator2 = @$filter["w_date_of_birth"];
 		$this->date_of_birth->AdvancedSearch->Save();
 
-		// Field email
-		$this->_email->AdvancedSearch->SearchValue = @$filter["x__email"];
-		$this->_email->AdvancedSearch->SearchOperator = @$filter["z__email"];
-		$this->_email->AdvancedSearch->SearchCondition = @$filter["v__email"];
-		$this->_email->AdvancedSearch->SearchValue2 = @$filter["y__email"];
-		$this->_email->AdvancedSearch->SearchOperator2 = @$filter["w__email"];
-		$this->_email->AdvancedSearch->Save();
+		// Field username
+		$this->username->AdvancedSearch->SearchValue = @$filter["x_username"];
+		$this->username->AdvancedSearch->SearchOperator = @$filter["z_username"];
+		$this->username->AdvancedSearch->SearchCondition = @$filter["v_username"];
+		$this->username->AdvancedSearch->SearchValue2 = @$filter["y_username"];
+		$this->username->AdvancedSearch->SearchOperator2 = @$filter["w_username"];
+		$this->username->AdvancedSearch->Save();
 
 		// Field mobile
 		$this->mobile->AdvancedSearch->SearchValue = @$filter["x_mobile"];
@@ -965,13 +1009,109 @@ class cuser_profile_list extends cuser_profile {
 		$this->department->AdvancedSearch->SearchOperator2 = @$filter["w_department"];
 		$this->department->AdvancedSearch->Save();
 
-		// Field username
-		$this->username->AdvancedSearch->SearchValue = @$filter["x_username"];
-		$this->username->AdvancedSearch->SearchOperator = @$filter["z_username"];
-		$this->username->AdvancedSearch->SearchCondition = @$filter["v_username"];
-		$this->username->AdvancedSearch->SearchValue2 = @$filter["y_username"];
-		$this->username->AdvancedSearch->SearchOperator2 = @$filter["w_username"];
-		$this->username->AdvancedSearch->Save();
+		// Field home_address
+		$this->home_address->AdvancedSearch->SearchValue = @$filter["x_home_address"];
+		$this->home_address->AdvancedSearch->SearchOperator = @$filter["z_home_address"];
+		$this->home_address->AdvancedSearch->SearchCondition = @$filter["v_home_address"];
+		$this->home_address->AdvancedSearch->SearchValue2 = @$filter["y_home_address"];
+		$this->home_address->AdvancedSearch->SearchOperator2 = @$filter["w_home_address"];
+		$this->home_address->AdvancedSearch->Save();
+
+		// Field town_city
+		$this->town_city->AdvancedSearch->SearchValue = @$filter["x_town_city"];
+		$this->town_city->AdvancedSearch->SearchOperator = @$filter["z_town_city"];
+		$this->town_city->AdvancedSearch->SearchCondition = @$filter["v_town_city"];
+		$this->town_city->AdvancedSearch->SearchValue2 = @$filter["y_town_city"];
+		$this->town_city->AdvancedSearch->SearchOperator2 = @$filter["w_town_city"];
+		$this->town_city->AdvancedSearch->Save();
+
+		// Field state_origin
+		$this->state_origin->AdvancedSearch->SearchValue = @$filter["x_state_origin"];
+		$this->state_origin->AdvancedSearch->SearchOperator = @$filter["z_state_origin"];
+		$this->state_origin->AdvancedSearch->SearchCondition = @$filter["v_state_origin"];
+		$this->state_origin->AdvancedSearch->SearchValue2 = @$filter["y_state_origin"];
+		$this->state_origin->AdvancedSearch->SearchOperator2 = @$filter["w_state_origin"];
+		$this->state_origin->AdvancedSearch->Save();
+
+		// Field local_gra
+		$this->local_gra->AdvancedSearch->SearchValue = @$filter["x_local_gra"];
+		$this->local_gra->AdvancedSearch->SearchOperator = @$filter["z_local_gra"];
+		$this->local_gra->AdvancedSearch->SearchCondition = @$filter["v_local_gra"];
+		$this->local_gra->AdvancedSearch->SearchValue2 = @$filter["y_local_gra"];
+		$this->local_gra->AdvancedSearch->SearchOperator2 = @$filter["w_local_gra"];
+		$this->local_gra->AdvancedSearch->Save();
+
+		// Field next_kin
+		$this->next_kin->AdvancedSearch->SearchValue = @$filter["x_next_kin"];
+		$this->next_kin->AdvancedSearch->SearchOperator = @$filter["z_next_kin"];
+		$this->next_kin->AdvancedSearch->SearchCondition = @$filter["v_next_kin"];
+		$this->next_kin->AdvancedSearch->SearchValue2 = @$filter["y_next_kin"];
+		$this->next_kin->AdvancedSearch->SearchOperator2 = @$filter["w_next_kin"];
+		$this->next_kin->AdvancedSearch->Save();
+
+		// Field resident_nxt_kin
+		$this->resident_nxt_kin->AdvancedSearch->SearchValue = @$filter["x_resident_nxt_kin"];
+		$this->resident_nxt_kin->AdvancedSearch->SearchOperator = @$filter["z_resident_nxt_kin"];
+		$this->resident_nxt_kin->AdvancedSearch->SearchCondition = @$filter["v_resident_nxt_kin"];
+		$this->resident_nxt_kin->AdvancedSearch->SearchValue2 = @$filter["y_resident_nxt_kin"];
+		$this->resident_nxt_kin->AdvancedSearch->SearchOperator2 = @$filter["w_resident_nxt_kin"];
+		$this->resident_nxt_kin->AdvancedSearch->Save();
+
+		// Field nearest_bus_stop
+		$this->nearest_bus_stop->AdvancedSearch->SearchValue = @$filter["x_nearest_bus_stop"];
+		$this->nearest_bus_stop->AdvancedSearch->SearchOperator = @$filter["z_nearest_bus_stop"];
+		$this->nearest_bus_stop->AdvancedSearch->SearchCondition = @$filter["v_nearest_bus_stop"];
+		$this->nearest_bus_stop->AdvancedSearch->SearchValue2 = @$filter["y_nearest_bus_stop"];
+		$this->nearest_bus_stop->AdvancedSearch->SearchOperator2 = @$filter["w_nearest_bus_stop"];
+		$this->nearest_bus_stop->AdvancedSearch->Save();
+
+		// Field town_city_nxt_kin
+		$this->town_city_nxt_kin->AdvancedSearch->SearchValue = @$filter["x_town_city_nxt_kin"];
+		$this->town_city_nxt_kin->AdvancedSearch->SearchOperator = @$filter["z_town_city_nxt_kin"];
+		$this->town_city_nxt_kin->AdvancedSearch->SearchCondition = @$filter["v_town_city_nxt_kin"];
+		$this->town_city_nxt_kin->AdvancedSearch->SearchValue2 = @$filter["y_town_city_nxt_kin"];
+		$this->town_city_nxt_kin->AdvancedSearch->SearchOperator2 = @$filter["w_town_city_nxt_kin"];
+		$this->town_city_nxt_kin->AdvancedSearch->Save();
+
+		// Field email_nxt_kin
+		$this->email_nxt_kin->AdvancedSearch->SearchValue = @$filter["x_email_nxt_kin"];
+		$this->email_nxt_kin->AdvancedSearch->SearchOperator = @$filter["z_email_nxt_kin"];
+		$this->email_nxt_kin->AdvancedSearch->SearchCondition = @$filter["v_email_nxt_kin"];
+		$this->email_nxt_kin->AdvancedSearch->SearchValue2 = @$filter["y_email_nxt_kin"];
+		$this->email_nxt_kin->AdvancedSearch->SearchOperator2 = @$filter["w_email_nxt_kin"];
+		$this->email_nxt_kin->AdvancedSearch->Save();
+
+		// Field phone_nxt_kin
+		$this->phone_nxt_kin->AdvancedSearch->SearchValue = @$filter["x_phone_nxt_kin"];
+		$this->phone_nxt_kin->AdvancedSearch->SearchOperator = @$filter["z_phone_nxt_kin"];
+		$this->phone_nxt_kin->AdvancedSearch->SearchCondition = @$filter["v_phone_nxt_kin"];
+		$this->phone_nxt_kin->AdvancedSearch->SearchValue2 = @$filter["y_phone_nxt_kin"];
+		$this->phone_nxt_kin->AdvancedSearch->SearchOperator2 = @$filter["w_phone_nxt_kin"];
+		$this->phone_nxt_kin->AdvancedSearch->Save();
+
+		// Field qualification_level
+		$this->qualification_level->AdvancedSearch->SearchValue = @$filter["x_qualification_level"];
+		$this->qualification_level->AdvancedSearch->SearchOperator = @$filter["z_qualification_level"];
+		$this->qualification_level->AdvancedSearch->SearchCondition = @$filter["v_qualification_level"];
+		$this->qualification_level->AdvancedSearch->SearchValue2 = @$filter["y_qualification_level"];
+		$this->qualification_level->AdvancedSearch->SearchOperator2 = @$filter["w_qualification_level"];
+		$this->qualification_level->AdvancedSearch->Save();
+
+		// Field qualification_grade
+		$this->qualification_grade->AdvancedSearch->SearchValue = @$filter["x_qualification_grade"];
+		$this->qualification_grade->AdvancedSearch->SearchOperator = @$filter["z_qualification_grade"];
+		$this->qualification_grade->AdvancedSearch->SearchCondition = @$filter["v_qualification_grade"];
+		$this->qualification_grade->AdvancedSearch->SearchValue2 = @$filter["y_qualification_grade"];
+		$this->qualification_grade->AdvancedSearch->SearchOperator2 = @$filter["w_qualification_grade"];
+		$this->qualification_grade->AdvancedSearch->Save();
+
+		// Field upload_of_credentcial
+		$this->upload_of_credentcial->AdvancedSearch->SearchValue = @$filter["x_upload_of_credentcial"];
+		$this->upload_of_credentcial->AdvancedSearch->SearchOperator = @$filter["z_upload_of_credentcial"];
+		$this->upload_of_credentcial->AdvancedSearch->SearchCondition = @$filter["v_upload_of_credentcial"];
+		$this->upload_of_credentcial->AdvancedSearch->SearchValue2 = @$filter["y_upload_of_credentcial"];
+		$this->upload_of_credentcial->AdvancedSearch->SearchOperator2 = @$filter["w_upload_of_credentcial"];
+		$this->upload_of_credentcial->AdvancedSearch->Save();
 
 		// Field password
 		$this->password->AdvancedSearch->SearchValue = @$filter["x_password"];
@@ -1013,10 +1153,24 @@ class cuser_profile_list extends cuser_profile {
 		$sWhere = "";
 		$this->BuildBasicSearchSQL($sWhere, $this->last_name, $arKeywords, $type);
 		$this->BuildBasicSearchSQL($sWhere, $this->first_name, $arKeywords, $type);
-		$this->BuildBasicSearchSQL($sWhere, $this->gender, $arKeywords, $type);
 		$this->BuildBasicSearchSQL($sWhere, $this->_email, $arKeywords, $type);
-		$this->BuildBasicSearchSQL($sWhere, $this->mobile, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->gender, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->marital_status, $arKeywords, $type);
 		$this->BuildBasicSearchSQL($sWhere, $this->username, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->mobile, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->home_address, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->town_city, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->state_origin, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->local_gra, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->next_kin, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->resident_nxt_kin, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->nearest_bus_stop, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->town_city_nxt_kin, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->email_nxt_kin, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->phone_nxt_kin, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->qualification_level, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->qualification_grade, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->upload_of_credentcial, $arKeywords, $type);
 		$this->BuildBasicSearchSQL($sWhere, $this->password, $arKeywords, $type);
 		$this->BuildBasicSearchSQL($sWhere, $this->profile, $arKeywords, $type);
 		return $sWhere;
@@ -1169,13 +1323,27 @@ class cuser_profile_list extends cuser_profile {
 			$this->UpdateSort($this->staff_id); // staff_id
 			$this->UpdateSort($this->last_name); // last_name
 			$this->UpdateSort($this->first_name); // first_name
-			$this->UpdateSort($this->gender); // gender
-			$this->UpdateSort($this->date_of_birth); // date_of_birth
 			$this->UpdateSort($this->_email); // email
+			$this->UpdateSort($this->gender); // gender
+			$this->UpdateSort($this->marital_status); // marital_status
+			$this->UpdateSort($this->date_of_birth); // date_of_birth
+			$this->UpdateSort($this->username); // username
 			$this->UpdateSort($this->mobile); // mobile
 			$this->UpdateSort($this->company); // company
 			$this->UpdateSort($this->department); // department
-			$this->UpdateSort($this->username); // username
+			$this->UpdateSort($this->home_address); // home_address
+			$this->UpdateSort($this->town_city); // town_city
+			$this->UpdateSort($this->state_origin); // state_origin
+			$this->UpdateSort($this->local_gra); // local_gra
+			$this->UpdateSort($this->next_kin); // next_kin
+			$this->UpdateSort($this->resident_nxt_kin); // resident_nxt_kin
+			$this->UpdateSort($this->nearest_bus_stop); // nearest_bus_stop
+			$this->UpdateSort($this->town_city_nxt_kin); // town_city_nxt_kin
+			$this->UpdateSort($this->email_nxt_kin); // email_nxt_kin
+			$this->UpdateSort($this->phone_nxt_kin); // phone_nxt_kin
+			$this->UpdateSort($this->qualification_level); // qualification_level
+			$this->UpdateSort($this->qualification_grade); // qualification_grade
+			$this->UpdateSort($this->upload_of_credentcial); // upload_of_credentcial
 			$this->UpdateSort($this->password); // password
 			$this->UpdateSort($this->accesslevel); // accesslevel
 			$this->UpdateSort($this->status); // status
@@ -1215,13 +1383,27 @@ class cuser_profile_list extends cuser_profile {
 				$this->staff_id->setSort("");
 				$this->last_name->setSort("");
 				$this->first_name->setSort("");
-				$this->gender->setSort("");
-				$this->date_of_birth->setSort("");
 				$this->_email->setSort("");
+				$this->gender->setSort("");
+				$this->marital_status->setSort("");
+				$this->date_of_birth->setSort("");
+				$this->username->setSort("");
 				$this->mobile->setSort("");
 				$this->company->setSort("");
 				$this->department->setSort("");
-				$this->username->setSort("");
+				$this->home_address->setSort("");
+				$this->town_city->setSort("");
+				$this->state_origin->setSort("");
+				$this->local_gra->setSort("");
+				$this->next_kin->setSort("");
+				$this->resident_nxt_kin->setSort("");
+				$this->nearest_bus_stop->setSort("");
+				$this->town_city_nxt_kin->setSort("");
+				$this->email_nxt_kin->setSort("");
+				$this->phone_nxt_kin->setSort("");
+				$this->qualification_level->setSort("");
+				$this->qualification_grade->setSort("");
+				$this->upload_of_credentcial->setSort("");
 				$this->password->setSort("");
 				$this->accesslevel->setSort("");
 				$this->status->setSort("");
@@ -1693,13 +1875,28 @@ class cuser_profile_list extends cuser_profile {
 		$this->staff_id->setDbValue($row['staff_id']);
 		$this->last_name->setDbValue($row['last_name']);
 		$this->first_name->setDbValue($row['first_name']);
-		$this->gender->setDbValue($row['gender']);
-		$this->date_of_birth->setDbValue($row['date_of_birth']);
 		$this->_email->setDbValue($row['email']);
+		$this->gender->setDbValue($row['gender']);
+		$this->marital_status->setDbValue($row['marital_status']);
+		$this->date_of_birth->setDbValue($row['date_of_birth']);
+		$this->username->setDbValue($row['username']);
 		$this->mobile->setDbValue($row['mobile']);
 		$this->company->setDbValue($row['company']);
 		$this->department->setDbValue($row['department']);
-		$this->username->setDbValue($row['username']);
+		$this->home_address->setDbValue($row['home_address']);
+		$this->town_city->setDbValue($row['town_city']);
+		$this->state_origin->setDbValue($row['state_origin']);
+		$this->local_gra->setDbValue($row['local_gra']);
+		$this->next_kin->setDbValue($row['next_kin']);
+		$this->resident_nxt_kin->setDbValue($row['resident_nxt_kin']);
+		$this->nearest_bus_stop->setDbValue($row['nearest_bus_stop']);
+		$this->town_city_nxt_kin->setDbValue($row['town_city_nxt_kin']);
+		$this->email_nxt_kin->setDbValue($row['email_nxt_kin']);
+		$this->phone_nxt_kin->setDbValue($row['phone_nxt_kin']);
+		$this->qualification_level->setDbValue($row['qualification_level']);
+		$this->qualification_grade->setDbValue($row['qualification_grade']);
+		$this->upload_of_credentcial->Upload->DbValue = $row['upload_of_credentcial'];
+		$this->upload_of_credentcial->setDbValue($this->upload_of_credentcial->Upload->DbValue);
 		$this->password->setDbValue($row['password']);
 		$this->accesslevel->setDbValue($row['accesslevel']);
 		$this->status->setDbValue($row['status']);
@@ -1713,13 +1910,27 @@ class cuser_profile_list extends cuser_profile {
 		$row['staff_id'] = NULL;
 		$row['last_name'] = NULL;
 		$row['first_name'] = NULL;
-		$row['gender'] = NULL;
-		$row['date_of_birth'] = NULL;
 		$row['email'] = NULL;
+		$row['gender'] = NULL;
+		$row['marital_status'] = NULL;
+		$row['date_of_birth'] = NULL;
+		$row['username'] = NULL;
 		$row['mobile'] = NULL;
 		$row['company'] = NULL;
 		$row['department'] = NULL;
-		$row['username'] = NULL;
+		$row['home_address'] = NULL;
+		$row['town_city'] = NULL;
+		$row['state_origin'] = NULL;
+		$row['local_gra'] = NULL;
+		$row['next_kin'] = NULL;
+		$row['resident_nxt_kin'] = NULL;
+		$row['nearest_bus_stop'] = NULL;
+		$row['town_city_nxt_kin'] = NULL;
+		$row['email_nxt_kin'] = NULL;
+		$row['phone_nxt_kin'] = NULL;
+		$row['qualification_level'] = NULL;
+		$row['qualification_grade'] = NULL;
+		$row['upload_of_credentcial'] = NULL;
 		$row['password'] = NULL;
 		$row['accesslevel'] = NULL;
 		$row['status'] = NULL;
@@ -1736,13 +1947,27 @@ class cuser_profile_list extends cuser_profile {
 		$this->staff_id->DbValue = $row['staff_id'];
 		$this->last_name->DbValue = $row['last_name'];
 		$this->first_name->DbValue = $row['first_name'];
-		$this->gender->DbValue = $row['gender'];
-		$this->date_of_birth->DbValue = $row['date_of_birth'];
 		$this->_email->DbValue = $row['email'];
+		$this->gender->DbValue = $row['gender'];
+		$this->marital_status->DbValue = $row['marital_status'];
+		$this->date_of_birth->DbValue = $row['date_of_birth'];
+		$this->username->DbValue = $row['username'];
 		$this->mobile->DbValue = $row['mobile'];
 		$this->company->DbValue = $row['company'];
 		$this->department->DbValue = $row['department'];
-		$this->username->DbValue = $row['username'];
+		$this->home_address->DbValue = $row['home_address'];
+		$this->town_city->DbValue = $row['town_city'];
+		$this->state_origin->DbValue = $row['state_origin'];
+		$this->local_gra->DbValue = $row['local_gra'];
+		$this->next_kin->DbValue = $row['next_kin'];
+		$this->resident_nxt_kin->DbValue = $row['resident_nxt_kin'];
+		$this->nearest_bus_stop->DbValue = $row['nearest_bus_stop'];
+		$this->town_city_nxt_kin->DbValue = $row['town_city_nxt_kin'];
+		$this->email_nxt_kin->DbValue = $row['email_nxt_kin'];
+		$this->phone_nxt_kin->DbValue = $row['phone_nxt_kin'];
+		$this->qualification_level->DbValue = $row['qualification_level'];
+		$this->qualification_grade->DbValue = $row['qualification_grade'];
+		$this->upload_of_credentcial->Upload->DbValue = $row['upload_of_credentcial'];
 		$this->password->DbValue = $row['password'];
 		$this->accesslevel->DbValue = $row['accesslevel'];
 		$this->status->DbValue = $row['status'];
@@ -1791,13 +2016,27 @@ class cuser_profile_list extends cuser_profile {
 		// staff_id
 		// last_name
 		// first_name
-		// gender
-		// date_of_birth
 		// email
+		// gender
+		// marital_status
+		// date_of_birth
+		// username
 		// mobile
 		// company
 		// department
-		// username
+		// home_address
+		// town_city
+		// state_origin
+		// local_gra
+		// next_kin
+		// resident_nxt_kin
+		// nearest_bus_stop
+		// town_city_nxt_kin
+		// email_nxt_kin
+		// phone_nxt_kin
+		// qualification_level
+		// qualification_grade
+		// upload_of_credentcial
 		// password
 		// accesslevel
 		// status
@@ -1821,6 +2060,10 @@ class cuser_profile_list extends cuser_profile {
 		$this->first_name->ViewValue = $this->first_name->CurrentValue;
 		$this->first_name->ViewCustomAttributes = "";
 
+		// email
+		$this->_email->ViewValue = $this->_email->CurrentValue;
+		$this->_email->ViewCustomAttributes = "";
+
 		// gender
 		if (strval($this->gender->CurrentValue) <> "") {
 			$this->gender->ViewValue = $this->gender->OptionCaption($this->gender->CurrentValue);
@@ -1829,14 +2072,22 @@ class cuser_profile_list extends cuser_profile {
 		}
 		$this->gender->ViewCustomAttributes = "";
 
+		// marital_status
+		if (strval($this->marital_status->CurrentValue) <> "") {
+			$this->marital_status->ViewValue = $this->marital_status->OptionCaption($this->marital_status->CurrentValue);
+		} else {
+			$this->marital_status->ViewValue = NULL;
+		}
+		$this->marital_status->ViewCustomAttributes = "";
+
 		// date_of_birth
 		$this->date_of_birth->ViewValue = $this->date_of_birth->CurrentValue;
 		$this->date_of_birth->ViewValue = ew_FormatDateTime($this->date_of_birth->ViewValue, 7);
 		$this->date_of_birth->ViewCustomAttributes = "";
 
-		// email
-		$this->_email->ViewValue = $this->_email->CurrentValue;
-		$this->_email->ViewCustomAttributes = "";
+		// username
+		$this->username->ViewValue = $this->username->CurrentValue;
+		$this->username->ViewCustomAttributes = "";
 
 		// mobile
 		$this->mobile->ViewValue = $this->mobile->CurrentValue;
@@ -1889,9 +2140,127 @@ class cuser_profile_list extends cuser_profile {
 		}
 		$this->department->ViewCustomAttributes = "";
 
-		// username
-		$this->username->ViewValue = $this->username->CurrentValue;
-		$this->username->ViewCustomAttributes = "";
+		// home_address
+		$this->home_address->ViewValue = $this->home_address->CurrentValue;
+		$this->home_address->ViewCustomAttributes = "";
+
+		// town_city
+		if (strval($this->town_city->CurrentValue) <> "") {
+			$sFilterWrk = "`code`" . ew_SearchString("=", $this->town_city->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `code`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `states_table`";
+		$sWhereWrk = "";
+		$this->town_city->LookupFilters = array("dx1" => '`state_descriptions`');
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->town_city, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->town_city->ViewValue = $this->town_city->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->town_city->ViewValue = $this->town_city->CurrentValue;
+			}
+		} else {
+			$this->town_city->ViewValue = NULL;
+		}
+		$this->town_city->ViewCustomAttributes = "";
+
+		// state_origin
+		if (strval($this->state_origin->CurrentValue) <> "") {
+			$sFilterWrk = "`code`" . ew_SearchString("=", $this->state_origin->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `code`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `states_table`";
+		$sWhereWrk = "";
+		$this->state_origin->LookupFilters = array("dx1" => '`state_descriptions`');
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->state_origin, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->state_origin->ViewValue = $this->state_origin->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->state_origin->ViewValue = $this->state_origin->CurrentValue;
+			}
+		} else {
+			$this->state_origin->ViewValue = NULL;
+		}
+		$this->state_origin->ViewCustomAttributes = "";
+
+		// local_gra
+		if (strval($this->local_gra->CurrentValue) <> "") {
+			$sFilterWrk = "`code`" . ew_SearchString("=", $this->local_gra->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `code`, `lga_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `lga_states`";
+		$sWhereWrk = "";
+		$this->local_gra->LookupFilters = array("dx1" => '`lga_descriptions`');
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->local_gra, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->local_gra->ViewValue = $this->local_gra->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->local_gra->ViewValue = $this->local_gra->CurrentValue;
+			}
+		} else {
+			$this->local_gra->ViewValue = NULL;
+		}
+		$this->local_gra->ViewCustomAttributes = "";
+
+		// next_kin
+		$this->next_kin->ViewValue = $this->next_kin->CurrentValue;
+		$this->next_kin->ViewCustomAttributes = "";
+
+		// resident_nxt_kin
+		$this->resident_nxt_kin->ViewValue = $this->resident_nxt_kin->CurrentValue;
+		$this->resident_nxt_kin->ViewCustomAttributes = "";
+
+		// nearest_bus_stop
+		$this->nearest_bus_stop->ViewValue = $this->nearest_bus_stop->CurrentValue;
+		$this->nearest_bus_stop->ViewCustomAttributes = "";
+
+		// town_city_nxt_kin
+		$this->town_city_nxt_kin->ViewValue = $this->town_city_nxt_kin->CurrentValue;
+		$this->town_city_nxt_kin->ViewCustomAttributes = "";
+
+		// email_nxt_kin
+		$this->email_nxt_kin->ViewValue = $this->email_nxt_kin->CurrentValue;
+		$this->email_nxt_kin->ViewCustomAttributes = "";
+
+		// phone_nxt_kin
+		$this->phone_nxt_kin->ViewValue = $this->phone_nxt_kin->CurrentValue;
+		$this->phone_nxt_kin->ViewCustomAttributes = "";
+
+		// qualification_level
+		if (strval($this->qualification_level->CurrentValue) <> "") {
+			$this->qualification_level->ViewValue = $this->qualification_level->OptionCaption($this->qualification_level->CurrentValue);
+		} else {
+			$this->qualification_level->ViewValue = NULL;
+		}
+		$this->qualification_level->ViewCustomAttributes = "";
+
+		// qualification_grade
+		if (strval($this->qualification_grade->CurrentValue) <> "") {
+			$this->qualification_grade->ViewValue = $this->qualification_grade->OptionCaption($this->qualification_grade->CurrentValue);
+		} else {
+			$this->qualification_grade->ViewValue = NULL;
+		}
+		$this->qualification_grade->ViewCustomAttributes = "";
+
+		// upload_of_credentcial
+		$this->upload_of_credentcial->UploadPath = "uploads/";
+		if (!ew_Empty($this->upload_of_credentcial->Upload->DbValue)) {
+			$this->upload_of_credentcial->ViewValue = $this->upload_of_credentcial->Upload->DbValue;
+		} else {
+			$this->upload_of_credentcial->ViewValue = "";
+		}
+		$this->upload_of_credentcial->ViewCustomAttributes = "";
 
 		// password
 		$this->password->ViewValue = $Language->Phrase("PasswordMask");
@@ -1952,20 +2321,30 @@ class cuser_profile_list extends cuser_profile {
 			$this->first_name->HrefValue = "";
 			$this->first_name->TooltipValue = "";
 
+			// email
+			$this->_email->LinkCustomAttributes = "";
+			$this->_email->HrefValue = "";
+			$this->_email->TooltipValue = "";
+
 			// gender
 			$this->gender->LinkCustomAttributes = "";
 			$this->gender->HrefValue = "";
 			$this->gender->TooltipValue = "";
+
+			// marital_status
+			$this->marital_status->LinkCustomAttributes = "";
+			$this->marital_status->HrefValue = "";
+			$this->marital_status->TooltipValue = "";
 
 			// date_of_birth
 			$this->date_of_birth->LinkCustomAttributes = "";
 			$this->date_of_birth->HrefValue = "";
 			$this->date_of_birth->TooltipValue = "";
 
-			// email
-			$this->_email->LinkCustomAttributes = "";
-			$this->_email->HrefValue = "";
-			$this->_email->TooltipValue = "";
+			// username
+			$this->username->LinkCustomAttributes = "";
+			$this->username->HrefValue = "";
+			$this->username->TooltipValue = "";
 
 			// mobile
 			$this->mobile->LinkCustomAttributes = "";
@@ -1982,10 +2361,71 @@ class cuser_profile_list extends cuser_profile {
 			$this->department->HrefValue = "";
 			$this->department->TooltipValue = "";
 
-			// username
-			$this->username->LinkCustomAttributes = "";
-			$this->username->HrefValue = "";
-			$this->username->TooltipValue = "";
+			// home_address
+			$this->home_address->LinkCustomAttributes = "";
+			$this->home_address->HrefValue = "";
+			$this->home_address->TooltipValue = "";
+
+			// town_city
+			$this->town_city->LinkCustomAttributes = "";
+			$this->town_city->HrefValue = "";
+			$this->town_city->TooltipValue = "";
+
+			// state_origin
+			$this->state_origin->LinkCustomAttributes = "";
+			$this->state_origin->HrefValue = "";
+			$this->state_origin->TooltipValue = "";
+
+			// local_gra
+			$this->local_gra->LinkCustomAttributes = "";
+			$this->local_gra->HrefValue = "";
+			$this->local_gra->TooltipValue = "";
+
+			// next_kin
+			$this->next_kin->LinkCustomAttributes = "";
+			$this->next_kin->HrefValue = "";
+			$this->next_kin->TooltipValue = "";
+
+			// resident_nxt_kin
+			$this->resident_nxt_kin->LinkCustomAttributes = "";
+			$this->resident_nxt_kin->HrefValue = "";
+			$this->resident_nxt_kin->TooltipValue = "";
+
+			// nearest_bus_stop
+			$this->nearest_bus_stop->LinkCustomAttributes = "";
+			$this->nearest_bus_stop->HrefValue = "";
+			$this->nearest_bus_stop->TooltipValue = "";
+
+			// town_city_nxt_kin
+			$this->town_city_nxt_kin->LinkCustomAttributes = "";
+			$this->town_city_nxt_kin->HrefValue = "";
+			$this->town_city_nxt_kin->TooltipValue = "";
+
+			// email_nxt_kin
+			$this->email_nxt_kin->LinkCustomAttributes = "";
+			$this->email_nxt_kin->HrefValue = "";
+			$this->email_nxt_kin->TooltipValue = "";
+
+			// phone_nxt_kin
+			$this->phone_nxt_kin->LinkCustomAttributes = "";
+			$this->phone_nxt_kin->HrefValue = "";
+			$this->phone_nxt_kin->TooltipValue = "";
+
+			// qualification_level
+			$this->qualification_level->LinkCustomAttributes = "";
+			$this->qualification_level->HrefValue = "";
+			$this->qualification_level->TooltipValue = "";
+
+			// qualification_grade
+			$this->qualification_grade->LinkCustomAttributes = "";
+			$this->qualification_grade->HrefValue = "";
+			$this->qualification_grade->TooltipValue = "";
+
+			// upload_of_credentcial
+			$this->upload_of_credentcial->LinkCustomAttributes = "";
+			$this->upload_of_credentcial->HrefValue = "";
+			$this->upload_of_credentcial->HrefValue2 = $this->upload_of_credentcial->UploadPath . $this->upload_of_credentcial->Upload->DbValue;
+			$this->upload_of_credentcial->TooltipValue = "";
 
 			// password
 			$this->password->LinkCustomAttributes = "";
@@ -2354,10 +2794,22 @@ fuser_profilelist.ValidateRequired = <?php echo json_encode(EW_CLIENT_VALIDATE) 
 // Dynamic selection lists
 fuser_profilelist.Lists["x_gender"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
 fuser_profilelist.Lists["x_gender"].Options = <?php echo json_encode($user_profile_list->gender->Options()) ?>;
+fuser_profilelist.Lists["x_marital_status"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
+fuser_profilelist.Lists["x_marital_status"].Options = <?php echo json_encode($user_profile_list->marital_status->Options()) ?>;
 fuser_profilelist.Lists["x_company"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_description","","",""],"ParentFields":[],"ChildFields":["x_department"],"FilterFields":[],"Options":[],"Template":"","LinkTable":"company"};
 fuser_profilelist.Lists["x_company"].Data = "<?php echo $user_profile_list->company->LookupFilterQuery(FALSE, "list") ?>";
 fuser_profilelist.Lists["x_department"] = {"LinkField":"x_code","Ajax":true,"AutoFill":false,"DisplayFields":["x_description","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"department"};
 fuser_profilelist.Lists["x_department"].Data = "<?php echo $user_profile_list->department->LookupFilterQuery(FALSE, "list") ?>";
+fuser_profilelist.Lists["x_town_city"] = {"LinkField":"x_code","Ajax":true,"AutoFill":false,"DisplayFields":["x_state_descriptions","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"states_table"};
+fuser_profilelist.Lists["x_town_city"].Data = "<?php echo $user_profile_list->town_city->LookupFilterQuery(FALSE, "list") ?>";
+fuser_profilelist.Lists["x_state_origin"] = {"LinkField":"x_code","Ajax":true,"AutoFill":false,"DisplayFields":["x_state_descriptions","","",""],"ParentFields":[],"ChildFields":["x_local_gra"],"FilterFields":[],"Options":[],"Template":"","LinkTable":"states_table"};
+fuser_profilelist.Lists["x_state_origin"].Data = "<?php echo $user_profile_list->state_origin->LookupFilterQuery(FALSE, "list") ?>";
+fuser_profilelist.Lists["x_local_gra"] = {"LinkField":"x_code","Ajax":true,"AutoFill":false,"DisplayFields":["x_lga_descriptions","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"lga_states"};
+fuser_profilelist.Lists["x_local_gra"].Data = "<?php echo $user_profile_list->local_gra->LookupFilterQuery(FALSE, "list") ?>";
+fuser_profilelist.Lists["x_qualification_level"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
+fuser_profilelist.Lists["x_qualification_level"].Options = <?php echo json_encode($user_profile_list->qualification_level->Options()) ?>;
+fuser_profilelist.Lists["x_qualification_grade"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
+fuser_profilelist.Lists["x_qualification_grade"].Options = <?php echo json_encode($user_profile_list->qualification_grade->Options()) ?>;
 fuser_profilelist.Lists["x_accesslevel"] = {"LinkField":"x_userlevelid","Ajax":true,"AutoFill":false,"DisplayFields":["x_userlevelname","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"userlevels"};
 fuser_profilelist.Lists["x_accesslevel"].Data = "<?php echo $user_profile_list->accesslevel->LookupFilterQuery(FALSE, "list") ?>";
 fuser_profilelist.Lists["x_status"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
@@ -2577,12 +3029,30 @@ $user_profile_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
+<?php if ($user_profile->_email->Visible) { // email ?>
+	<?php if ($user_profile->SortUrl($user_profile->_email) == "") { ?>
+		<th data-name="_email" class="<?php echo $user_profile->_email->HeaderCellClass() ?>"><div id="elh_user_profile__email" class="user_profile__email"><div class="ewTableHeaderCaption"><?php echo $user_profile->_email->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="_email" class="<?php echo $user_profile->_email->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->_email) ?>',1);"><div id="elh_user_profile__email" class="user_profile__email">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->_email->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->_email->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->_email->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
 <?php if ($user_profile->gender->Visible) { // gender ?>
 	<?php if ($user_profile->SortUrl($user_profile->gender) == "") { ?>
 		<th data-name="gender" class="<?php echo $user_profile->gender->HeaderCellClass() ?>"><div id="elh_user_profile_gender" class="user_profile_gender"><div class="ewTableHeaderCaption"><?php echo $user_profile->gender->FldCaption() ?></div></div></th>
 	<?php } else { ?>
 		<th data-name="gender" class="<?php echo $user_profile->gender->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->gender) ?>',1);"><div id="elh_user_profile_gender" class="user_profile_gender">
 			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->gender->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->gender->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->gender->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->marital_status->Visible) { // marital_status ?>
+	<?php if ($user_profile->SortUrl($user_profile->marital_status) == "") { ?>
+		<th data-name="marital_status" class="<?php echo $user_profile->marital_status->HeaderCellClass() ?>"><div id="elh_user_profile_marital_status" class="user_profile_marital_status"><div class="ewTableHeaderCaption"><?php echo $user_profile->marital_status->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="marital_status" class="<?php echo $user_profile->marital_status->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->marital_status) ?>',1);"><div id="elh_user_profile_marital_status" class="user_profile_marital_status">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->marital_status->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->marital_status->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->marital_status->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
@@ -2595,12 +3065,12 @@ $user_profile_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
-<?php if ($user_profile->_email->Visible) { // email ?>
-	<?php if ($user_profile->SortUrl($user_profile->_email) == "") { ?>
-		<th data-name="_email" class="<?php echo $user_profile->_email->HeaderCellClass() ?>"><div id="elh_user_profile__email" class="user_profile__email"><div class="ewTableHeaderCaption"><?php echo $user_profile->_email->FldCaption() ?></div></div></th>
+<?php if ($user_profile->username->Visible) { // username ?>
+	<?php if ($user_profile->SortUrl($user_profile->username) == "") { ?>
+		<th data-name="username" class="<?php echo $user_profile->username->HeaderCellClass() ?>"><div id="elh_user_profile_username" class="user_profile_username"><div class="ewTableHeaderCaption"><?php echo $user_profile->username->FldCaption() ?></div></div></th>
 	<?php } else { ?>
-		<th data-name="_email" class="<?php echo $user_profile->_email->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->_email) ?>',1);"><div id="elh_user_profile__email" class="user_profile__email">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->_email->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->_email->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->_email->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		<th data-name="username" class="<?php echo $user_profile->username->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->username) ?>',1);"><div id="elh_user_profile_username" class="user_profile_username">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->username->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->username->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->username->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
@@ -2631,12 +3101,120 @@ $user_profile_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
-<?php if ($user_profile->username->Visible) { // username ?>
-	<?php if ($user_profile->SortUrl($user_profile->username) == "") { ?>
-		<th data-name="username" class="<?php echo $user_profile->username->HeaderCellClass() ?>"><div id="elh_user_profile_username" class="user_profile_username"><div class="ewTableHeaderCaption"><?php echo $user_profile->username->FldCaption() ?></div></div></th>
+<?php if ($user_profile->home_address->Visible) { // home_address ?>
+	<?php if ($user_profile->SortUrl($user_profile->home_address) == "") { ?>
+		<th data-name="home_address" class="<?php echo $user_profile->home_address->HeaderCellClass() ?>"><div id="elh_user_profile_home_address" class="user_profile_home_address"><div class="ewTableHeaderCaption"><?php echo $user_profile->home_address->FldCaption() ?></div></div></th>
 	<?php } else { ?>
-		<th data-name="username" class="<?php echo $user_profile->username->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->username) ?>',1);"><div id="elh_user_profile_username" class="user_profile_username">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->username->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->username->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->username->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		<th data-name="home_address" class="<?php echo $user_profile->home_address->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->home_address) ?>',1);"><div id="elh_user_profile_home_address" class="user_profile_home_address">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->home_address->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->home_address->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->home_address->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->town_city->Visible) { // town_city ?>
+	<?php if ($user_profile->SortUrl($user_profile->town_city) == "") { ?>
+		<th data-name="town_city" class="<?php echo $user_profile->town_city->HeaderCellClass() ?>"><div id="elh_user_profile_town_city" class="user_profile_town_city"><div class="ewTableHeaderCaption"><?php echo $user_profile->town_city->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="town_city" class="<?php echo $user_profile->town_city->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->town_city) ?>',1);"><div id="elh_user_profile_town_city" class="user_profile_town_city">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->town_city->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->town_city->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->town_city->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->state_origin->Visible) { // state_origin ?>
+	<?php if ($user_profile->SortUrl($user_profile->state_origin) == "") { ?>
+		<th data-name="state_origin" class="<?php echo $user_profile->state_origin->HeaderCellClass() ?>"><div id="elh_user_profile_state_origin" class="user_profile_state_origin"><div class="ewTableHeaderCaption"><?php echo $user_profile->state_origin->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="state_origin" class="<?php echo $user_profile->state_origin->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->state_origin) ?>',1);"><div id="elh_user_profile_state_origin" class="user_profile_state_origin">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->state_origin->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->state_origin->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->state_origin->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->local_gra->Visible) { // local_gra ?>
+	<?php if ($user_profile->SortUrl($user_profile->local_gra) == "") { ?>
+		<th data-name="local_gra" class="<?php echo $user_profile->local_gra->HeaderCellClass() ?>"><div id="elh_user_profile_local_gra" class="user_profile_local_gra"><div class="ewTableHeaderCaption"><?php echo $user_profile->local_gra->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="local_gra" class="<?php echo $user_profile->local_gra->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->local_gra) ?>',1);"><div id="elh_user_profile_local_gra" class="user_profile_local_gra">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->local_gra->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->local_gra->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->local_gra->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->next_kin->Visible) { // next_kin ?>
+	<?php if ($user_profile->SortUrl($user_profile->next_kin) == "") { ?>
+		<th data-name="next_kin" class="<?php echo $user_profile->next_kin->HeaderCellClass() ?>"><div id="elh_user_profile_next_kin" class="user_profile_next_kin"><div class="ewTableHeaderCaption"><?php echo $user_profile->next_kin->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="next_kin" class="<?php echo $user_profile->next_kin->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->next_kin) ?>',1);"><div id="elh_user_profile_next_kin" class="user_profile_next_kin">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->next_kin->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->next_kin->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->next_kin->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->resident_nxt_kin->Visible) { // resident_nxt_kin ?>
+	<?php if ($user_profile->SortUrl($user_profile->resident_nxt_kin) == "") { ?>
+		<th data-name="resident_nxt_kin" class="<?php echo $user_profile->resident_nxt_kin->HeaderCellClass() ?>"><div id="elh_user_profile_resident_nxt_kin" class="user_profile_resident_nxt_kin"><div class="ewTableHeaderCaption"><?php echo $user_profile->resident_nxt_kin->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="resident_nxt_kin" class="<?php echo $user_profile->resident_nxt_kin->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->resident_nxt_kin) ?>',1);"><div id="elh_user_profile_resident_nxt_kin" class="user_profile_resident_nxt_kin">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->resident_nxt_kin->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->resident_nxt_kin->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->resident_nxt_kin->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->nearest_bus_stop->Visible) { // nearest_bus_stop ?>
+	<?php if ($user_profile->SortUrl($user_profile->nearest_bus_stop) == "") { ?>
+		<th data-name="nearest_bus_stop" class="<?php echo $user_profile->nearest_bus_stop->HeaderCellClass() ?>"><div id="elh_user_profile_nearest_bus_stop" class="user_profile_nearest_bus_stop"><div class="ewTableHeaderCaption"><?php echo $user_profile->nearest_bus_stop->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="nearest_bus_stop" class="<?php echo $user_profile->nearest_bus_stop->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->nearest_bus_stop) ?>',1);"><div id="elh_user_profile_nearest_bus_stop" class="user_profile_nearest_bus_stop">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->nearest_bus_stop->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->nearest_bus_stop->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->nearest_bus_stop->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->town_city_nxt_kin->Visible) { // town_city_nxt_kin ?>
+	<?php if ($user_profile->SortUrl($user_profile->town_city_nxt_kin) == "") { ?>
+		<th data-name="town_city_nxt_kin" class="<?php echo $user_profile->town_city_nxt_kin->HeaderCellClass() ?>"><div id="elh_user_profile_town_city_nxt_kin" class="user_profile_town_city_nxt_kin"><div class="ewTableHeaderCaption"><?php echo $user_profile->town_city_nxt_kin->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="town_city_nxt_kin" class="<?php echo $user_profile->town_city_nxt_kin->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->town_city_nxt_kin) ?>',1);"><div id="elh_user_profile_town_city_nxt_kin" class="user_profile_town_city_nxt_kin">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->town_city_nxt_kin->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->town_city_nxt_kin->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->town_city_nxt_kin->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->email_nxt_kin->Visible) { // email_nxt_kin ?>
+	<?php if ($user_profile->SortUrl($user_profile->email_nxt_kin) == "") { ?>
+		<th data-name="email_nxt_kin" class="<?php echo $user_profile->email_nxt_kin->HeaderCellClass() ?>"><div id="elh_user_profile_email_nxt_kin" class="user_profile_email_nxt_kin"><div class="ewTableHeaderCaption"><?php echo $user_profile->email_nxt_kin->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="email_nxt_kin" class="<?php echo $user_profile->email_nxt_kin->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->email_nxt_kin) ?>',1);"><div id="elh_user_profile_email_nxt_kin" class="user_profile_email_nxt_kin">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->email_nxt_kin->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->email_nxt_kin->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->email_nxt_kin->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->phone_nxt_kin->Visible) { // phone_nxt_kin ?>
+	<?php if ($user_profile->SortUrl($user_profile->phone_nxt_kin) == "") { ?>
+		<th data-name="phone_nxt_kin" class="<?php echo $user_profile->phone_nxt_kin->HeaderCellClass() ?>"><div id="elh_user_profile_phone_nxt_kin" class="user_profile_phone_nxt_kin"><div class="ewTableHeaderCaption"><?php echo $user_profile->phone_nxt_kin->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="phone_nxt_kin" class="<?php echo $user_profile->phone_nxt_kin->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->phone_nxt_kin) ?>',1);"><div id="elh_user_profile_phone_nxt_kin" class="user_profile_phone_nxt_kin">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->phone_nxt_kin->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->phone_nxt_kin->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->phone_nxt_kin->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->qualification_level->Visible) { // qualification_level ?>
+	<?php if ($user_profile->SortUrl($user_profile->qualification_level) == "") { ?>
+		<th data-name="qualification_level" class="<?php echo $user_profile->qualification_level->HeaderCellClass() ?>"><div id="elh_user_profile_qualification_level" class="user_profile_qualification_level"><div class="ewTableHeaderCaption"><?php echo $user_profile->qualification_level->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="qualification_level" class="<?php echo $user_profile->qualification_level->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->qualification_level) ?>',1);"><div id="elh_user_profile_qualification_level" class="user_profile_qualification_level">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->qualification_level->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->qualification_level->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->qualification_level->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->qualification_grade->Visible) { // qualification_grade ?>
+	<?php if ($user_profile->SortUrl($user_profile->qualification_grade) == "") { ?>
+		<th data-name="qualification_grade" class="<?php echo $user_profile->qualification_grade->HeaderCellClass() ?>"><div id="elh_user_profile_qualification_grade" class="user_profile_qualification_grade"><div class="ewTableHeaderCaption"><?php echo $user_profile->qualification_grade->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="qualification_grade" class="<?php echo $user_profile->qualification_grade->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->qualification_grade) ?>',1);"><div id="elh_user_profile_qualification_grade" class="user_profile_qualification_grade">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->qualification_grade->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->qualification_grade->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->qualification_grade->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
+<?php if ($user_profile->upload_of_credentcial->Visible) { // upload_of_credentcial ?>
+	<?php if ($user_profile->SortUrl($user_profile->upload_of_credentcial) == "") { ?>
+		<th data-name="upload_of_credentcial" class="<?php echo $user_profile->upload_of_credentcial->HeaderCellClass() ?>"><div id="elh_user_profile_upload_of_credentcial" class="user_profile_upload_of_credentcial"><div class="ewTableHeaderCaption"><?php echo $user_profile->upload_of_credentcial->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="upload_of_credentcial" class="<?php echo $user_profile->upload_of_credentcial->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $user_profile->SortUrl($user_profile->upload_of_credentcial) ?>',1);"><div id="elh_user_profile_upload_of_credentcial" class="user_profile_upload_of_credentcial">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $user_profile->upload_of_credentcial->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($user_profile->upload_of_credentcial->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($user_profile->upload_of_credentcial->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
@@ -2764,11 +3342,27 @@ $user_profile_list->ListOptions->Render("body", "left", $user_profile_list->RowC
 </span>
 </td>
 	<?php } ?>
+	<?php if ($user_profile->_email->Visible) { // email ?>
+		<td data-name="_email"<?php echo $user_profile->_email->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile__email" class="user_profile__email">
+<span<?php echo $user_profile->_email->ViewAttributes() ?>>
+<?php echo $user_profile->_email->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
 	<?php if ($user_profile->gender->Visible) { // gender ?>
 		<td data-name="gender"<?php echo $user_profile->gender->CellAttributes() ?>>
 <span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_gender" class="user_profile_gender">
 <span<?php echo $user_profile->gender->ViewAttributes() ?>>
 <?php echo $user_profile->gender->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->marital_status->Visible) { // marital_status ?>
+		<td data-name="marital_status"<?php echo $user_profile->marital_status->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_marital_status" class="user_profile_marital_status">
+<span<?php echo $user_profile->marital_status->ViewAttributes() ?>>
+<?php echo $user_profile->marital_status->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>
@@ -2780,11 +3374,11 @@ $user_profile_list->ListOptions->Render("body", "left", $user_profile_list->RowC
 </span>
 </td>
 	<?php } ?>
-	<?php if ($user_profile->_email->Visible) { // email ?>
-		<td data-name="_email"<?php echo $user_profile->_email->CellAttributes() ?>>
-<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile__email" class="user_profile__email">
-<span<?php echo $user_profile->_email->ViewAttributes() ?>>
-<?php echo $user_profile->_email->ListViewValue() ?></span>
+	<?php if ($user_profile->username->Visible) { // username ?>
+		<td data-name="username"<?php echo $user_profile->username->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_username" class="user_profile_username">
+<span<?php echo $user_profile->username->ViewAttributes() ?>>
+<?php echo $user_profile->username->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>
@@ -2812,11 +3406,108 @@ $user_profile_list->ListOptions->Render("body", "left", $user_profile_list->RowC
 </span>
 </td>
 	<?php } ?>
-	<?php if ($user_profile->username->Visible) { // username ?>
-		<td data-name="username"<?php echo $user_profile->username->CellAttributes() ?>>
-<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_username" class="user_profile_username">
-<span<?php echo $user_profile->username->ViewAttributes() ?>>
-<?php echo $user_profile->username->ListViewValue() ?></span>
+	<?php if ($user_profile->home_address->Visible) { // home_address ?>
+		<td data-name="home_address"<?php echo $user_profile->home_address->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_home_address" class="user_profile_home_address">
+<span<?php echo $user_profile->home_address->ViewAttributes() ?>>
+<?php echo $user_profile->home_address->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->town_city->Visible) { // town_city ?>
+		<td data-name="town_city"<?php echo $user_profile->town_city->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_town_city" class="user_profile_town_city">
+<span<?php echo $user_profile->town_city->ViewAttributes() ?>>
+<?php echo $user_profile->town_city->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->state_origin->Visible) { // state_origin ?>
+		<td data-name="state_origin"<?php echo $user_profile->state_origin->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_state_origin" class="user_profile_state_origin">
+<span<?php echo $user_profile->state_origin->ViewAttributes() ?>>
+<?php echo $user_profile->state_origin->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->local_gra->Visible) { // local_gra ?>
+		<td data-name="local_gra"<?php echo $user_profile->local_gra->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_local_gra" class="user_profile_local_gra">
+<span<?php echo $user_profile->local_gra->ViewAttributes() ?>>
+<?php echo $user_profile->local_gra->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->next_kin->Visible) { // next_kin ?>
+		<td data-name="next_kin"<?php echo $user_profile->next_kin->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_next_kin" class="user_profile_next_kin">
+<span<?php echo $user_profile->next_kin->ViewAttributes() ?>>
+<?php echo $user_profile->next_kin->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->resident_nxt_kin->Visible) { // resident_nxt_kin ?>
+		<td data-name="resident_nxt_kin"<?php echo $user_profile->resident_nxt_kin->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_resident_nxt_kin" class="user_profile_resident_nxt_kin">
+<span<?php echo $user_profile->resident_nxt_kin->ViewAttributes() ?>>
+<?php echo $user_profile->resident_nxt_kin->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->nearest_bus_stop->Visible) { // nearest_bus_stop ?>
+		<td data-name="nearest_bus_stop"<?php echo $user_profile->nearest_bus_stop->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_nearest_bus_stop" class="user_profile_nearest_bus_stop">
+<span<?php echo $user_profile->nearest_bus_stop->ViewAttributes() ?>>
+<?php echo $user_profile->nearest_bus_stop->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->town_city_nxt_kin->Visible) { // town_city_nxt_kin ?>
+		<td data-name="town_city_nxt_kin"<?php echo $user_profile->town_city_nxt_kin->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_town_city_nxt_kin" class="user_profile_town_city_nxt_kin">
+<span<?php echo $user_profile->town_city_nxt_kin->ViewAttributes() ?>>
+<?php echo $user_profile->town_city_nxt_kin->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->email_nxt_kin->Visible) { // email_nxt_kin ?>
+		<td data-name="email_nxt_kin"<?php echo $user_profile->email_nxt_kin->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_email_nxt_kin" class="user_profile_email_nxt_kin">
+<span<?php echo $user_profile->email_nxt_kin->ViewAttributes() ?>>
+<?php echo $user_profile->email_nxt_kin->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->phone_nxt_kin->Visible) { // phone_nxt_kin ?>
+		<td data-name="phone_nxt_kin"<?php echo $user_profile->phone_nxt_kin->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_phone_nxt_kin" class="user_profile_phone_nxt_kin">
+<span<?php echo $user_profile->phone_nxt_kin->ViewAttributes() ?>>
+<?php echo $user_profile->phone_nxt_kin->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->qualification_level->Visible) { // qualification_level ?>
+		<td data-name="qualification_level"<?php echo $user_profile->qualification_level->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_qualification_level" class="user_profile_qualification_level">
+<span<?php echo $user_profile->qualification_level->ViewAttributes() ?>>
+<?php echo $user_profile->qualification_level->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->qualification_grade->Visible) { // qualification_grade ?>
+		<td data-name="qualification_grade"<?php echo $user_profile->qualification_grade->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_qualification_grade" class="user_profile_qualification_grade">
+<span<?php echo $user_profile->qualification_grade->ViewAttributes() ?>>
+<?php echo $user_profile->qualification_grade->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($user_profile->upload_of_credentcial->Visible) { // upload_of_credentcial ?>
+		<td data-name="upload_of_credentcial"<?php echo $user_profile->upload_of_credentcial->CellAttributes() ?>>
+<span id="el<?php echo $user_profile_list->RowCnt ?>_user_profile_upload_of_credentcial" class="user_profile_upload_of_credentcial">
+<span<?php echo $user_profile->upload_of_credentcial->ViewAttributes() ?>>
+<?php echo ew_GetFileViewTag($user_profile->upload_of_credentcial, $user_profile->upload_of_credentcial->ListViewValue()) ?>
+</span>
 </span>
 </td>
 	<?php } ?>

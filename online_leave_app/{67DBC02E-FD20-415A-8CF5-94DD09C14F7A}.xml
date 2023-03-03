@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<configuration date="2023/02/14" author="e.World Technology Ltd.">
-  <project id="{67DBC02E-FD20-415A-8CF5-94DD09C14F7A}" file="C:\Users\Hi\Documents\PHPMaker\Project\online_leave_app.pmp" name="online_leave_app" product="PHPMaker" version="14.0" datetime="2023/02/14 11:42:39" languagefolder="phplang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
+<configuration date="2023/03/03" author="e.World Technology Ltd.">
+  <project id="{67DBC02E-FD20-415A-8CF5-94DD09C14F7A}" file="C:\Users\Hi\Documents\PHPMaker\Project\online_leave_app.pmp" name="online_leave_app" product="PHPMaker" version="14.0" datetime="2023/03/03 15:52:06" languagefolder="phplang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
     <table id="department" name="department" caption="Department" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="leave_form" name="leave_form" caption="Leave Form" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="status" name="status" caption="Status" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
@@ -11,5 +11,7 @@
     <table id="home_php" name="home.php" caption="Home" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="company" name="company" caption="Company" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="report" name="report" caption="Leave Report" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="lga_states" name="lga_states" caption="lga states" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="states_table" name="states_table" caption="states table" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
   </project>
 </configuration>

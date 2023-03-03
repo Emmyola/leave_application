@@ -346,97 +346,130 @@ $home_php->Page_Main();
 Page_Rendering();
 ?>
 <?php include_once "header.php" ?>
-<div class="panel panel-default">
-	<div class="panel-heading">
-	 	<marquee width="70%" direction="left" height="20px">
+ <div class="panel panel-default">
+	 <div class="panel-heading">
+	 <marquee width="70%" direction="left" height="20px">
 		<strong><span style="color:#8d1c2d !important">WELCOME TO LEAVE APPLICATION MANAGEMENT SYSTEM : <?php echo $_SESSION['Staff_Name']?> </span></strong> 
 		<i style="color:#8d1c3d"> | Staff ID: <?php echo $_SESSION['Staff_ID']?> | Role: <?php echo $_SESSION['role_name']?> | Company: <?php echo $_SESSION["company_name" ]?> </i>
 		</marquee>
 		<p style="color:#0000 !important, align-test: center !important">NB: Applying for Leave should be two Weeks before applied Leave application due date.....</p>
+	 </div>
+ </div>
+<br><br>
+ <div class="col-md-3 col-sm-6 col-xs-12">
+	<div class="info-box bg-yellow-gradient">
+		<span class="info-box-icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+		<div class="info-box-content">
+			<span class="info-box-text">Return For Rework</span>
+			<span class="info-box-number"><?php echo $_SESSION['MyReworkCount'] ?></span>
+		</div>
 	</div>
 </div>
-	<br><br>
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="info-box bg-yellow-gradient">
-			<span class="info-box-icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-			<div class="info-box-content">
-				<span class="info-box-text">Return For Rework</span>
-				<span class="info-box-number"><?php echo $_SESSION['MyReworkCount'] ?></span>
-			</div>
+<div class="col-md-3 col-sm-6 col-xs-12">
+	<div class="info-box bg-aqua-gradient">
+		<span class="info-box-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+		<div class="info-box-content">
+			<span class="info-box-text">Pending Leaves</span>
+			<span class="info-box-number"><?php echo $_SESSION['MyPendingCount'] ?></span>
 		</div>
 	</div>
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="info-box bg-aqua-gradient">
-			<span class="info-box-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
-			<div class="info-box-content">
-				<span class="info-box-text">Pending Leaves</span>
-				<span class="info-box-number"><?php echo $_SESSION['MyPendingCount'] ?></span>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="info-box bg-red-gradient">
-			<span class="info-box-icon"><i class="fa fa-ban" aria-hidden="true"></i></span>
-			<div class="info-box-content">
-				<span class="info-box-text">Leave Rejected</span>
-				<span class="info-box-number"><?php echo $_SESSION['MyRejectionCount'] ?></span>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<div class="info-box bg-green-gradient">
-			<span class="info-box-icon"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-			<div class="info-box-content">
-				<span class="info-box-text">Approved Leave</span>
-				<span class="info-box-number"><?php echo $_SESSION['MyApproverCount'] ?></span>
-			</div>
-		</div>
-	</div><br><br>
-	
-	<?php $dbhelper = &DbHelper();?>
-	<div id="r_drugs_dashboard" class="col-lg-6 col-md-6 col-sm-6">
-		<div class="panel panel-success">
-			<div class="panel-heading"><strong><?php date_default_timezone_set("Africa/Lagos"); echo "Approved Leave  Details - Today (" . date("l jS \of F Y") . ")"; ?></strong></div>
-				<div class="panel-body">
-				<?php 
-				$sql = "SELECT DISTINCT " .  
-				"`leave_form`.`id` AS `ID`,".
-				"`date`.`time` AS `Initiated Date`,".
-				"`leave_type` AS `Leave Type`,".
-				"`leave_duration` AS `Leave Duration`,".
-				"`status` AS `Status` = 5".
-				" FROM `leave_form`";
-				echo $dbhelper->ExecuteHtml($sql, array("fieldcaption" => TRUE, "tablename" => array("leave_form")));
-				?>
-			</div>
-		</div>
-	</div>
-	<?php $dbhelper = &DbHelper();?>
-	<div id="r_drugs_dashboard" class="col-lg-6 col-md-6 col-sm-6">
-		<div class="panel panel-danger">
-			<div class="panel-heading"><strong><?php date_default_timezone_set("Africa/Lagos"); echo "Reject Leave  Details - Today (" . date("l jS \of F Y") . ")"; ?></strong></div>
-				<div class="panel-body">
-				<?php 
-				$sql = "SELECT DISTINCT " .  
-				"`leave_form`.`id` AS `ID`,".
-				"`date`.`time` AS `Initiated Date`,".
-				"`leave_type` AS `Leave Type`,".
-				"`leave_duration` AS `Leave Duration`,".
-				"`status` AS `Status` = 2".
-				" FROM `leave_form`";
-				echo $dbhelper->ExecuteHtml($sql, array("fieldcaption" => TRUE, "tablename" => array("leave_form")));
-				?>
-			</div>
-		</div>
-	</div>
-
 </div>
- 
-
-
+<div class="col-md-3 col-sm-6 col-xs-12">
+	<div class="info-box bg-red-gradient">
+		<span class="info-box-icon"><i class="fa fa-ban" aria-hidden="true"></i></span>
+		<div class="info-box-content">
+			<span class="info-box-text">Leave Rejected</span>
+			<span class="info-box-number"><?php echo $_SESSION['MyRejectionCount'] ?></span>
+		</div>
+</div>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-12">
+	<div class="info-box bg-green-gradient">
+		<span class="info-box-icon"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+		<div class="info-box-content">
+			<span class="info-box-text">Approved Leave</span>
+			<span class="info-box-number"><?php echo $_SESSION['MyApproverCount'] ?></span>
+		</div>
+	</div>
+</div><br><br><br><br><br><br>
+<div class="card-body px-0 pt-0 pb-2 panel panel-primary" style="color:#8d1c2d !important">
+			  <div class="table-responsive p-0">
+				<table class="table align-items-center justify-content-center mb-0">
+				  <thead>
+					<tr>
+					  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-4 ps-2">ID#</th>
+					  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-4 ps-2">Date Initiated</th>
+					  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-4">Leave Type</th>
+					  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-4 ps-2">Leave Duration</th>
+					  <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-4 ps-2">Category</th> -->
+					  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-4 ps-2">Status</th>
+					  <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-4 ps-2">Projection Progress</th> -->
+					  <th></th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr>
+					  <td>
+						<div class="d-flex px-2">
+						  <div class="my-auto">
+							<h6 class="mb-0 text-sm">1</h6>
+						  </div>
+						</div>
+					  </td>
+					  <td>
+					  <div class="d-flex px-2">
+						  <div class="my-auto">
+							<h4 class="mb-2 text-sm"><?php echo $_SESSION['AnaysisDateTime']?></h4>
+						  </div>
+						</div>
+					  </td>
+					  <td>
+					  <div class="d-flex px-2">
+						  <div class="my-auto">
+							<h6 class="mb-0 text-sm"><?php echo $_SESSION['AnalysisLeaveType']?></h6> 
+						  </div>
+						</div>
+					  </td>
+					  <td>
+						<div class="d-flex px-2">
+						  <div class="my-auto">
+							<h6 class="mb-0 text-sm"><?php echo $_SESSION['AnalysisNumberOfDays'] ?></h6>
+						  </div>
+						</div>
+					  </td>
+					  <!-- <td>
+						<div class="d-flex px-2">
+						  <div class="my-auto">
+							<h6 class="mb-0 text-sm">Transactions book</h6>
+						  </div>
+						</div>
+					  </td> -->
+					  <td>
+						<div class="d-flex px-2">
+						  <button class="btn btn text-info " style="border-radius:30px !important">
+							<h6 class="mb-2 text-sm text-"><?php echo $_SESSION['AnalysisStatus'] ?></h6>
+						  </button>
+						</div>
+					  </td>
+					  <!-- <td>
+					  <div class="d-flex align-items-center justify-content-center">
+						  <span class="me-2 text-xs font-weight-bold">50%</span>
+						  <div>
+							<div class="progress">
+							  <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="50" style="width: 50%;"></div>
+							</div>
+						  </div>
+						</div>
+					  </td> -->
+					</tr>
+				  </tbody>
+				</table>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	</div>
 	<!--other side-->
-
-	
 <?php if (EW_DEBUG_ENABLED) echo ew_DebugMsg(); ?>
 <?php include_once "footer.php" ?>
 <?php

@@ -2080,6 +2080,10 @@ class cleave_form_edit extends cleave_form {
 				$CustomError = "Replacement Staff Role Field Can not be Empty.";
 				return FALSE;
 			}
+			if($rs["initiator_action"] == 1 && date('N', strtotime(ew_UnFormatDateTime($rs["start_date"], 0))) >= 6) {
+				$CustomError = "Start-Date cannot fall on a weekend.";
+				return FALSE;
+			}
 
 			///recommender validation
 			if(CurrentUserLevel() == 2 && $this->status->CurrentValue == 3 && ($rs["recommender_action"] == '' || $rs["recommender_comments"] == '')){
@@ -2386,8 +2390,18 @@ $(document).ready(function(){
 		//var testing = (total_number_of_leave_collected == leave_duration ) alert('Exhausted Already') : 
 		// alert(total_number_of_leave_collected);
 		// exit;
-		// ==========My Codes=============
+		//=============number of working day in a week======
 
+		for(var i = 0; started < ended; ) {
+			if( started.getDay() > 0 && ended.getDay() < 6) i++;
+				started.setDate(started.getDate()+1);
+			}
+			alert(i);
+
+			//document.getElementById("result").innerHTML = "Toggled String is " + str2;
+		}
+
+		// ==========My Codes=============
 		var No_of_days = $("#x_no_of_days").val();
 		var sum_previous_current_duration = parseInt(No_of_days) + total_number_of_leave_collected;
 

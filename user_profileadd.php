@@ -330,17 +330,34 @@ class cuser_profile_add extends cuser_profile {
 		$this->staff_id->SetVisibility();
 		$this->last_name->SetVisibility();
 		$this->first_name->SetVisibility();
-		$this->gender->SetVisibility();
-		$this->date_of_birth->SetVisibility();
 		$this->_email->SetVisibility();
+		$this->gender->SetVisibility();
+		$this->marital_status->SetVisibility();
+		$this->date_of_birth->SetVisibility();
+		$this->username->SetVisibility();
 		$this->mobile->SetVisibility();
 		$this->company->SetVisibility();
 		$this->department->SetVisibility();
-		$this->username->SetVisibility();
+		$this->home_address->SetVisibility();
+		$this->town_city->SetVisibility();
+		$this->state_origin->SetVisibility();
+		$this->local_gra->SetVisibility();
+		$this->next_kin->SetVisibility();
+		$this->resident_nxt_kin->SetVisibility();
+		$this->nearest_bus_stop->SetVisibility();
+		$this->town_city_nxt_kin->SetVisibility();
+		$this->email_nxt_kin->SetVisibility();
+		$this->phone_nxt_kin->SetVisibility();
+		$this->qualification_level->SetVisibility();
+		$this->qualification_grade->SetVisibility();
+		$this->upload_of_credentcial->SetVisibility();
 		$this->password->SetVisibility();
 		$this->accesslevel->SetVisibility();
 		$this->status->SetVisibility();
 		$this->profile->SetVisibility();
+
+		// Set up multi page object
+		$this->SetupMultiPages();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -442,6 +459,7 @@ class cuser_profile_add extends cuser_profile {
 	var $Priv = 0;
 	var $OldRecordset;
 	var $CopyRecord;
+	var $MultiPages; // Multi pages object
 
 	//
 	// Page main
@@ -542,6 +560,9 @@ class cuser_profile_add extends cuser_profile {
 		global $objForm, $Language;
 
 		// Get upload data
+		$this->upload_of_credentcial->Upload->Index = $objForm->Index;
+		$this->upload_of_credentcial->Upload->UploadFile();
+		$this->upload_of_credentcial->CurrentValue = $this->upload_of_credentcial->Upload->FileName;
 	}
 
 	// Load default values
@@ -554,20 +575,49 @@ class cuser_profile_add extends cuser_profile {
 		$this->last_name->OldValue = $this->last_name->CurrentValue;
 		$this->first_name->CurrentValue = NULL;
 		$this->first_name->OldValue = $this->first_name->CurrentValue;
-		$this->gender->CurrentValue = NULL;
-		$this->gender->OldValue = $this->gender->CurrentValue;
-		$this->date_of_birth->CurrentValue = NULL;
-		$this->date_of_birth->OldValue = $this->date_of_birth->CurrentValue;
 		$this->_email->CurrentValue = NULL;
 		$this->_email->OldValue = $this->_email->CurrentValue;
+		$this->gender->CurrentValue = NULL;
+		$this->gender->OldValue = $this->gender->CurrentValue;
+		$this->marital_status->CurrentValue = NULL;
+		$this->marital_status->OldValue = $this->marital_status->CurrentValue;
+		$this->date_of_birth->CurrentValue = NULL;
+		$this->date_of_birth->OldValue = $this->date_of_birth->CurrentValue;
+		$this->username->CurrentValue = NULL;
+		$this->username->OldValue = $this->username->CurrentValue;
 		$this->mobile->CurrentValue = NULL;
 		$this->mobile->OldValue = $this->mobile->CurrentValue;
 		$this->company->CurrentValue = NULL;
 		$this->company->OldValue = $this->company->CurrentValue;
 		$this->department->CurrentValue = NULL;
 		$this->department->OldValue = $this->department->CurrentValue;
-		$this->username->CurrentValue = NULL;
-		$this->username->OldValue = $this->username->CurrentValue;
+		$this->home_address->CurrentValue = NULL;
+		$this->home_address->OldValue = $this->home_address->CurrentValue;
+		$this->town_city->CurrentValue = NULL;
+		$this->town_city->OldValue = $this->town_city->CurrentValue;
+		$this->state_origin->CurrentValue = NULL;
+		$this->state_origin->OldValue = $this->state_origin->CurrentValue;
+		$this->local_gra->CurrentValue = NULL;
+		$this->local_gra->OldValue = $this->local_gra->CurrentValue;
+		$this->next_kin->CurrentValue = NULL;
+		$this->next_kin->OldValue = $this->next_kin->CurrentValue;
+		$this->resident_nxt_kin->CurrentValue = NULL;
+		$this->resident_nxt_kin->OldValue = $this->resident_nxt_kin->CurrentValue;
+		$this->nearest_bus_stop->CurrentValue = NULL;
+		$this->nearest_bus_stop->OldValue = $this->nearest_bus_stop->CurrentValue;
+		$this->town_city_nxt_kin->CurrentValue = NULL;
+		$this->town_city_nxt_kin->OldValue = $this->town_city_nxt_kin->CurrentValue;
+		$this->email_nxt_kin->CurrentValue = NULL;
+		$this->email_nxt_kin->OldValue = $this->email_nxt_kin->CurrentValue;
+		$this->phone_nxt_kin->CurrentValue = NULL;
+		$this->phone_nxt_kin->OldValue = $this->phone_nxt_kin->CurrentValue;
+		$this->qualification_level->CurrentValue = NULL;
+		$this->qualification_level->OldValue = $this->qualification_level->CurrentValue;
+		$this->qualification_grade->CurrentValue = NULL;
+		$this->qualification_grade->OldValue = $this->qualification_grade->CurrentValue;
+		$this->upload_of_credentcial->Upload->DbValue = NULL;
+		$this->upload_of_credentcial->OldValue = $this->upload_of_credentcial->Upload->DbValue;
+		$this->upload_of_credentcial->CurrentValue = NULL; // Clear file related field
 		$this->password->CurrentValue = NULL;
 		$this->password->OldValue = $this->password->CurrentValue;
 		$this->accesslevel->CurrentValue = NULL;
@@ -582,6 +632,7 @@ class cuser_profile_add extends cuser_profile {
 
 		// Load from form
 		global $objForm;
+		$this->GetUploadFiles(); // Get upload files
 		if (!$this->staff_id->FldIsDetailKey) {
 			$this->staff_id->setFormValue($objForm->GetValue("x_staff_id"));
 		}
@@ -591,15 +642,21 @@ class cuser_profile_add extends cuser_profile {
 		if (!$this->first_name->FldIsDetailKey) {
 			$this->first_name->setFormValue($objForm->GetValue("x_first_name"));
 		}
+		if (!$this->_email->FldIsDetailKey) {
+			$this->_email->setFormValue($objForm->GetValue("x__email"));
+		}
 		if (!$this->gender->FldIsDetailKey) {
 			$this->gender->setFormValue($objForm->GetValue("x_gender"));
+		}
+		if (!$this->marital_status->FldIsDetailKey) {
+			$this->marital_status->setFormValue($objForm->GetValue("x_marital_status"));
 		}
 		if (!$this->date_of_birth->FldIsDetailKey) {
 			$this->date_of_birth->setFormValue($objForm->GetValue("x_date_of_birth"));
 			$this->date_of_birth->CurrentValue = ew_UnFormatDateTime($this->date_of_birth->CurrentValue, 7);
 		}
-		if (!$this->_email->FldIsDetailKey) {
-			$this->_email->setFormValue($objForm->GetValue("x__email"));
+		if (!$this->username->FldIsDetailKey) {
+			$this->username->setFormValue($objForm->GetValue("x_username"));
 		}
 		if (!$this->mobile->FldIsDetailKey) {
 			$this->mobile->setFormValue($objForm->GetValue("x_mobile"));
@@ -610,8 +667,41 @@ class cuser_profile_add extends cuser_profile {
 		if (!$this->department->FldIsDetailKey) {
 			$this->department->setFormValue($objForm->GetValue("x_department"));
 		}
-		if (!$this->username->FldIsDetailKey) {
-			$this->username->setFormValue($objForm->GetValue("x_username"));
+		if (!$this->home_address->FldIsDetailKey) {
+			$this->home_address->setFormValue($objForm->GetValue("x_home_address"));
+		}
+		if (!$this->town_city->FldIsDetailKey) {
+			$this->town_city->setFormValue($objForm->GetValue("x_town_city"));
+		}
+		if (!$this->state_origin->FldIsDetailKey) {
+			$this->state_origin->setFormValue($objForm->GetValue("x_state_origin"));
+		}
+		if (!$this->local_gra->FldIsDetailKey) {
+			$this->local_gra->setFormValue($objForm->GetValue("x_local_gra"));
+		}
+		if (!$this->next_kin->FldIsDetailKey) {
+			$this->next_kin->setFormValue($objForm->GetValue("x_next_kin"));
+		}
+		if (!$this->resident_nxt_kin->FldIsDetailKey) {
+			$this->resident_nxt_kin->setFormValue($objForm->GetValue("x_resident_nxt_kin"));
+		}
+		if (!$this->nearest_bus_stop->FldIsDetailKey) {
+			$this->nearest_bus_stop->setFormValue($objForm->GetValue("x_nearest_bus_stop"));
+		}
+		if (!$this->town_city_nxt_kin->FldIsDetailKey) {
+			$this->town_city_nxt_kin->setFormValue($objForm->GetValue("x_town_city_nxt_kin"));
+		}
+		if (!$this->email_nxt_kin->FldIsDetailKey) {
+			$this->email_nxt_kin->setFormValue($objForm->GetValue("x_email_nxt_kin"));
+		}
+		if (!$this->phone_nxt_kin->FldIsDetailKey) {
+			$this->phone_nxt_kin->setFormValue($objForm->GetValue("x_phone_nxt_kin"));
+		}
+		if (!$this->qualification_level->FldIsDetailKey) {
+			$this->qualification_level->setFormValue($objForm->GetValue("x_qualification_level"));
+		}
+		if (!$this->qualification_grade->FldIsDetailKey) {
+			$this->qualification_grade->setFormValue($objForm->GetValue("x_qualification_grade"));
 		}
 		if (!$this->password->FldIsDetailKey) {
 			$this->password->setFormValue($objForm->GetValue("x_password"));
@@ -633,14 +723,27 @@ class cuser_profile_add extends cuser_profile {
 		$this->staff_id->CurrentValue = $this->staff_id->FormValue;
 		$this->last_name->CurrentValue = $this->last_name->FormValue;
 		$this->first_name->CurrentValue = $this->first_name->FormValue;
+		$this->_email->CurrentValue = $this->_email->FormValue;
 		$this->gender->CurrentValue = $this->gender->FormValue;
+		$this->marital_status->CurrentValue = $this->marital_status->FormValue;
 		$this->date_of_birth->CurrentValue = $this->date_of_birth->FormValue;
 		$this->date_of_birth->CurrentValue = ew_UnFormatDateTime($this->date_of_birth->CurrentValue, 7);
-		$this->_email->CurrentValue = $this->_email->FormValue;
+		$this->username->CurrentValue = $this->username->FormValue;
 		$this->mobile->CurrentValue = $this->mobile->FormValue;
 		$this->company->CurrentValue = $this->company->FormValue;
 		$this->department->CurrentValue = $this->department->FormValue;
-		$this->username->CurrentValue = $this->username->FormValue;
+		$this->home_address->CurrentValue = $this->home_address->FormValue;
+		$this->town_city->CurrentValue = $this->town_city->FormValue;
+		$this->state_origin->CurrentValue = $this->state_origin->FormValue;
+		$this->local_gra->CurrentValue = $this->local_gra->FormValue;
+		$this->next_kin->CurrentValue = $this->next_kin->FormValue;
+		$this->resident_nxt_kin->CurrentValue = $this->resident_nxt_kin->FormValue;
+		$this->nearest_bus_stop->CurrentValue = $this->nearest_bus_stop->FormValue;
+		$this->town_city_nxt_kin->CurrentValue = $this->town_city_nxt_kin->FormValue;
+		$this->email_nxt_kin->CurrentValue = $this->email_nxt_kin->FormValue;
+		$this->phone_nxt_kin->CurrentValue = $this->phone_nxt_kin->FormValue;
+		$this->qualification_level->CurrentValue = $this->qualification_level->FormValue;
+		$this->qualification_grade->CurrentValue = $this->qualification_grade->FormValue;
 		$this->password->CurrentValue = $this->password->FormValue;
 		$this->accesslevel->CurrentValue = $this->accesslevel->FormValue;
 		$this->status->CurrentValue = $this->status->FormValue;
@@ -693,13 +796,28 @@ class cuser_profile_add extends cuser_profile {
 		$this->staff_id->setDbValue($row['staff_id']);
 		$this->last_name->setDbValue($row['last_name']);
 		$this->first_name->setDbValue($row['first_name']);
-		$this->gender->setDbValue($row['gender']);
-		$this->date_of_birth->setDbValue($row['date_of_birth']);
 		$this->_email->setDbValue($row['email']);
+		$this->gender->setDbValue($row['gender']);
+		$this->marital_status->setDbValue($row['marital_status']);
+		$this->date_of_birth->setDbValue($row['date_of_birth']);
+		$this->username->setDbValue($row['username']);
 		$this->mobile->setDbValue($row['mobile']);
 		$this->company->setDbValue($row['company']);
 		$this->department->setDbValue($row['department']);
-		$this->username->setDbValue($row['username']);
+		$this->home_address->setDbValue($row['home_address']);
+		$this->town_city->setDbValue($row['town_city']);
+		$this->state_origin->setDbValue($row['state_origin']);
+		$this->local_gra->setDbValue($row['local_gra']);
+		$this->next_kin->setDbValue($row['next_kin']);
+		$this->resident_nxt_kin->setDbValue($row['resident_nxt_kin']);
+		$this->nearest_bus_stop->setDbValue($row['nearest_bus_stop']);
+		$this->town_city_nxt_kin->setDbValue($row['town_city_nxt_kin']);
+		$this->email_nxt_kin->setDbValue($row['email_nxt_kin']);
+		$this->phone_nxt_kin->setDbValue($row['phone_nxt_kin']);
+		$this->qualification_level->setDbValue($row['qualification_level']);
+		$this->qualification_grade->setDbValue($row['qualification_grade']);
+		$this->upload_of_credentcial->Upload->DbValue = $row['upload_of_credentcial'];
+		$this->upload_of_credentcial->setDbValue($this->upload_of_credentcial->Upload->DbValue);
 		$this->password->setDbValue($row['password']);
 		$this->accesslevel->setDbValue($row['accesslevel']);
 		$this->status->setDbValue($row['status']);
@@ -714,13 +832,27 @@ class cuser_profile_add extends cuser_profile {
 		$row['staff_id'] = $this->staff_id->CurrentValue;
 		$row['last_name'] = $this->last_name->CurrentValue;
 		$row['first_name'] = $this->first_name->CurrentValue;
-		$row['gender'] = $this->gender->CurrentValue;
-		$row['date_of_birth'] = $this->date_of_birth->CurrentValue;
 		$row['email'] = $this->_email->CurrentValue;
+		$row['gender'] = $this->gender->CurrentValue;
+		$row['marital_status'] = $this->marital_status->CurrentValue;
+		$row['date_of_birth'] = $this->date_of_birth->CurrentValue;
+		$row['username'] = $this->username->CurrentValue;
 		$row['mobile'] = $this->mobile->CurrentValue;
 		$row['company'] = $this->company->CurrentValue;
 		$row['department'] = $this->department->CurrentValue;
-		$row['username'] = $this->username->CurrentValue;
+		$row['home_address'] = $this->home_address->CurrentValue;
+		$row['town_city'] = $this->town_city->CurrentValue;
+		$row['state_origin'] = $this->state_origin->CurrentValue;
+		$row['local_gra'] = $this->local_gra->CurrentValue;
+		$row['next_kin'] = $this->next_kin->CurrentValue;
+		$row['resident_nxt_kin'] = $this->resident_nxt_kin->CurrentValue;
+		$row['nearest_bus_stop'] = $this->nearest_bus_stop->CurrentValue;
+		$row['town_city_nxt_kin'] = $this->town_city_nxt_kin->CurrentValue;
+		$row['email_nxt_kin'] = $this->email_nxt_kin->CurrentValue;
+		$row['phone_nxt_kin'] = $this->phone_nxt_kin->CurrentValue;
+		$row['qualification_level'] = $this->qualification_level->CurrentValue;
+		$row['qualification_grade'] = $this->qualification_grade->CurrentValue;
+		$row['upload_of_credentcial'] = $this->upload_of_credentcial->Upload->DbValue;
 		$row['password'] = $this->password->CurrentValue;
 		$row['accesslevel'] = $this->accesslevel->CurrentValue;
 		$row['status'] = $this->status->CurrentValue;
@@ -737,13 +869,27 @@ class cuser_profile_add extends cuser_profile {
 		$this->staff_id->DbValue = $row['staff_id'];
 		$this->last_name->DbValue = $row['last_name'];
 		$this->first_name->DbValue = $row['first_name'];
-		$this->gender->DbValue = $row['gender'];
-		$this->date_of_birth->DbValue = $row['date_of_birth'];
 		$this->_email->DbValue = $row['email'];
+		$this->gender->DbValue = $row['gender'];
+		$this->marital_status->DbValue = $row['marital_status'];
+		$this->date_of_birth->DbValue = $row['date_of_birth'];
+		$this->username->DbValue = $row['username'];
 		$this->mobile->DbValue = $row['mobile'];
 		$this->company->DbValue = $row['company'];
 		$this->department->DbValue = $row['department'];
-		$this->username->DbValue = $row['username'];
+		$this->home_address->DbValue = $row['home_address'];
+		$this->town_city->DbValue = $row['town_city'];
+		$this->state_origin->DbValue = $row['state_origin'];
+		$this->local_gra->DbValue = $row['local_gra'];
+		$this->next_kin->DbValue = $row['next_kin'];
+		$this->resident_nxt_kin->DbValue = $row['resident_nxt_kin'];
+		$this->nearest_bus_stop->DbValue = $row['nearest_bus_stop'];
+		$this->town_city_nxt_kin->DbValue = $row['town_city_nxt_kin'];
+		$this->email_nxt_kin->DbValue = $row['email_nxt_kin'];
+		$this->phone_nxt_kin->DbValue = $row['phone_nxt_kin'];
+		$this->qualification_level->DbValue = $row['qualification_level'];
+		$this->qualification_grade->DbValue = $row['qualification_grade'];
+		$this->upload_of_credentcial->Upload->DbValue = $row['upload_of_credentcial'];
 		$this->password->DbValue = $row['password'];
 		$this->accesslevel->DbValue = $row['accesslevel'];
 		$this->status->DbValue = $row['status'];
@@ -786,13 +932,27 @@ class cuser_profile_add extends cuser_profile {
 		// staff_id
 		// last_name
 		// first_name
-		// gender
-		// date_of_birth
 		// email
+		// gender
+		// marital_status
+		// date_of_birth
+		// username
 		// mobile
 		// company
 		// department
-		// username
+		// home_address
+		// town_city
+		// state_origin
+		// local_gra
+		// next_kin
+		// resident_nxt_kin
+		// nearest_bus_stop
+		// town_city_nxt_kin
+		// email_nxt_kin
+		// phone_nxt_kin
+		// qualification_level
+		// qualification_grade
+		// upload_of_credentcial
 		// password
 		// accesslevel
 		// status
@@ -816,6 +976,10 @@ class cuser_profile_add extends cuser_profile {
 		$this->first_name->ViewValue = $this->first_name->CurrentValue;
 		$this->first_name->ViewCustomAttributes = "";
 
+		// email
+		$this->_email->ViewValue = $this->_email->CurrentValue;
+		$this->_email->ViewCustomAttributes = "";
+
 		// gender
 		if (strval($this->gender->CurrentValue) <> "") {
 			$this->gender->ViewValue = $this->gender->OptionCaption($this->gender->CurrentValue);
@@ -824,14 +988,22 @@ class cuser_profile_add extends cuser_profile {
 		}
 		$this->gender->ViewCustomAttributes = "";
 
+		// marital_status
+		if (strval($this->marital_status->CurrentValue) <> "") {
+			$this->marital_status->ViewValue = $this->marital_status->OptionCaption($this->marital_status->CurrentValue);
+		} else {
+			$this->marital_status->ViewValue = NULL;
+		}
+		$this->marital_status->ViewCustomAttributes = "";
+
 		// date_of_birth
 		$this->date_of_birth->ViewValue = $this->date_of_birth->CurrentValue;
 		$this->date_of_birth->ViewValue = ew_FormatDateTime($this->date_of_birth->ViewValue, 7);
 		$this->date_of_birth->ViewCustomAttributes = "";
 
-		// email
-		$this->_email->ViewValue = $this->_email->CurrentValue;
-		$this->_email->ViewCustomAttributes = "";
+		// username
+		$this->username->ViewValue = $this->username->CurrentValue;
+		$this->username->ViewCustomAttributes = "";
 
 		// mobile
 		$this->mobile->ViewValue = $this->mobile->CurrentValue;
@@ -884,9 +1056,127 @@ class cuser_profile_add extends cuser_profile {
 		}
 		$this->department->ViewCustomAttributes = "";
 
-		// username
-		$this->username->ViewValue = $this->username->CurrentValue;
-		$this->username->ViewCustomAttributes = "";
+		// home_address
+		$this->home_address->ViewValue = $this->home_address->CurrentValue;
+		$this->home_address->ViewCustomAttributes = "";
+
+		// town_city
+		if (strval($this->town_city->CurrentValue) <> "") {
+			$sFilterWrk = "`code`" . ew_SearchString("=", $this->town_city->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `code`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `states_table`";
+		$sWhereWrk = "";
+		$this->town_city->LookupFilters = array("dx1" => '`state_descriptions`');
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->town_city, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->town_city->ViewValue = $this->town_city->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->town_city->ViewValue = $this->town_city->CurrentValue;
+			}
+		} else {
+			$this->town_city->ViewValue = NULL;
+		}
+		$this->town_city->ViewCustomAttributes = "";
+
+		// state_origin
+		if (strval($this->state_origin->CurrentValue) <> "") {
+			$sFilterWrk = "`code`" . ew_SearchString("=", $this->state_origin->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `code`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `states_table`";
+		$sWhereWrk = "";
+		$this->state_origin->LookupFilters = array("dx1" => '`state_descriptions`');
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->state_origin, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->state_origin->ViewValue = $this->state_origin->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->state_origin->ViewValue = $this->state_origin->CurrentValue;
+			}
+		} else {
+			$this->state_origin->ViewValue = NULL;
+		}
+		$this->state_origin->ViewCustomAttributes = "";
+
+		// local_gra
+		if (strval($this->local_gra->CurrentValue) <> "") {
+			$sFilterWrk = "`code`" . ew_SearchString("=", $this->local_gra->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `code`, `lga_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `lga_states`";
+		$sWhereWrk = "";
+		$this->local_gra->LookupFilters = array("dx1" => '`lga_descriptions`');
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->local_gra, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->local_gra->ViewValue = $this->local_gra->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->local_gra->ViewValue = $this->local_gra->CurrentValue;
+			}
+		} else {
+			$this->local_gra->ViewValue = NULL;
+		}
+		$this->local_gra->ViewCustomAttributes = "";
+
+		// next_kin
+		$this->next_kin->ViewValue = $this->next_kin->CurrentValue;
+		$this->next_kin->ViewCustomAttributes = "";
+
+		// resident_nxt_kin
+		$this->resident_nxt_kin->ViewValue = $this->resident_nxt_kin->CurrentValue;
+		$this->resident_nxt_kin->ViewCustomAttributes = "";
+
+		// nearest_bus_stop
+		$this->nearest_bus_stop->ViewValue = $this->nearest_bus_stop->CurrentValue;
+		$this->nearest_bus_stop->ViewCustomAttributes = "";
+
+		// town_city_nxt_kin
+		$this->town_city_nxt_kin->ViewValue = $this->town_city_nxt_kin->CurrentValue;
+		$this->town_city_nxt_kin->ViewCustomAttributes = "";
+
+		// email_nxt_kin
+		$this->email_nxt_kin->ViewValue = $this->email_nxt_kin->CurrentValue;
+		$this->email_nxt_kin->ViewCustomAttributes = "";
+
+		// phone_nxt_kin
+		$this->phone_nxt_kin->ViewValue = $this->phone_nxt_kin->CurrentValue;
+		$this->phone_nxt_kin->ViewCustomAttributes = "";
+
+		// qualification_level
+		if (strval($this->qualification_level->CurrentValue) <> "") {
+			$this->qualification_level->ViewValue = $this->qualification_level->OptionCaption($this->qualification_level->CurrentValue);
+		} else {
+			$this->qualification_level->ViewValue = NULL;
+		}
+		$this->qualification_level->ViewCustomAttributes = "";
+
+		// qualification_grade
+		if (strval($this->qualification_grade->CurrentValue) <> "") {
+			$this->qualification_grade->ViewValue = $this->qualification_grade->OptionCaption($this->qualification_grade->CurrentValue);
+		} else {
+			$this->qualification_grade->ViewValue = NULL;
+		}
+		$this->qualification_grade->ViewCustomAttributes = "";
+
+		// upload_of_credentcial
+		$this->upload_of_credentcial->UploadPath = "uploads/";
+		if (!ew_Empty($this->upload_of_credentcial->Upload->DbValue)) {
+			$this->upload_of_credentcial->ViewValue = $this->upload_of_credentcial->Upload->DbValue;
+		} else {
+			$this->upload_of_credentcial->ViewValue = "";
+		}
+		$this->upload_of_credentcial->ViewCustomAttributes = "";
 
 		// password
 		$this->password->ViewValue = $Language->Phrase("PasswordMask");
@@ -946,20 +1236,30 @@ class cuser_profile_add extends cuser_profile {
 			$this->first_name->HrefValue = "";
 			$this->first_name->TooltipValue = "";
 
+			// email
+			$this->_email->LinkCustomAttributes = "";
+			$this->_email->HrefValue = "";
+			$this->_email->TooltipValue = "";
+
 			// gender
 			$this->gender->LinkCustomAttributes = "";
 			$this->gender->HrefValue = "";
 			$this->gender->TooltipValue = "";
+
+			// marital_status
+			$this->marital_status->LinkCustomAttributes = "";
+			$this->marital_status->HrefValue = "";
+			$this->marital_status->TooltipValue = "";
 
 			// date_of_birth
 			$this->date_of_birth->LinkCustomAttributes = "";
 			$this->date_of_birth->HrefValue = "";
 			$this->date_of_birth->TooltipValue = "";
 
-			// email
-			$this->_email->LinkCustomAttributes = "";
-			$this->_email->HrefValue = "";
-			$this->_email->TooltipValue = "";
+			// username
+			$this->username->LinkCustomAttributes = "";
+			$this->username->HrefValue = "";
+			$this->username->TooltipValue = "";
 
 			// mobile
 			$this->mobile->LinkCustomAttributes = "";
@@ -976,10 +1276,71 @@ class cuser_profile_add extends cuser_profile {
 			$this->department->HrefValue = "";
 			$this->department->TooltipValue = "";
 
-			// username
-			$this->username->LinkCustomAttributes = "";
-			$this->username->HrefValue = "";
-			$this->username->TooltipValue = "";
+			// home_address
+			$this->home_address->LinkCustomAttributes = "";
+			$this->home_address->HrefValue = "";
+			$this->home_address->TooltipValue = "";
+
+			// town_city
+			$this->town_city->LinkCustomAttributes = "";
+			$this->town_city->HrefValue = "";
+			$this->town_city->TooltipValue = "";
+
+			// state_origin
+			$this->state_origin->LinkCustomAttributes = "";
+			$this->state_origin->HrefValue = "";
+			$this->state_origin->TooltipValue = "";
+
+			// local_gra
+			$this->local_gra->LinkCustomAttributes = "";
+			$this->local_gra->HrefValue = "";
+			$this->local_gra->TooltipValue = "";
+
+			// next_kin
+			$this->next_kin->LinkCustomAttributes = "";
+			$this->next_kin->HrefValue = "";
+			$this->next_kin->TooltipValue = "";
+
+			// resident_nxt_kin
+			$this->resident_nxt_kin->LinkCustomAttributes = "";
+			$this->resident_nxt_kin->HrefValue = "";
+			$this->resident_nxt_kin->TooltipValue = "";
+
+			// nearest_bus_stop
+			$this->nearest_bus_stop->LinkCustomAttributes = "";
+			$this->nearest_bus_stop->HrefValue = "";
+			$this->nearest_bus_stop->TooltipValue = "";
+
+			// town_city_nxt_kin
+			$this->town_city_nxt_kin->LinkCustomAttributes = "";
+			$this->town_city_nxt_kin->HrefValue = "";
+			$this->town_city_nxt_kin->TooltipValue = "";
+
+			// email_nxt_kin
+			$this->email_nxt_kin->LinkCustomAttributes = "";
+			$this->email_nxt_kin->HrefValue = "";
+			$this->email_nxt_kin->TooltipValue = "";
+
+			// phone_nxt_kin
+			$this->phone_nxt_kin->LinkCustomAttributes = "";
+			$this->phone_nxt_kin->HrefValue = "";
+			$this->phone_nxt_kin->TooltipValue = "";
+
+			// qualification_level
+			$this->qualification_level->LinkCustomAttributes = "";
+			$this->qualification_level->HrefValue = "";
+			$this->qualification_level->TooltipValue = "";
+
+			// qualification_grade
+			$this->qualification_grade->LinkCustomAttributes = "";
+			$this->qualification_grade->HrefValue = "";
+			$this->qualification_grade->TooltipValue = "";
+
+			// upload_of_credentcial
+			$this->upload_of_credentcial->LinkCustomAttributes = "";
+			$this->upload_of_credentcial->HrefValue = "";
+			$this->upload_of_credentcial->HrefValue2 = $this->upload_of_credentcial->UploadPath . $this->upload_of_credentcial->Upload->DbValue;
+			$this->upload_of_credentcial->TooltipValue = "";
 
 			// password
 			$this->password->LinkCustomAttributes = "";
@@ -1026,9 +1387,19 @@ class cuser_profile_add extends cuser_profile {
 			$this->first_name->EditValue = ew_HtmlEncode($this->first_name->CurrentValue);
 			$this->first_name->PlaceHolder = ew_RemoveHtml($this->first_name->FldCaption());
 
+			// email
+			$this->_email->EditAttrs["class"] = "form-control";
+			$this->_email->EditCustomAttributes = "";
+			$this->_email->EditValue = ew_HtmlEncode($this->_email->CurrentValue);
+			$this->_email->PlaceHolder = ew_RemoveHtml($this->_email->FldCaption());
+
 			// gender
 			$this->gender->EditCustomAttributes = "";
 			$this->gender->EditValue = $this->gender->Options(FALSE);
+
+			// marital_status
+			$this->marital_status->EditCustomAttributes = "";
+			$this->marital_status->EditValue = $this->marital_status->Options(TRUE);
 
 			// date_of_birth
 			$this->date_of_birth->EditAttrs["class"] = "form-control";
@@ -1036,11 +1407,11 @@ class cuser_profile_add extends cuser_profile {
 			$this->date_of_birth->EditValue = ew_HtmlEncode(ew_FormatDateTime($this->date_of_birth->CurrentValue, 7));
 			$this->date_of_birth->PlaceHolder = ew_RemoveHtml($this->date_of_birth->FldCaption());
 
-			// email
-			$this->_email->EditAttrs["class"] = "form-control";
-			$this->_email->EditCustomAttributes = "";
-			$this->_email->EditValue = ew_HtmlEncode($this->_email->CurrentValue);
-			$this->_email->PlaceHolder = ew_RemoveHtml($this->_email->FldCaption());
+			// username
+			$this->username->EditAttrs["class"] = "form-control";
+			$this->username->EditCustomAttributes = "";
+			$this->username->EditValue = ew_HtmlEncode($this->username->CurrentValue);
+			$this->username->PlaceHolder = ew_RemoveHtml($this->username->FldCaption());
 
 			// mobile
 			$this->mobile->EditAttrs["class"] = "form-control";
@@ -1099,11 +1470,145 @@ class cuser_profile_add extends cuser_profile {
 			if ($rswrk) $rswrk->Close();
 			$this->department->EditValue = $arwrk;
 
-			// username
-			$this->username->EditAttrs["class"] = "form-control";
-			$this->username->EditCustomAttributes = "";
-			$this->username->EditValue = ew_HtmlEncode($this->username->CurrentValue);
-			$this->username->PlaceHolder = ew_RemoveHtml($this->username->FldCaption());
+			// home_address
+			$this->home_address->EditAttrs["class"] = "form-control";
+			$this->home_address->EditCustomAttributes = "";
+			$this->home_address->EditValue = ew_HtmlEncode($this->home_address->CurrentValue);
+			$this->home_address->PlaceHolder = ew_RemoveHtml($this->home_address->FldCaption());
+
+			// town_city
+			$this->town_city->EditCustomAttributes = "";
+			if (trim(strval($this->town_city->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`code`" . ew_SearchString("=", $this->town_city->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `code`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `states_table`";
+			$sWhereWrk = "";
+			$this->town_city->LookupFilters = array("dx1" => '`state_descriptions`');
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->town_city, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = ew_HtmlEncode($rswrk->fields('DispFld'));
+				$this->town_city->ViewValue = $this->town_city->DisplayValue($arwrk);
+			} else {
+				$this->town_city->ViewValue = $Language->Phrase("PleaseSelect");
+			}
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->town_city->EditValue = $arwrk;
+
+			// state_origin
+			$this->state_origin->EditCustomAttributes = "";
+			if (trim(strval($this->state_origin->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`code`" . ew_SearchString("=", $this->state_origin->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `code`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `states_table`";
+			$sWhereWrk = "";
+			$this->state_origin->LookupFilters = array("dx1" => '`state_descriptions`');
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->state_origin, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = ew_HtmlEncode($rswrk->fields('DispFld'));
+				$this->state_origin->ViewValue = $this->state_origin->DisplayValue($arwrk);
+			} else {
+				$this->state_origin->ViewValue = $Language->Phrase("PleaseSelect");
+			}
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->state_origin->EditValue = $arwrk;
+
+			// local_gra
+			$this->local_gra->EditCustomAttributes = "";
+			if (trim(strval($this->local_gra->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`code`" . ew_SearchString("=", $this->local_gra->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `code`, `lga_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, `state_code` AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `lga_states`";
+			$sWhereWrk = "";
+			$this->local_gra->LookupFilters = array("dx1" => '`lga_descriptions`');
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->local_gra, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = ew_HtmlEncode($rswrk->fields('DispFld'));
+				$this->local_gra->ViewValue = $this->local_gra->DisplayValue($arwrk);
+			} else {
+				$this->local_gra->ViewValue = $Language->Phrase("PleaseSelect");
+			}
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->local_gra->EditValue = $arwrk;
+
+			// next_kin
+			$this->next_kin->EditAttrs["class"] = "form-control";
+			$this->next_kin->EditCustomAttributes = "";
+			$this->next_kin->EditValue = ew_HtmlEncode($this->next_kin->CurrentValue);
+			$this->next_kin->PlaceHolder = ew_RemoveHtml($this->next_kin->FldCaption());
+
+			// resident_nxt_kin
+			$this->resident_nxt_kin->EditAttrs["class"] = "form-control";
+			$this->resident_nxt_kin->EditCustomAttributes = "";
+			$this->resident_nxt_kin->EditValue = ew_HtmlEncode($this->resident_nxt_kin->CurrentValue);
+			$this->resident_nxt_kin->PlaceHolder = ew_RemoveHtml($this->resident_nxt_kin->FldCaption());
+
+			// nearest_bus_stop
+			$this->nearest_bus_stop->EditAttrs["class"] = "form-control";
+			$this->nearest_bus_stop->EditCustomAttributes = "";
+			$this->nearest_bus_stop->EditValue = ew_HtmlEncode($this->nearest_bus_stop->CurrentValue);
+			$this->nearest_bus_stop->PlaceHolder = ew_RemoveHtml($this->nearest_bus_stop->FldCaption());
+
+			// town_city_nxt_kin
+			$this->town_city_nxt_kin->EditAttrs["class"] = "form-control";
+			$this->town_city_nxt_kin->EditCustomAttributes = "";
+			$this->town_city_nxt_kin->EditValue = ew_HtmlEncode($this->town_city_nxt_kin->CurrentValue);
+			$this->town_city_nxt_kin->PlaceHolder = ew_RemoveHtml($this->town_city_nxt_kin->FldCaption());
+
+			// email_nxt_kin
+			$this->email_nxt_kin->EditAttrs["class"] = "form-control";
+			$this->email_nxt_kin->EditCustomAttributes = "";
+			$this->email_nxt_kin->EditValue = ew_HtmlEncode($this->email_nxt_kin->CurrentValue);
+			$this->email_nxt_kin->PlaceHolder = ew_RemoveHtml($this->email_nxt_kin->FldCaption());
+
+			// phone_nxt_kin
+			$this->phone_nxt_kin->EditAttrs["class"] = "form-control";
+			$this->phone_nxt_kin->EditCustomAttributes = "";
+			$this->phone_nxt_kin->EditValue = ew_HtmlEncode($this->phone_nxt_kin->CurrentValue);
+			$this->phone_nxt_kin->PlaceHolder = ew_RemoveHtml($this->phone_nxt_kin->FldCaption());
+
+			// qualification_level
+			$this->qualification_level->EditAttrs["class"] = "form-control";
+			$this->qualification_level->EditCustomAttributes = "";
+			$this->qualification_level->EditValue = $this->qualification_level->Options(TRUE);
+
+			// qualification_grade
+			$this->qualification_grade->EditAttrs["class"] = "form-control";
+			$this->qualification_grade->EditCustomAttributes = "";
+			$this->qualification_grade->EditValue = $this->qualification_grade->Options(TRUE);
+
+			// upload_of_credentcial
+			$this->upload_of_credentcial->EditAttrs["class"] = "form-control";
+			$this->upload_of_credentcial->EditCustomAttributes = "";
+			$this->upload_of_credentcial->UploadPath = "uploads/";
+			if (!ew_Empty($this->upload_of_credentcial->Upload->DbValue)) {
+				$this->upload_of_credentcial->EditValue = $this->upload_of_credentcial->Upload->DbValue;
+			} else {
+				$this->upload_of_credentcial->EditValue = "";
+			}
+			if (!ew_Empty($this->upload_of_credentcial->CurrentValue))
+					$this->upload_of_credentcial->Upload->FileName = $this->upload_of_credentcial->CurrentValue;
+			if (($this->CurrentAction == "I" || $this->CurrentAction == "C") && !$this->EventCancelled) ew_RenderUploadField($this->upload_of_credentcial);
 
 			// password
 			$this->password->EditAttrs["class"] = "form-control";
@@ -1158,17 +1663,25 @@ class cuser_profile_add extends cuser_profile {
 			$this->first_name->LinkCustomAttributes = "";
 			$this->first_name->HrefValue = "";
 
+			// email
+			$this->_email->LinkCustomAttributes = "";
+			$this->_email->HrefValue = "";
+
 			// gender
 			$this->gender->LinkCustomAttributes = "";
 			$this->gender->HrefValue = "";
+
+			// marital_status
+			$this->marital_status->LinkCustomAttributes = "";
+			$this->marital_status->HrefValue = "";
 
 			// date_of_birth
 			$this->date_of_birth->LinkCustomAttributes = "";
 			$this->date_of_birth->HrefValue = "";
 
-			// email
-			$this->_email->LinkCustomAttributes = "";
-			$this->_email->HrefValue = "";
+			// username
+			$this->username->LinkCustomAttributes = "";
+			$this->username->HrefValue = "";
 
 			// mobile
 			$this->mobile->LinkCustomAttributes = "";
@@ -1182,9 +1695,58 @@ class cuser_profile_add extends cuser_profile {
 			$this->department->LinkCustomAttributes = "";
 			$this->department->HrefValue = "";
 
-			// username
-			$this->username->LinkCustomAttributes = "";
-			$this->username->HrefValue = "";
+			// home_address
+			$this->home_address->LinkCustomAttributes = "";
+			$this->home_address->HrefValue = "";
+
+			// town_city
+			$this->town_city->LinkCustomAttributes = "";
+			$this->town_city->HrefValue = "";
+
+			// state_origin
+			$this->state_origin->LinkCustomAttributes = "";
+			$this->state_origin->HrefValue = "";
+
+			// local_gra
+			$this->local_gra->LinkCustomAttributes = "";
+			$this->local_gra->HrefValue = "";
+
+			// next_kin
+			$this->next_kin->LinkCustomAttributes = "";
+			$this->next_kin->HrefValue = "";
+
+			// resident_nxt_kin
+			$this->resident_nxt_kin->LinkCustomAttributes = "";
+			$this->resident_nxt_kin->HrefValue = "";
+
+			// nearest_bus_stop
+			$this->nearest_bus_stop->LinkCustomAttributes = "";
+			$this->nearest_bus_stop->HrefValue = "";
+
+			// town_city_nxt_kin
+			$this->town_city_nxt_kin->LinkCustomAttributes = "";
+			$this->town_city_nxt_kin->HrefValue = "";
+
+			// email_nxt_kin
+			$this->email_nxt_kin->LinkCustomAttributes = "";
+			$this->email_nxt_kin->HrefValue = "";
+
+			// phone_nxt_kin
+			$this->phone_nxt_kin->LinkCustomAttributes = "";
+			$this->phone_nxt_kin->HrefValue = "";
+
+			// qualification_level
+			$this->qualification_level->LinkCustomAttributes = "";
+			$this->qualification_level->HrefValue = "";
+
+			// qualification_grade
+			$this->qualification_grade->LinkCustomAttributes = "";
+			$this->qualification_grade->HrefValue = "";
+
+			// upload_of_credentcial
+			$this->upload_of_credentcial->LinkCustomAttributes = "";
+			$this->upload_of_credentcial->HrefValue = "";
+			$this->upload_of_credentcial->HrefValue2 = $this->upload_of_credentcial->UploadPath . $this->upload_of_credentcial->Upload->DbValue;
 
 			// password
 			$this->password->LinkCustomAttributes = "";
@@ -1232,8 +1794,14 @@ class cuser_profile_add extends cuser_profile {
 		if (!$this->first_name->FldIsDetailKey && !is_null($this->first_name->FormValue) && $this->first_name->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->first_name->FldCaption(), $this->first_name->ReqErrMsg));
 		}
+		if (!$this->_email->FldIsDetailKey && !is_null($this->_email->FormValue) && $this->_email->FormValue == "") {
+			ew_AddMessage($gsFormError, str_replace("%s", $this->_email->FldCaption(), $this->_email->ReqErrMsg));
+		}
 		if ($this->gender->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->gender->FldCaption(), $this->gender->ReqErrMsg));
+		}
+		if (!$this->marital_status->FldIsDetailKey && !is_null($this->marital_status->FormValue) && $this->marital_status->FormValue == "") {
+			ew_AddMessage($gsFormError, str_replace("%s", $this->marital_status->FldCaption(), $this->marital_status->ReqErrMsg));
 		}
 		if (!$this->date_of_birth->FldIsDetailKey && !is_null($this->date_of_birth->FormValue) && $this->date_of_birth->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->date_of_birth->FldCaption(), $this->date_of_birth->ReqErrMsg));
@@ -1241,8 +1809,8 @@ class cuser_profile_add extends cuser_profile {
 		if (!ew_CheckEuroDate($this->date_of_birth->FormValue)) {
 			ew_AddMessage($gsFormError, $this->date_of_birth->FldErrMsg());
 		}
-		if (!$this->_email->FldIsDetailKey && !is_null($this->_email->FormValue) && $this->_email->FormValue == "") {
-			ew_AddMessage($gsFormError, str_replace("%s", $this->_email->FldCaption(), $this->_email->ReqErrMsg));
+		if (!$this->username->FldIsDetailKey && !is_null($this->username->FormValue) && $this->username->FormValue == "") {
+			ew_AddMessage($gsFormError, str_replace("%s", $this->username->FldCaption(), $this->username->ReqErrMsg));
 		}
 		if (!$this->mobile->FldIsDetailKey && !is_null($this->mobile->FormValue) && $this->mobile->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->mobile->FldCaption(), $this->mobile->ReqErrMsg));
@@ -1250,8 +1818,20 @@ class cuser_profile_add extends cuser_profile {
 		if (!$this->department->FldIsDetailKey && !is_null($this->department->FormValue) && $this->department->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->department->FldCaption(), $this->department->ReqErrMsg));
 		}
-		if (!$this->username->FldIsDetailKey && !is_null($this->username->FormValue) && $this->username->FormValue == "") {
-			ew_AddMessage($gsFormError, str_replace("%s", $this->username->FldCaption(), $this->username->ReqErrMsg));
+		if (!$this->town_city->FldIsDetailKey && !is_null($this->town_city->FormValue) && $this->town_city->FormValue == "") {
+			ew_AddMessage($gsFormError, str_replace("%s", $this->town_city->FldCaption(), $this->town_city->ReqErrMsg));
+		}
+		if (!$this->state_origin->FldIsDetailKey && !is_null($this->state_origin->FormValue) && $this->state_origin->FormValue == "") {
+			ew_AddMessage($gsFormError, str_replace("%s", $this->state_origin->FldCaption(), $this->state_origin->ReqErrMsg));
+		}
+		if (!$this->local_gra->FldIsDetailKey && !is_null($this->local_gra->FormValue) && $this->local_gra->FormValue == "") {
+			ew_AddMessage($gsFormError, str_replace("%s", $this->local_gra->FldCaption(), $this->local_gra->ReqErrMsg));
+		}
+		if (!$this->qualification_level->FldIsDetailKey && !is_null($this->qualification_level->FormValue) && $this->qualification_level->FormValue == "") {
+			ew_AddMessage($gsFormError, str_replace("%s", $this->qualification_level->FldCaption(), $this->qualification_level->ReqErrMsg));
+		}
+		if (!$this->qualification_grade->FldIsDetailKey && !is_null($this->qualification_grade->FormValue) && $this->qualification_grade->FormValue == "") {
+			ew_AddMessage($gsFormError, str_replace("%s", $this->qualification_grade->FldCaption(), $this->qualification_grade->ReqErrMsg));
 		}
 		if (!$this->password->FldIsDetailKey && !is_null($this->password->FormValue) && $this->password->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->password->FldCaption(), $this->password->ReqErrMsg));
@@ -1292,6 +1872,8 @@ class cuser_profile_add extends cuser_profile {
 		// Load db values from rsold
 		$this->LoadDbValues($rsold);
 		if ($rsold) {
+			$this->upload_of_credentcial->OldUploadPath = "uploads/";
+			$this->upload_of_credentcial->UploadPath = $this->upload_of_credentcial->OldUploadPath;
 		}
 		$rsnew = array();
 
@@ -1304,14 +1886,20 @@ class cuser_profile_add extends cuser_profile {
 		// first_name
 		$this->first_name->SetDbValueDef($rsnew, $this->first_name->CurrentValue, NULL, FALSE);
 
+		// email
+		$this->_email->SetDbValueDef($rsnew, $this->_email->CurrentValue, "", FALSE);
+
 		// gender
 		$this->gender->SetDbValueDef($rsnew, $this->gender->CurrentValue, NULL, FALSE);
+
+		// marital_status
+		$this->marital_status->SetDbValueDef($rsnew, $this->marital_status->CurrentValue, NULL, FALSE);
 
 		// date_of_birth
 		$this->date_of_birth->SetDbValueDef($rsnew, ew_UnFormatDateTime($this->date_of_birth->CurrentValue, 7), ew_CurrentDate(), FALSE);
 
-		// email
-		$this->_email->SetDbValueDef($rsnew, $this->_email->CurrentValue, "", FALSE);
+		// username
+		$this->username->SetDbValueDef($rsnew, $this->username->CurrentValue, NULL, FALSE);
 
 		// mobile
 		$this->mobile->SetDbValueDef($rsnew, $this->mobile->CurrentValue, "", FALSE);
@@ -1322,8 +1910,53 @@ class cuser_profile_add extends cuser_profile {
 		// department
 		$this->department->SetDbValueDef($rsnew, $this->department->CurrentValue, NULL, FALSE);
 
-		// username
-		$this->username->SetDbValueDef($rsnew, $this->username->CurrentValue, NULL, FALSE);
+		// home_address
+		$this->home_address->SetDbValueDef($rsnew, $this->home_address->CurrentValue, NULL, FALSE);
+
+		// town_city
+		$this->town_city->SetDbValueDef($rsnew, $this->town_city->CurrentValue, NULL, FALSE);
+
+		// state_origin
+		$this->state_origin->SetDbValueDef($rsnew, $this->state_origin->CurrentValue, NULL, FALSE);
+
+		// local_gra
+		$this->local_gra->SetDbValueDef($rsnew, $this->local_gra->CurrentValue, NULL, FALSE);
+
+		// next_kin
+		$this->next_kin->SetDbValueDef($rsnew, $this->next_kin->CurrentValue, NULL, FALSE);
+
+		// resident_nxt_kin
+		$this->resident_nxt_kin->SetDbValueDef($rsnew, $this->resident_nxt_kin->CurrentValue, NULL, FALSE);
+
+		// nearest_bus_stop
+		$this->nearest_bus_stop->SetDbValueDef($rsnew, $this->nearest_bus_stop->CurrentValue, NULL, FALSE);
+
+		// town_city_nxt_kin
+		$this->town_city_nxt_kin->SetDbValueDef($rsnew, $this->town_city_nxt_kin->CurrentValue, NULL, FALSE);
+
+		// email_nxt_kin
+		$this->email_nxt_kin->SetDbValueDef($rsnew, $this->email_nxt_kin->CurrentValue, NULL, FALSE);
+
+		// phone_nxt_kin
+		$this->phone_nxt_kin->SetDbValueDef($rsnew, $this->phone_nxt_kin->CurrentValue, NULL, FALSE);
+
+		// qualification_level
+		$this->qualification_level->SetDbValueDef($rsnew, $this->qualification_level->CurrentValue, NULL, FALSE);
+
+		// qualification_grade
+		$this->qualification_grade->SetDbValueDef($rsnew, $this->qualification_grade->CurrentValue, NULL, FALSE);
+
+		// upload_of_credentcial
+		if ($this->upload_of_credentcial->Visible && !$this->upload_of_credentcial->Upload->KeepFile) {
+			$this->upload_of_credentcial->Upload->DbValue = ""; // No need to delete old file
+			if ($this->upload_of_credentcial->Upload->FileName == "") {
+				$rsnew['upload_of_credentcial'] = NULL;
+			} else {
+				$rsnew['upload_of_credentcial'] = $this->upload_of_credentcial->Upload->FileName;
+			}
+			$this->upload_of_credentcial->ImageWidth = 1000; // Resize width
+			$this->upload_of_credentcial->ImageHeight = 0; // Resize height
+		}
 
 		// password
 		$this->password->SetDbValueDef($rsnew, $this->password->CurrentValue, "", FALSE);
@@ -1338,6 +1971,32 @@ class cuser_profile_add extends cuser_profile {
 
 		// profile
 		$this->profile->SetDbValueDef($rsnew, $this->profile->CurrentValue, NULL, FALSE);
+		if ($this->upload_of_credentcial->Visible && !$this->upload_of_credentcial->Upload->KeepFile) {
+			$this->upload_of_credentcial->UploadPath = "uploads/";
+			$OldFiles = ew_Empty($this->upload_of_credentcial->Upload->DbValue) ? array() : array($this->upload_of_credentcial->Upload->DbValue);
+			if (!ew_Empty($this->upload_of_credentcial->Upload->FileName)) {
+				$NewFiles = array($this->upload_of_credentcial->Upload->FileName);
+				$NewFileCount = count($NewFiles);
+				for ($i = 0; $i < $NewFileCount; $i++) {
+					$fldvar = ($this->upload_of_credentcial->Upload->Index < 0) ? $this->upload_of_credentcial->FldVar : substr($this->upload_of_credentcial->FldVar, 0, 1) . $this->upload_of_credentcial->Upload->Index . substr($this->upload_of_credentcial->FldVar, 1);
+					if ($NewFiles[$i] <> "") {
+						$file = $NewFiles[$i];
+						if (file_exists(ew_UploadTempPath($fldvar, $this->upload_of_credentcial->TblVar) . $file)) {
+							$file1 = ew_UploadFileNameEx($this->upload_of_credentcial->PhysicalUploadPath(), $file); // Get new file name
+							if ($file1 <> $file) { // Rename temp file
+								while (file_exists(ew_UploadTempPath($fldvar, $this->upload_of_credentcial->TblVar) . $file1) || file_exists($this->upload_of_credentcial->PhysicalUploadPath() . $file1)) // Make sure no file name clash
+									$file1 = ew_UniqueFilename($this->upload_of_credentcial->PhysicalUploadPath(), $file1, TRUE); // Use indexed name
+								rename(ew_UploadTempPath($fldvar, $this->upload_of_credentcial->TblVar) . $file, ew_UploadTempPath($fldvar, $this->upload_of_credentcial->TblVar) . $file1);
+								$NewFiles[$i] = $file1;
+							}
+						}
+					}
+				}
+				$this->upload_of_credentcial->Upload->DbValue = empty($OldFiles) ? "" : implode(EW_MULTIPLE_UPLOAD_SEPARATOR, $OldFiles);
+				$this->upload_of_credentcial->Upload->FileName = implode(EW_MULTIPLE_UPLOAD_SEPARATOR, $NewFiles);
+				$this->upload_of_credentcial->SetDbValueDef($rsnew, $this->upload_of_credentcial->Upload->FileName, NULL, FALSE);
+			}
+		}
 
 		// Call Row Inserting event
 		$rs = ($rsold == NULL) ? NULL : $rsold->fields;
@@ -1347,6 +2006,30 @@ class cuser_profile_add extends cuser_profile {
 			$AddRow = $this->Insert($rsnew);
 			$conn->raiseErrorFn = '';
 			if ($AddRow) {
+				if ($this->upload_of_credentcial->Visible && !$this->upload_of_credentcial->Upload->KeepFile) {
+					$OldFiles = ew_Empty($this->upload_of_credentcial->Upload->DbValue) ? array() : array($this->upload_of_credentcial->Upload->DbValue);
+					if (!ew_Empty($this->upload_of_credentcial->Upload->FileName)) {
+						$NewFiles = array($this->upload_of_credentcial->Upload->FileName);
+						$NewFiles2 = array($rsnew['upload_of_credentcial']);
+						$NewFileCount = count($NewFiles);
+						for ($i = 0; $i < $NewFileCount; $i++) {
+							$fldvar = ($this->upload_of_credentcial->Upload->Index < 0) ? $this->upload_of_credentcial->FldVar : substr($this->upload_of_credentcial->FldVar, 0, 1) . $this->upload_of_credentcial->Upload->Index . substr($this->upload_of_credentcial->FldVar, 1);
+							if ($NewFiles[$i] <> "") {
+								$file = ew_UploadTempPath($fldvar, $this->upload_of_credentcial->TblVar) . $NewFiles[$i];
+								if (file_exists($file)) {
+									if (@$NewFiles2[$i] <> "") // Use correct file name
+										$NewFiles[$i] = $NewFiles2[$i];
+									if (!$this->upload_of_credentcial->Upload->ResizeAndSaveToFile($this->upload_of_credentcial->ImageWidth, $this->upload_of_credentcial->ImageHeight, EW_THUMBNAIL_DEFAULT_QUALITY, $NewFiles[$i], TRUE, $i)) {
+										$this->setFailureMessage($Language->Phrase("UploadErrMsg7"));
+										return FALSE;
+									}
+								}
+							}
+						}
+					} else {
+						$NewFiles = array();
+					}
+				}
 			}
 		} else {
 			if ($this->getSuccessMessage() <> "" || $this->getFailureMessage() <> "") {
@@ -1366,6 +2049,9 @@ class cuser_profile_add extends cuser_profile {
 			$rs = ($rsold == NULL) ? NULL : $rsold->fields;
 			$this->Row_Inserted($rs, $rsnew);
 		}
+
+		// upload_of_credentcial
+		ew_CleanUploadTempPath($this->upload_of_credentcial, $this->upload_of_credentcial->Upload->Index);
 		return $AddRow;
 	}
 
@@ -1385,6 +2071,17 @@ class cuser_profile_add extends cuser_profile {
 		$Breadcrumb->Add("list", $this->TableVar, $this->AddMasterUrl("user_profilelist.php"), "", $this->TableVar, TRUE);
 		$PageId = ($this->CurrentAction == "C") ? "Copy" : "Add";
 		$Breadcrumb->Add("add", $PageId, $url);
+	}
+
+	// Set up multi pages
+	function SetupMultiPages() {
+		$pages = new cSubPages();
+		$pages->Style = "tabs";
+		$pages->Add(0);
+		$pages->Add(1);
+		$pages->Add(2);
+		$pages->Add(3);
+		$this->MultiPages = $pages;
 	}
 
 	// Setup lookup filters of a field
@@ -1414,6 +2111,42 @@ class cuser_profile_add extends cuser_profile {
 			$this->Lookup_Selecting($this->department, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			$sSqlWrk .= " ORDER BY `description` ASC";
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
+		case "x_town_city":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `code` AS `LinkFld`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `states_table`";
+			$sWhereWrk = "{filter}";
+			$fld->LookupFilters = array("dx1" => '`state_descriptions`');
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`code` IN ({filter_value})', "t0" => "3", "fn0" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->town_city, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
+		case "x_state_origin":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `code` AS `LinkFld`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `states_table`";
+			$sWhereWrk = "{filter}";
+			$fld->LookupFilters = array("dx1" => '`state_descriptions`');
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`code` IN ({filter_value})', "t0" => "3", "fn0" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->state_origin, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
+		case "x_local_gra":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `code` AS `LinkFld`, `lga_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `lga_states`";
+			$sWhereWrk = "{filter}";
+			$fld->LookupFilters = array("dx1" => '`lga_descriptions`');
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`code` IN ({filter_value})', "t0" => "3", "fn0" => "", "f1" => '`state_code` IN ({filter_value})', "t1" => "200", "fn1" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->local_gra, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			if ($sSqlWrk <> "")
 				$fld->LookupFilters["s"] .= $sSqlWrk;
 			break;
@@ -1560,27 +2293,45 @@ fuser_profileadd.Validate = function() {
 			elm = this.GetElements("x" + infix + "_first_name");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->first_name->FldCaption(), $user_profile->first_name->ReqErrMsg)) ?>");
+			elm = this.GetElements("x" + infix + "__email");
+			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
+				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->_email->FldCaption(), $user_profile->_email->ReqErrMsg)) ?>");
 			elm = this.GetElements("x" + infix + "_gender");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->gender->FldCaption(), $user_profile->gender->ReqErrMsg)) ?>");
+			elm = this.GetElements("x" + infix + "_marital_status");
+			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
+				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->marital_status->FldCaption(), $user_profile->marital_status->ReqErrMsg)) ?>");
 			elm = this.GetElements("x" + infix + "_date_of_birth");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->date_of_birth->FldCaption(), $user_profile->date_of_birth->ReqErrMsg)) ?>");
 			elm = this.GetElements("x" + infix + "_date_of_birth");
 			if (elm && !ew_CheckEuroDate(elm.value))
 				return this.OnError(elm, "<?php echo ew_JsEncode2($user_profile->date_of_birth->FldErrMsg()) ?>");
-			elm = this.GetElements("x" + infix + "__email");
+			elm = this.GetElements("x" + infix + "_username");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
-				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->_email->FldCaption(), $user_profile->_email->ReqErrMsg)) ?>");
+				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->username->FldCaption(), $user_profile->username->ReqErrMsg)) ?>");
 			elm = this.GetElements("x" + infix + "_mobile");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->mobile->FldCaption(), $user_profile->mobile->ReqErrMsg)) ?>");
 			elm = this.GetElements("x" + infix + "_department");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->department->FldCaption(), $user_profile->department->ReqErrMsg)) ?>");
-			elm = this.GetElements("x" + infix + "_username");
+			elm = this.GetElements("x" + infix + "_town_city");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
-				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->username->FldCaption(), $user_profile->username->ReqErrMsg)) ?>");
+				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->town_city->FldCaption(), $user_profile->town_city->ReqErrMsg)) ?>");
+			elm = this.GetElements("x" + infix + "_state_origin");
+			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
+				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->state_origin->FldCaption(), $user_profile->state_origin->ReqErrMsg)) ?>");
+			elm = this.GetElements("x" + infix + "_local_gra");
+			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
+				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->local_gra->FldCaption(), $user_profile->local_gra->ReqErrMsg)) ?>");
+			elm = this.GetElements("x" + infix + "_qualification_level");
+			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
+				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->qualification_level->FldCaption(), $user_profile->qualification_level->ReqErrMsg)) ?>");
+			elm = this.GetElements("x" + infix + "_qualification_grade");
+			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
+				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->qualification_grade->FldCaption(), $user_profile->qualification_grade->ReqErrMsg)) ?>");
 			elm = this.GetElements("x" + infix + "_password");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $user_profile->password->FldCaption(), $user_profile->password->ReqErrMsg)) ?>");
@@ -1615,13 +2366,28 @@ fuser_profileadd.Form_CustomValidate =
 // Use JavaScript validation or not
 fuser_profileadd.ValidateRequired = <?php echo json_encode(EW_CLIENT_VALIDATE) ?>;
 
+// Multi-Page
+fuser_profileadd.MultiPage = new ew_MultiPage("fuser_profileadd");
+
 // Dynamic selection lists
 fuser_profileadd.Lists["x_gender"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
 fuser_profileadd.Lists["x_gender"].Options = <?php echo json_encode($user_profile_add->gender->Options()) ?>;
+fuser_profileadd.Lists["x_marital_status"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
+fuser_profileadd.Lists["x_marital_status"].Options = <?php echo json_encode($user_profile_add->marital_status->Options()) ?>;
 fuser_profileadd.Lists["x_company"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_description","","",""],"ParentFields":[],"ChildFields":["x_department"],"FilterFields":[],"Options":[],"Template":"","LinkTable":"company"};
 fuser_profileadd.Lists["x_company"].Data = "<?php echo $user_profile_add->company->LookupFilterQuery(FALSE, "add") ?>";
 fuser_profileadd.Lists["x_department"] = {"LinkField":"x_code","Ajax":true,"AutoFill":false,"DisplayFields":["x_description","","",""],"ParentFields":["x_company"],"ChildFields":[],"FilterFields":["x_company_id"],"Options":[],"Template":"","LinkTable":"department"};
 fuser_profileadd.Lists["x_department"].Data = "<?php echo $user_profile_add->department->LookupFilterQuery(FALSE, "add") ?>";
+fuser_profileadd.Lists["x_town_city"] = {"LinkField":"x_code","Ajax":true,"AutoFill":false,"DisplayFields":["x_state_descriptions","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"states_table"};
+fuser_profileadd.Lists["x_town_city"].Data = "<?php echo $user_profile_add->town_city->LookupFilterQuery(FALSE, "add") ?>";
+fuser_profileadd.Lists["x_state_origin"] = {"LinkField":"x_code","Ajax":true,"AutoFill":false,"DisplayFields":["x_state_descriptions","","",""],"ParentFields":[],"ChildFields":["x_local_gra"],"FilterFields":[],"Options":[],"Template":"","LinkTable":"states_table"};
+fuser_profileadd.Lists["x_state_origin"].Data = "<?php echo $user_profile_add->state_origin->LookupFilterQuery(FALSE, "add") ?>";
+fuser_profileadd.Lists["x_local_gra"] = {"LinkField":"x_code","Ajax":true,"AutoFill":false,"DisplayFields":["x_lga_descriptions","","",""],"ParentFields":["x_state_origin"],"ChildFields":[],"FilterFields":["x_state_code"],"Options":[],"Template":"","LinkTable":"lga_states"};
+fuser_profileadd.Lists["x_local_gra"].Data = "<?php echo $user_profile_add->local_gra->LookupFilterQuery(FALSE, "add") ?>";
+fuser_profileadd.Lists["x_qualification_level"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
+fuser_profileadd.Lists["x_qualification_level"].Options = <?php echo json_encode($user_profile_add->qualification_level->Options()) ?>;
+fuser_profileadd.Lists["x_qualification_grade"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
+fuser_profileadd.Lists["x_qualification_grade"].Options = <?php echo json_encode($user_profile_add->qualification_grade->Options()) ?>;
 fuser_profileadd.Lists["x_accesslevel"] = {"LinkField":"x_userlevelid","Ajax":true,"AutoFill":false,"DisplayFields":["x_userlevelname","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"userlevels"};
 fuser_profileadd.Lists["x_accesslevel"].Data = "<?php echo $user_profile_add->accesslevel->LookupFilterQuery(FALSE, "add") ?>";
 fuser_profileadd.Lists["x_status"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
@@ -1672,6 +2438,15 @@ $user_profile_add->ShowMessage();
 <!-- Fields to prevent google autofill -->
 <input class="hidden" type="text" name="<?php echo ew_Encrypt(ew_Random()) ?>">
 <input class="hidden" type="password" name="<?php echo ew_Encrypt(ew_Random()) ?>">
+<div class="ewMultiPage"><!-- multi-page -->
+<div class="nav-tabs-custom" id="user_profile_add"><!-- multi-page .nav-tabs-custom -->
+	<ul class="nav<?php echo $user_profile_add->MultiPages->NavStyle() ?>">
+		<li<?php echo $user_profile_add->MultiPages->TabStyle("1") ?>><a href="#tab_user_profile1" data-toggle="tab"><?php echo $user_profile->PageCaption(1) ?></a></li>
+		<li<?php echo $user_profile_add->MultiPages->TabStyle("2") ?>><a href="#tab_user_profile2" data-toggle="tab"><?php echo $user_profile->PageCaption(2) ?></a></li>
+		<li<?php echo $user_profile_add->MultiPages->TabStyle("3") ?>><a href="#tab_user_profile3" data-toggle="tab"><?php echo $user_profile->PageCaption(3) ?></a></li>
+	</ul>
+	<div class="tab-content"><!-- multi-page .nav-tabs-custom .tab-content -->
+		<div class="tab-pane<?php echo $user_profile_add->MultiPages->PageStyle("1") ?>" id="tab_user_profile1"><!-- multi-page .tab-pane -->
 <div class="ewAddDiv"><!-- page* -->
 <?php if ($user_profile->staff_id->Visible) { // staff_id ?>
 	<div id="r_staff_id" class="form-group">
@@ -1683,10 +2458,10 @@ $user_profile_add->ShowMessage();
 <span<?php echo $user_profile->staff_id->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->staff_id->EditValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_staff_id" name="x_staff_id" id="x_staff_id" value="<?php echo ew_HtmlEncode($user_profile->staff_id->CurrentValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_staff_id" data-page="1" name="x_staff_id" id="x_staff_id" value="<?php echo ew_HtmlEncode($user_profile->staff_id->CurrentValue) ?>">
 <?php } else { ?>
 <span id="el_user_profile_staff_id">
-<input type="text" data-table="user_profile" data-field="x_staff_id" name="x_staff_id" id="x_staff_id" placeholder="<?php echo ew_HtmlEncode($user_profile->staff_id->getPlaceHolder()) ?>" value="<?php echo $user_profile->staff_id->EditValue ?>"<?php echo $user_profile->staff_id->EditAttributes() ?>>
+<input type="text" data-table="user_profile" data-field="x_staff_id" data-page="1" name="x_staff_id" id="x_staff_id" placeholder="<?php echo ew_HtmlEncode($user_profile->staff_id->getPlaceHolder()) ?>" value="<?php echo $user_profile->staff_id->EditValue ?>"<?php echo $user_profile->staff_id->EditAttributes() ?>>
 </span>
 <?php } ?>
 <?php } else { ?>
@@ -1694,7 +2469,7 @@ $user_profile_add->ShowMessage();
 <span<?php echo $user_profile->staff_id->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->staff_id->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_staff_id" name="x_staff_id" id="x_staff_id" value="<?php echo ew_HtmlEncode($user_profile->staff_id->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_staff_id" data-page="1" name="x_staff_id" id="x_staff_id" value="<?php echo ew_HtmlEncode($user_profile->staff_id->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->staff_id->CustomMsg ?></div></div>
 	</div>
@@ -1705,14 +2480,14 @@ $user_profile_add->ShowMessage();
 		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->last_name->CellAttributes() ?>>
 <?php if ($user_profile->CurrentAction <> "F") { ?>
 <span id="el_user_profile_last_name">
-<input type="text" data-table="user_profile" data-field="x_last_name" name="x_last_name" id="x_last_name" size="30" maxlength="50" placeholder="<?php echo ew_HtmlEncode($user_profile->last_name->getPlaceHolder()) ?>" value="<?php echo $user_profile->last_name->EditValue ?>"<?php echo $user_profile->last_name->EditAttributes() ?>>
+<input type="text" data-table="user_profile" data-field="x_last_name" data-page="1" name="x_last_name" id="x_last_name" size="30" maxlength="50" placeholder="<?php echo ew_HtmlEncode($user_profile->last_name->getPlaceHolder()) ?>" value="<?php echo $user_profile->last_name->EditValue ?>"<?php echo $user_profile->last_name->EditAttributes() ?>>
 </span>
 <?php } else { ?>
 <span id="el_user_profile_last_name">
 <span<?php echo $user_profile->last_name->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->last_name->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_last_name" name="x_last_name" id="x_last_name" value="<?php echo ew_HtmlEncode($user_profile->last_name->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_last_name" data-page="1" name="x_last_name" id="x_last_name" value="<?php echo ew_HtmlEncode($user_profile->last_name->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->last_name->CustomMsg ?></div></div>
 	</div>
@@ -1723,16 +2498,34 @@ $user_profile_add->ShowMessage();
 		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->first_name->CellAttributes() ?>>
 <?php if ($user_profile->CurrentAction <> "F") { ?>
 <span id="el_user_profile_first_name">
-<input type="text" data-table="user_profile" data-field="x_first_name" name="x_first_name" id="x_first_name" size="30" maxlength="50" placeholder="<?php echo ew_HtmlEncode($user_profile->first_name->getPlaceHolder()) ?>" value="<?php echo $user_profile->first_name->EditValue ?>"<?php echo $user_profile->first_name->EditAttributes() ?>>
+<input type="text" data-table="user_profile" data-field="x_first_name" data-page="1" name="x_first_name" id="x_first_name" size="30" maxlength="50" placeholder="<?php echo ew_HtmlEncode($user_profile->first_name->getPlaceHolder()) ?>" value="<?php echo $user_profile->first_name->EditValue ?>"<?php echo $user_profile->first_name->EditAttributes() ?>>
 </span>
 <?php } else { ?>
 <span id="el_user_profile_first_name">
 <span<?php echo $user_profile->first_name->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->first_name->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_first_name" name="x_first_name" id="x_first_name" value="<?php echo ew_HtmlEncode($user_profile->first_name->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_first_name" data-page="1" name="x_first_name" id="x_first_name" value="<?php echo ew_HtmlEncode($user_profile->first_name->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->first_name->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->_email->Visible) { // email ?>
+	<div id="r__email" class="form-group">
+		<label id="elh_user_profile__email" for="x__email" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->_email->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->_email->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile__email">
+<input type="text" data-table="user_profile" data-field="x__email" data-page="1" name="x__email" id="x__email" size="30" maxlength="25" placeholder="<?php echo ew_HtmlEncode($user_profile->_email->getPlaceHolder()) ?>" value="<?php echo $user_profile->_email->EditValue ?>"<?php echo $user_profile->_email->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile__email">
+<span<?php echo $user_profile->_email->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->_email->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x__email" data-page="1" name="x__email" id="x__email" value="<?php echo ew_HtmlEncode($user_profile->_email->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->_email->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 <?php if ($user_profile->gender->Visible) { // gender ?>
@@ -1751,10 +2544,10 @@ $user_profile_add->ShowMessage();
 	<?php } ?>
 	<div id="dsl_x_gender" data-repeatcolumn="5" class="dropdown-menu">
 		<div class="ewItems" style="position: relative; overflow-x: hidden;">
-<?php echo $user_profile->gender->RadioButtonListHtml(TRUE, "x_gender") ?>
+<?php echo $user_profile->gender->RadioButtonListHtml(TRUE, "x_gender", 1) ?>
 		</div>
 	</div>
-	<div id="tp_x_gender" class="ewTemplate"><input type="radio" data-table="user_profile" data-field="x_gender" data-value-separator="<?php echo $user_profile->gender->DisplayValueSeparatorAttribute() ?>" name="x_gender" id="x_gender" value="{value}"<?php echo $user_profile->gender->EditAttributes() ?>></div>
+	<div id="tp_x_gender" class="ewTemplate"><input type="radio" data-table="user_profile" data-field="x_gender" data-page="1" data-value-separator="<?php echo $user_profile->gender->DisplayValueSeparatorAttribute() ?>" name="x_gender" id="x_gender" value="{value}"<?php echo $user_profile->gender->EditAttributes() ?>></div>
 </div>
 </span>
 <?php } else { ?>
@@ -1762,9 +2555,41 @@ $user_profile_add->ShowMessage();
 <span<?php echo $user_profile->gender->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->gender->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_gender" name="x_gender" id="x_gender" value="<?php echo ew_HtmlEncode($user_profile->gender->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_gender" data-page="1" name="x_gender" id="x_gender" value="<?php echo ew_HtmlEncode($user_profile->gender->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->gender->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->marital_status->Visible) { // marital_status ?>
+	<div id="r_marital_status" class="form-group">
+		<label id="elh_user_profile_marital_status" for="x_marital_status" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->marital_status->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->marital_status->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_marital_status">
+<div class="ewDropdownList has-feedback">
+	<span onclick="" class="form-control dropdown-toggle" aria-expanded="false"<?php if ($user_profile->marital_status->ReadOnly) { ?> readonly<?php } else { ?>data-toggle="dropdown"<?php } ?>>
+		<?php echo $user_profile->marital_status->ViewValue ?>
+	</span>
+	<?php if (!$user_profile->marital_status->ReadOnly) { ?>
+	<span class="glyphicon glyphicon-remove form-control-feedback ewDropdownListClear"></span>
+	<span class="form-control-feedback"><span class="caret"></span></span>
+	<?php } ?>
+	<div id="dsl_x_marital_status" data-repeatcolumn="1" class="dropdown-menu">
+		<div class="ewItems" style="position: relative; overflow-x: hidden;">
+<?php echo $user_profile->marital_status->RadioButtonListHtml(TRUE, "x_marital_status", 1) ?>
+		</div>
+	</div>
+	<div id="tp_x_marital_status" class="ewTemplate"><input type="radio" data-table="user_profile" data-field="x_marital_status" data-page="1" data-value-separator="<?php echo $user_profile->marital_status->DisplayValueSeparatorAttribute() ?>" name="x_marital_status" id="x_marital_status" value="{value}"<?php echo $user_profile->marital_status->EditAttributes() ?>></div>
+</div>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_marital_status">
+<span<?php echo $user_profile->marital_status->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->marital_status->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_marital_status" data-page="1" name="x_marital_status" id="x_marital_status" value="<?php echo ew_HtmlEncode($user_profile->marital_status->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->marital_status->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 <?php if ($user_profile->date_of_birth->Visible) { // date_of_birth ?>
@@ -1773,7 +2598,7 @@ $user_profile_add->ShowMessage();
 		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->date_of_birth->CellAttributes() ?>>
 <?php if ($user_profile->CurrentAction <> "F") { ?>
 <span id="el_user_profile_date_of_birth">
-<input type="text" data-table="user_profile" data-field="x_date_of_birth" data-format="7" name="x_date_of_birth" id="x_date_of_birth" size="10" placeholder="<?php echo ew_HtmlEncode($user_profile->date_of_birth->getPlaceHolder()) ?>" value="<?php echo $user_profile->date_of_birth->EditValue ?>"<?php echo $user_profile->date_of_birth->EditAttributes() ?>>
+<input type="text" data-table="user_profile" data-field="x_date_of_birth" data-page="1" data-format="7" name="x_date_of_birth" id="x_date_of_birth" size="10" placeholder="<?php echo ew_HtmlEncode($user_profile->date_of_birth->getPlaceHolder()) ?>" value="<?php echo $user_profile->date_of_birth->EditValue ?>"<?php echo $user_profile->date_of_birth->EditAttributes() ?>>
 <?php if (!$user_profile->date_of_birth->ReadOnly && !$user_profile->date_of_birth->Disabled && !isset($user_profile->date_of_birth->EditAttrs["readonly"]) && !isset($user_profile->date_of_birth->EditAttrs["disabled"])) { ?>
 <script type="text/javascript">
 ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly":true,"useCurrent":false,"format":7});
@@ -1785,27 +2610,27 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 <span<?php echo $user_profile->date_of_birth->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->date_of_birth->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_date_of_birth" name="x_date_of_birth" id="x_date_of_birth" value="<?php echo ew_HtmlEncode($user_profile->date_of_birth->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_date_of_birth" data-page="1" name="x_date_of_birth" id="x_date_of_birth" value="<?php echo ew_HtmlEncode($user_profile->date_of_birth->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->date_of_birth->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
-<?php if ($user_profile->_email->Visible) { // email ?>
-	<div id="r__email" class="form-group">
-		<label id="elh_user_profile__email" for="x__email" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->_email->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
-		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->_email->CellAttributes() ?>>
+<?php if ($user_profile->username->Visible) { // username ?>
+	<div id="r_username" class="form-group">
+		<label id="elh_user_profile_username" for="x_username" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->username->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->username->CellAttributes() ?>>
 <?php if ($user_profile->CurrentAction <> "F") { ?>
-<span id="el_user_profile__email">
-<input type="text" data-table="user_profile" data-field="x__email" name="x__email" id="x__email" size="30" maxlength="25" placeholder="<?php echo ew_HtmlEncode($user_profile->_email->getPlaceHolder()) ?>" value="<?php echo $user_profile->_email->EditValue ?>"<?php echo $user_profile->_email->EditAttributes() ?>>
+<span id="el_user_profile_username">
+<input type="text" data-table="user_profile" data-field="x_username" data-page="1" name="x_username" id="x_username" size="30" maxlength="50" placeholder="<?php echo ew_HtmlEncode($user_profile->username->getPlaceHolder()) ?>" value="<?php echo $user_profile->username->EditValue ?>"<?php echo $user_profile->username->EditAttributes() ?>>
 </span>
 <?php } else { ?>
-<span id="el_user_profile__email">
-<span<?php echo $user_profile->_email->ViewAttributes() ?>>
-<p class="form-control-static"><?php echo $user_profile->_email->ViewValue ?></p></span>
+<span id="el_user_profile_username">
+<span<?php echo $user_profile->username->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->username->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x__email" name="x__email" id="x__email" value="<?php echo ew_HtmlEncode($user_profile->_email->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_username" data-page="1" name="x_username" id="x_username" value="<?php echo ew_HtmlEncode($user_profile->username->FormValue) ?>">
 <?php } ?>
-<?php echo $user_profile->_email->CustomMsg ?></div></div>
+<?php echo $user_profile->username->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 <?php if ($user_profile->mobile->Visible) { // mobile ?>
@@ -1814,14 +2639,14 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->mobile->CellAttributes() ?>>
 <?php if ($user_profile->CurrentAction <> "F") { ?>
 <span id="el_user_profile_mobile">
-<input type="text" data-table="user_profile" data-field="x_mobile" name="x_mobile" id="x_mobile" size="30" maxlength="11" placeholder="<?php echo ew_HtmlEncode($user_profile->mobile->getPlaceHolder()) ?>" value="<?php echo $user_profile->mobile->EditValue ?>"<?php echo $user_profile->mobile->EditAttributes() ?>>
+<input type="text" data-table="user_profile" data-field="x_mobile" data-page="1" name="x_mobile" id="x_mobile" size="30" maxlength="11" placeholder="<?php echo ew_HtmlEncode($user_profile->mobile->getPlaceHolder()) ?>" value="<?php echo $user_profile->mobile->EditValue ?>"<?php echo $user_profile->mobile->EditAttributes() ?>>
 </span>
 <?php } else { ?>
 <span id="el_user_profile_mobile">
 <span<?php echo $user_profile->mobile->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->mobile->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_mobile" name="x_mobile" id="x_mobile" value="<?php echo ew_HtmlEncode($user_profile->mobile->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_mobile" data-page="1" name="x_mobile" id="x_mobile" value="<?php echo ew_HtmlEncode($user_profile->mobile->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->mobile->CustomMsg ?></div></div>
 	</div>
@@ -1837,14 +2662,14 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_company"><?php echo (strval($user_profile->company->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $user_profile->company->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($user_profile->company->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_company',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($user_profile->company->ReadOnly || $user_profile->company->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
-<input type="hidden" data-table="user_profile" data-field="x_company" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $user_profile->company->DisplayValueSeparatorAttribute() ?>" name="x_company" id="x_company" value="<?php echo $user_profile->company->CurrentValue ?>"<?php echo $user_profile->company->EditAttributes() ?>>
+<input type="hidden" data-table="user_profile" data-field="x_company" data-page="1" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $user_profile->company->DisplayValueSeparatorAttribute() ?>" name="x_company" id="x_company" value="<?php echo $user_profile->company->CurrentValue ?>"<?php echo $user_profile->company->EditAttributes() ?>>
 </span>
 <?php } else { ?>
 <span id="el_user_profile_company">
 <span<?php echo $user_profile->company->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->company->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_company" name="x_company" id="x_company" value="<?php echo ew_HtmlEncode($user_profile->company->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_company" data-page="1" name="x_company" id="x_company" value="<?php echo ew_HtmlEncode($user_profile->company->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->company->CustomMsg ?></div></div>
 	</div>
@@ -1859,34 +2684,274 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_department"><?php echo (strval($user_profile->department->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $user_profile->department->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($user_profile->department->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_department',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($user_profile->department->ReadOnly || $user_profile->department->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
-<input type="hidden" data-table="user_profile" data-field="x_department" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $user_profile->department->DisplayValueSeparatorAttribute() ?>" name="x_department" id="x_department" value="<?php echo $user_profile->department->CurrentValue ?>"<?php echo $user_profile->department->EditAttributes() ?>>
+<input type="hidden" data-table="user_profile" data-field="x_department" data-page="1" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $user_profile->department->DisplayValueSeparatorAttribute() ?>" name="x_department" id="x_department" value="<?php echo $user_profile->department->CurrentValue ?>"<?php echo $user_profile->department->EditAttributes() ?>>
 </span>
 <?php } else { ?>
 <span id="el_user_profile_department">
 <span<?php echo $user_profile->department->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->department->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_department" name="x_department" id="x_department" value="<?php echo ew_HtmlEncode($user_profile->department->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_department" data-page="1" name="x_department" id="x_department" value="<?php echo ew_HtmlEncode($user_profile->department->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->department->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
-<?php if ($user_profile->username->Visible) { // username ?>
-	<div id="r_username" class="form-group">
-		<label id="elh_user_profile_username" for="x_username" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->username->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
-		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->username->CellAttributes() ?>>
+<?php if ($user_profile->home_address->Visible) { // home_address ?>
+	<div id="r_home_address" class="form-group">
+		<label id="elh_user_profile_home_address" for="x_home_address" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->home_address->FldCaption() ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->home_address->CellAttributes() ?>>
 <?php if ($user_profile->CurrentAction <> "F") { ?>
-<span id="el_user_profile_username">
-<input type="text" data-table="user_profile" data-field="x_username" name="x_username" id="x_username" size="30" maxlength="50" placeholder="<?php echo ew_HtmlEncode($user_profile->username->getPlaceHolder()) ?>" value="<?php echo $user_profile->username->EditValue ?>"<?php echo $user_profile->username->EditAttributes() ?>>
+<span id="el_user_profile_home_address">
+<input type="text" data-table="user_profile" data-field="x_home_address" data-page="1" name="x_home_address" id="x_home_address" size="30" maxlength="200" placeholder="<?php echo ew_HtmlEncode($user_profile->home_address->getPlaceHolder()) ?>" value="<?php echo $user_profile->home_address->EditValue ?>"<?php echo $user_profile->home_address->EditAttributes() ?>>
 </span>
 <?php } else { ?>
-<span id="el_user_profile_username">
-<span<?php echo $user_profile->username->ViewAttributes() ?>>
-<p class="form-control-static"><?php echo $user_profile->username->ViewValue ?></p></span>
+<span id="el_user_profile_home_address">
+<span<?php echo $user_profile->home_address->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->home_address->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_username" name="x_username" id="x_username" value="<?php echo ew_HtmlEncode($user_profile->username->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_home_address" data-page="1" name="x_home_address" id="x_home_address" value="<?php echo ew_HtmlEncode($user_profile->home_address->FormValue) ?>">
 <?php } ?>
-<?php echo $user_profile->username->CustomMsg ?></div></div>
+<?php echo $user_profile->home_address->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->town_city->Visible) { // town_city ?>
+	<div id="r_town_city" class="form-group">
+		<label id="elh_user_profile_town_city" for="x_town_city" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->town_city->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->town_city->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_town_city">
+<span class="ewLookupList">
+	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_town_city"><?php echo (strval($user_profile->town_city->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $user_profile->town_city->ViewValue); ?></span>
+</span>
+<button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($user_profile->town_city->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_town_city',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($user_profile->town_city->ReadOnly || $user_profile->town_city->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
+<input type="hidden" data-table="user_profile" data-field="x_town_city" data-page="1" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $user_profile->town_city->DisplayValueSeparatorAttribute() ?>" name="x_town_city" id="x_town_city" value="<?php echo $user_profile->town_city->CurrentValue ?>"<?php echo $user_profile->town_city->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_town_city">
+<span<?php echo $user_profile->town_city->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->town_city->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_town_city" data-page="1" name="x_town_city" id="x_town_city" value="<?php echo ew_HtmlEncode($user_profile->town_city->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->town_city->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->state_origin->Visible) { // state_origin ?>
+	<div id="r_state_origin" class="form-group">
+		<label id="elh_user_profile_state_origin" for="x_state_origin" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->state_origin->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->state_origin->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_state_origin">
+<?php $user_profile->state_origin->EditAttrs["onchange"] = "ew_UpdateOpt.call(this); " . @$user_profile->state_origin->EditAttrs["onchange"]; ?>
+<span class="ewLookupList">
+	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_state_origin"><?php echo (strval($user_profile->state_origin->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $user_profile->state_origin->ViewValue); ?></span>
+</span>
+<button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($user_profile->state_origin->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_state_origin',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($user_profile->state_origin->ReadOnly || $user_profile->state_origin->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
+<input type="hidden" data-table="user_profile" data-field="x_state_origin" data-page="1" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $user_profile->state_origin->DisplayValueSeparatorAttribute() ?>" name="x_state_origin" id="x_state_origin" value="<?php echo $user_profile->state_origin->CurrentValue ?>"<?php echo $user_profile->state_origin->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_state_origin">
+<span<?php echo $user_profile->state_origin->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->state_origin->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_state_origin" data-page="1" name="x_state_origin" id="x_state_origin" value="<?php echo ew_HtmlEncode($user_profile->state_origin->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->state_origin->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->local_gra->Visible) { // local_gra ?>
+	<div id="r_local_gra" class="form-group">
+		<label id="elh_user_profile_local_gra" for="x_local_gra" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->local_gra->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->local_gra->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_local_gra">
+<span class="ewLookupList">
+	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_local_gra"><?php echo (strval($user_profile->local_gra->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $user_profile->local_gra->ViewValue); ?></span>
+</span>
+<button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($user_profile->local_gra->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_local_gra',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($user_profile->local_gra->ReadOnly || $user_profile->local_gra->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
+<input type="hidden" data-table="user_profile" data-field="x_local_gra" data-page="1" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $user_profile->local_gra->DisplayValueSeparatorAttribute() ?>" name="x_local_gra" id="x_local_gra" value="<?php echo $user_profile->local_gra->CurrentValue ?>"<?php echo $user_profile->local_gra->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_local_gra">
+<span<?php echo $user_profile->local_gra->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->local_gra->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_local_gra" data-page="1" name="x_local_gra" id="x_local_gra" value="<?php echo ew_HtmlEncode($user_profile->local_gra->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->local_gra->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+</div><!-- /page* -->
+		</div><!-- /multi-page .tab-pane -->
+		<div class="tab-pane<?php echo $user_profile_add->MultiPages->PageStyle("2") ?>" id="tab_user_profile2"><!-- multi-page .tab-pane -->
+<div class="ewAddDiv"><!-- page* -->
+<?php if ($user_profile->next_kin->Visible) { // next_kin ?>
+	<div id="r_next_kin" class="form-group">
+		<label id="elh_user_profile_next_kin" for="x_next_kin" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->next_kin->FldCaption() ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->next_kin->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_next_kin">
+<input type="text" data-table="user_profile" data-field="x_next_kin" data-page="2" name="x_next_kin" id="x_next_kin" size="30" maxlength="200" placeholder="<?php echo ew_HtmlEncode($user_profile->next_kin->getPlaceHolder()) ?>" value="<?php echo $user_profile->next_kin->EditValue ?>"<?php echo $user_profile->next_kin->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_next_kin">
+<span<?php echo $user_profile->next_kin->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->next_kin->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_next_kin" data-page="2" name="x_next_kin" id="x_next_kin" value="<?php echo ew_HtmlEncode($user_profile->next_kin->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->next_kin->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->resident_nxt_kin->Visible) { // resident_nxt_kin ?>
+	<div id="r_resident_nxt_kin" class="form-group">
+		<label id="elh_user_profile_resident_nxt_kin" for="x_resident_nxt_kin" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->resident_nxt_kin->FldCaption() ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->resident_nxt_kin->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_resident_nxt_kin">
+<input type="text" data-table="user_profile" data-field="x_resident_nxt_kin" data-page="2" name="x_resident_nxt_kin" id="x_resident_nxt_kin" size="30" maxlength="200" placeholder="<?php echo ew_HtmlEncode($user_profile->resident_nxt_kin->getPlaceHolder()) ?>" value="<?php echo $user_profile->resident_nxt_kin->EditValue ?>"<?php echo $user_profile->resident_nxt_kin->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_resident_nxt_kin">
+<span<?php echo $user_profile->resident_nxt_kin->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->resident_nxt_kin->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_resident_nxt_kin" data-page="2" name="x_resident_nxt_kin" id="x_resident_nxt_kin" value="<?php echo ew_HtmlEncode($user_profile->resident_nxt_kin->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->resident_nxt_kin->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->nearest_bus_stop->Visible) { // nearest_bus_stop ?>
+	<div id="r_nearest_bus_stop" class="form-group">
+		<label id="elh_user_profile_nearest_bus_stop" for="x_nearest_bus_stop" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->nearest_bus_stop->FldCaption() ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->nearest_bus_stop->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_nearest_bus_stop">
+<input type="text" data-table="user_profile" data-field="x_nearest_bus_stop" data-page="2" name="x_nearest_bus_stop" id="x_nearest_bus_stop" size="30" maxlength="200" placeholder="<?php echo ew_HtmlEncode($user_profile->nearest_bus_stop->getPlaceHolder()) ?>" value="<?php echo $user_profile->nearest_bus_stop->EditValue ?>"<?php echo $user_profile->nearest_bus_stop->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_nearest_bus_stop">
+<span<?php echo $user_profile->nearest_bus_stop->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->nearest_bus_stop->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_nearest_bus_stop" data-page="2" name="x_nearest_bus_stop" id="x_nearest_bus_stop" value="<?php echo ew_HtmlEncode($user_profile->nearest_bus_stop->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->nearest_bus_stop->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->town_city_nxt_kin->Visible) { // town_city_nxt_kin ?>
+	<div id="r_town_city_nxt_kin" class="form-group">
+		<label id="elh_user_profile_town_city_nxt_kin" for="x_town_city_nxt_kin" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->town_city_nxt_kin->FldCaption() ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->town_city_nxt_kin->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_town_city_nxt_kin">
+<input type="text" data-table="user_profile" data-field="x_town_city_nxt_kin" data-page="2" name="x_town_city_nxt_kin" id="x_town_city_nxt_kin" size="30" maxlength="200" placeholder="<?php echo ew_HtmlEncode($user_profile->town_city_nxt_kin->getPlaceHolder()) ?>" value="<?php echo $user_profile->town_city_nxt_kin->EditValue ?>"<?php echo $user_profile->town_city_nxt_kin->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_town_city_nxt_kin">
+<span<?php echo $user_profile->town_city_nxt_kin->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->town_city_nxt_kin->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_town_city_nxt_kin" data-page="2" name="x_town_city_nxt_kin" id="x_town_city_nxt_kin" value="<?php echo ew_HtmlEncode($user_profile->town_city_nxt_kin->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->town_city_nxt_kin->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->email_nxt_kin->Visible) { // email_nxt_kin ?>
+	<div id="r_email_nxt_kin" class="form-group">
+		<label id="elh_user_profile_email_nxt_kin" for="x_email_nxt_kin" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->email_nxt_kin->FldCaption() ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->email_nxt_kin->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_email_nxt_kin">
+<input type="text" data-table="user_profile" data-field="x_email_nxt_kin" data-page="2" name="x_email_nxt_kin" id="x_email_nxt_kin" size="30" maxlength="50" placeholder="<?php echo ew_HtmlEncode($user_profile->email_nxt_kin->getPlaceHolder()) ?>" value="<?php echo $user_profile->email_nxt_kin->EditValue ?>"<?php echo $user_profile->email_nxt_kin->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_email_nxt_kin">
+<span<?php echo $user_profile->email_nxt_kin->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->email_nxt_kin->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_email_nxt_kin" data-page="2" name="x_email_nxt_kin" id="x_email_nxt_kin" value="<?php echo ew_HtmlEncode($user_profile->email_nxt_kin->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->email_nxt_kin->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->phone_nxt_kin->Visible) { // phone_nxt_kin ?>
+	<div id="r_phone_nxt_kin" class="form-group">
+		<label id="elh_user_profile_phone_nxt_kin" for="x_phone_nxt_kin" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->phone_nxt_kin->FldCaption() ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->phone_nxt_kin->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_phone_nxt_kin">
+<input type="text" data-table="user_profile" data-field="x_phone_nxt_kin" data-page="2" name="x_phone_nxt_kin" id="x_phone_nxt_kin" size="30" maxlength="200" placeholder="<?php echo ew_HtmlEncode($user_profile->phone_nxt_kin->getPlaceHolder()) ?>" value="<?php echo $user_profile->phone_nxt_kin->EditValue ?>"<?php echo $user_profile->phone_nxt_kin->EditAttributes() ?>>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_phone_nxt_kin">
+<span<?php echo $user_profile->phone_nxt_kin->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->phone_nxt_kin->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_phone_nxt_kin" data-page="2" name="x_phone_nxt_kin" id="x_phone_nxt_kin" value="<?php echo ew_HtmlEncode($user_profile->phone_nxt_kin->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->phone_nxt_kin->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->qualification_level->Visible) { // qualification_level ?>
+	<div id="r_qualification_level" class="form-group">
+		<label id="elh_user_profile_qualification_level" for="x_qualification_level" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->qualification_level->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->qualification_level->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_qualification_level">
+<select data-table="user_profile" data-field="x_qualification_level" data-page="2" data-value-separator="<?php echo $user_profile->qualification_level->DisplayValueSeparatorAttribute() ?>" id="x_qualification_level" name="x_qualification_level"<?php echo $user_profile->qualification_level->EditAttributes() ?>>
+<?php echo $user_profile->qualification_level->SelectOptionListHtml("x_qualification_level") ?>
+</select>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_qualification_level">
+<span<?php echo $user_profile->qualification_level->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->qualification_level->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_qualification_level" data-page="2" name="x_qualification_level" id="x_qualification_level" value="<?php echo ew_HtmlEncode($user_profile->qualification_level->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->qualification_level->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->qualification_grade->Visible) { // qualification_grade ?>
+	<div id="r_qualification_grade" class="form-group">
+		<label id="elh_user_profile_qualification_grade" for="x_qualification_grade" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->qualification_grade->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->qualification_grade->CellAttributes() ?>>
+<?php if ($user_profile->CurrentAction <> "F") { ?>
+<span id="el_user_profile_qualification_grade">
+<select data-table="user_profile" data-field="x_qualification_grade" data-page="2" data-value-separator="<?php echo $user_profile->qualification_grade->DisplayValueSeparatorAttribute() ?>" id="x_qualification_grade" name="x_qualification_grade"<?php echo $user_profile->qualification_grade->EditAttributes() ?>>
+<?php echo $user_profile->qualification_grade->SelectOptionListHtml("x_qualification_grade") ?>
+</select>
+</span>
+<?php } else { ?>
+<span id="el_user_profile_qualification_grade">
+<span<?php echo $user_profile->qualification_grade->ViewAttributes() ?>>
+<p class="form-control-static"><?php echo $user_profile->qualification_grade->ViewValue ?></p></span>
+</span>
+<input type="hidden" data-table="user_profile" data-field="x_qualification_grade" data-page="2" name="x_qualification_grade" id="x_qualification_grade" value="<?php echo ew_HtmlEncode($user_profile->qualification_grade->FormValue) ?>">
+<?php } ?>
+<?php echo $user_profile->qualification_grade->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($user_profile->upload_of_credentcial->Visible) { // upload_of_credentcial ?>
+	<div id="r_upload_of_credentcial" class="form-group">
+		<label id="elh_user_profile_upload_of_credentcial" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->upload_of_credentcial->FldCaption() ?></label>
+		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->upload_of_credentcial->CellAttributes() ?>>
+<span id="el_user_profile_upload_of_credentcial">
+<div id="fd_x_upload_of_credentcial">
+<span title="<?php echo $user_profile->upload_of_credentcial->FldTitle() ? $user_profile->upload_of_credentcial->FldTitle() : $Language->Phrase("ChooseFile") ?>" class="btn btn-default btn-sm fileinput-button ewTooltip<?php if ($user_profile->upload_of_credentcial->ReadOnly || $user_profile->upload_of_credentcial->Disabled) echo " hide"; ?>" data-trigger="hover">
+	<span><?php echo $Language->Phrase("ChooseFileBtn") ?></span>
+	<input type="file" title=" " data-table="user_profile" data-field="x_upload_of_credentcial" data-page="2" name="x_upload_of_credentcial" id="x_upload_of_credentcial"<?php echo $user_profile->upload_of_credentcial->EditAttributes() ?>>
+</span>
+<input type="hidden" name="fn_x_upload_of_credentcial" id= "fn_x_upload_of_credentcial" value="<?php echo $user_profile->upload_of_credentcial->Upload->FileName ?>">
+<input type="hidden" name="fa_x_upload_of_credentcial" id= "fa_x_upload_of_credentcial" value="0">
+<input type="hidden" name="fs_x_upload_of_credentcial" id= "fs_x_upload_of_credentcial" value="225">
+<input type="hidden" name="fx_x_upload_of_credentcial" id= "fx_x_upload_of_credentcial" value="<?php echo $user_profile->upload_of_credentcial->UploadAllowedFileExt ?>">
+<input type="hidden" name="fm_x_upload_of_credentcial" id= "fm_x_upload_of_credentcial" value="<?php echo $user_profile->upload_of_credentcial->UploadMaxFileSize ?>">
+</div>
+<table id="ft_x_upload_of_credentcial" class="table table-condensed pull-left ewUploadTable"><tbody class="files"></tbody></table>
+</span>
+<?php echo $user_profile->upload_of_credentcial->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 <?php if ($user_profile->password->Visible) { // password ?>
@@ -1896,7 +2961,7 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 <?php if ($user_profile->CurrentAction <> "F") { ?>
 <span id="el_user_profile_password">
 <div class="input-group" id="ig_password">
-<input type="password" data-password-generated="pgt_password" data-table="user_profile" data-field="x_password" name="x_password" id="x_password" size="30" maxlength="50" placeholder="<?php echo ew_HtmlEncode($user_profile->password->getPlaceHolder()) ?>"<?php echo $user_profile->password->EditAttributes() ?>>
+<input type="password" data-password-generated="pgt_password" data-table="user_profile" data-field="x_password" data-page="2" name="x_password" id="x_password" size="30" maxlength="50" placeholder="<?php echo ew_HtmlEncode($user_profile->password->getPlaceHolder()) ?>"<?php echo $user_profile->password->EditAttributes() ?>>
 <span class="input-group-btn">
 	<button type="button" class="btn btn-default ewPasswordGenerator" title="<?php echo ew_HtmlTitle($Language->Phrase("GeneratePassword")) ?>" data-password-field="x_password" data-password-confirm="c_password" data-password-generated="pgt_password"><?php echo $Language->Phrase("GeneratePassword") ?></button>
 </span>
@@ -1908,11 +2973,15 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 <span<?php echo $user_profile->password->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->password->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_password" name="x_password" id="x_password" value="<?php echo ew_HtmlEncode($user_profile->password->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_password" data-page="2" name="x_password" id="x_password" value="<?php echo ew_HtmlEncode($user_profile->password->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->password->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
+</div><!-- /page* -->
+		</div><!-- /multi-page .tab-pane -->
+		<div class="tab-pane<?php echo $user_profile_add->MultiPages->PageStyle("3") ?>" id="tab_user_profile3"><!-- multi-page .tab-pane -->
+<div class="ewAddDiv"><!-- page* -->
 <?php if ($user_profile->accesslevel->Visible) { // accesslevel ?>
 	<div id="r_accesslevel" class="form-group">
 		<label id="elh_user_profile_accesslevel" for="x_accesslevel" class="<?php echo $user_profile_add->LeftColumnClass ?>"><?php echo $user_profile->accesslevel->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
@@ -1924,7 +2993,7 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 </span>
 <?php } else { ?>
 <span id="el_user_profile_accesslevel">
-<select data-table="user_profile" data-field="x_accesslevel" data-value-separator="<?php echo $user_profile->accesslevel->DisplayValueSeparatorAttribute() ?>" id="x_accesslevel" name="x_accesslevel"<?php echo $user_profile->accesslevel->EditAttributes() ?>>
+<select data-table="user_profile" data-field="x_accesslevel" data-page="3" data-value-separator="<?php echo $user_profile->accesslevel->DisplayValueSeparatorAttribute() ?>" id="x_accesslevel" name="x_accesslevel"<?php echo $user_profile->accesslevel->EditAttributes() ?>>
 <?php echo $user_profile->accesslevel->SelectOptionListHtml("x_accesslevel") ?>
 </select>
 </span>
@@ -1934,7 +3003,7 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 <span<?php echo $user_profile->accesslevel->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->accesslevel->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_accesslevel" name="x_accesslevel" id="x_accesslevel" value="<?php echo ew_HtmlEncode($user_profile->accesslevel->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_accesslevel" data-page="3" name="x_accesslevel" id="x_accesslevel" value="<?php echo ew_HtmlEncode($user_profile->accesslevel->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->accesslevel->CustomMsg ?></div></div>
 	</div>
@@ -1945,9 +3014,9 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->status->CellAttributes() ?>>
 <?php if ($user_profile->CurrentAction <> "F") { ?>
 <span id="el_user_profile_status">
-<div id="tp_x_status" class="ewTemplate"><input type="radio" data-table="user_profile" data-field="x_status" data-value-separator="<?php echo $user_profile->status->DisplayValueSeparatorAttribute() ?>" name="x_status" id="x_status" value="{value}"<?php echo $user_profile->status->EditAttributes() ?>></div>
+<div id="tp_x_status" class="ewTemplate"><input type="radio" data-table="user_profile" data-field="x_status" data-page="3" data-value-separator="<?php echo $user_profile->status->DisplayValueSeparatorAttribute() ?>" name="x_status" id="x_status" value="{value}"<?php echo $user_profile->status->EditAttributes() ?>></div>
 <div id="dsl_x_status" data-repeatcolumn="5" class="ewItemList" style="display: none;"><div>
-<?php echo $user_profile->status->RadioButtonListHtml(FALSE, "x_status") ?>
+<?php echo $user_profile->status->RadioButtonListHtml(FALSE, "x_status", 3) ?>
 </div></div>
 </span>
 <?php } else { ?>
@@ -1955,7 +3024,7 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 <span<?php echo $user_profile->status->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->status->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_status" name="x_status" id="x_status" value="<?php echo ew_HtmlEncode($user_profile->status->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_status" data-page="3" name="x_status" id="x_status" value="<?php echo ew_HtmlEncode($user_profile->status->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->status->CustomMsg ?></div></div>
 	</div>
@@ -1966,19 +3035,23 @@ ew_CreateDateTimePicker("fuser_profileadd", "x_date_of_birth", {"ignoreReadonly"
 		<div class="<?php echo $user_profile_add->RightColumnClass ?>"><div<?php echo $user_profile->profile->CellAttributes() ?>>
 <?php if ($user_profile->CurrentAction <> "F") { ?>
 <span id="el_user_profile_profile">
-<textarea data-table="user_profile" data-field="x_profile" name="x_profile" id="x_profile" cols="35" rows="4" placeholder="<?php echo ew_HtmlEncode($user_profile->profile->getPlaceHolder()) ?>"<?php echo $user_profile->profile->EditAttributes() ?>><?php echo $user_profile->profile->EditValue ?></textarea>
+<textarea data-table="user_profile" data-field="x_profile" data-page="3" name="x_profile" id="x_profile" cols="35" rows="4" placeholder="<?php echo ew_HtmlEncode($user_profile->profile->getPlaceHolder()) ?>"<?php echo $user_profile->profile->EditAttributes() ?>><?php echo $user_profile->profile->EditValue ?></textarea>
 </span>
 <?php } else { ?>
 <span id="el_user_profile_profile">
 <span<?php echo $user_profile->profile->ViewAttributes() ?>>
 <p class="form-control-static"><?php echo $user_profile->profile->ViewValue ?></p></span>
 </span>
-<input type="hidden" data-table="user_profile" data-field="x_profile" name="x_profile" id="x_profile" value="<?php echo ew_HtmlEncode($user_profile->profile->FormValue) ?>">
+<input type="hidden" data-table="user_profile" data-field="x_profile" data-page="3" name="x_profile" id="x_profile" value="<?php echo ew_HtmlEncode($user_profile->profile->FormValue) ?>">
 <?php } ?>
 <?php echo $user_profile->profile->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 </div><!-- /page* -->
+		</div><!-- /multi-page .tab-pane -->
+	</div><!-- /multi-page .nav-tabs-custom .tab-content -->
+</div><!-- /multi-page .nav-tabs-custom -->
+</div><!-- /multi-page -->
 <?php if (!$user_profile_add->IsModal) { ?>
 <div class="form-group"><!-- buttons .form-group -->
 	<div class="<?php echo $user_profile_add->OffsetColumnClass ?>"><!-- buttons offset -->

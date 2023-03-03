@@ -323,6 +323,10 @@ class cdefault {
 			$this->Page_Terminate("companylist.php");
 		if ($Security->AllowList(CurrentProjectID() . 'report'))
 			$this->Page_Terminate("reportlist.php");
+		if ($Security->AllowList(CurrentProjectID() . 'lga_states'))
+			$this->Page_Terminate("lga_stateslist.php");
+		if ($Security->AllowList(CurrentProjectID() . 'states_table'))
+			$this->Page_Terminate("states_tablelist.php");
 		if ($Security->IsLoggedIn()) {
 			$this->setFailureMessage(ew_DeniedMsg() . "<br><br><a href=\"logout.php\">" . $Language->Phrase("BackToLogin") . "</a>");
 		} else {

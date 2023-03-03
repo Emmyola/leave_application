@@ -11,13 +11,27 @@ class cuser_profile extends cTable {
 	var $staff_id;
 	var $last_name;
 	var $first_name;
-	var $gender;
-	var $date_of_birth;
 	var $_email;
+	var $gender;
+	var $marital_status;
+	var $date_of_birth;
+	var $username;
 	var $mobile;
 	var $company;
 	var $department;
-	var $username;
+	var $home_address;
+	var $town_city;
+	var $state_origin;
+	var $local_gra;
+	var $next_kin;
+	var $resident_nxt_kin;
+	var $nearest_bus_stop;
+	var $town_city_nxt_kin;
+	var $email_nxt_kin;
+	var $phone_nxt_kin;
+	var $qualification_level;
+	var $qualification_grade;
+	var $upload_of_credentcial;
 	var $password;
 	var $accesslevel;
 	var $status;
@@ -77,11 +91,24 @@ class cuser_profile extends cTable {
 		$this->first_name->Sortable = TRUE; // Allow sort
 		$this->fields['first_name'] = &$this->first_name;
 
+		// email
+		$this->_email = new cField('user_profile', 'user_profile', 'x__email', 'email', '`email`', '`email`', 200, -1, FALSE, '`email`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->_email->Sortable = TRUE; // Allow sort
+		$this->fields['email'] = &$this->_email;
+
 		// gender
 		$this->gender = new cField('user_profile', 'user_profile', 'x_gender', 'gender', '`gender`', '`gender`', 200, -1, FALSE, '`gender`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'RADIO');
 		$this->gender->Sortable = TRUE; // Allow sort
 		$this->gender->OptionCount = 2;
 		$this->fields['gender'] = &$this->gender;
+
+		// marital_status
+		$this->marital_status = new cField('user_profile', 'user_profile', 'x_marital_status', 'marital_status', '`marital_status`', '`marital_status`', 200, -1, FALSE, '`marital_status`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->marital_status->Sortable = TRUE; // Allow sort
+		$this->marital_status->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->marital_status->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->marital_status->OptionCount = 5;
+		$this->fields['marital_status'] = &$this->marital_status;
 
 		// date_of_birth
 		$this->date_of_birth = new cField('user_profile', 'user_profile', 'x_date_of_birth', 'date_of_birth', '`date_of_birth`', ew_CastDateFieldForLike('`date_of_birth`', 7, "DB"), 133, 7, FALSE, '`date_of_birth`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
@@ -89,10 +116,10 @@ class cuser_profile extends cTable {
 		$this->date_of_birth->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EW_DATE_SEPARATOR"], $Language->Phrase("IncorrectDateDMY"));
 		$this->fields['date_of_birth'] = &$this->date_of_birth;
 
-		// email
-		$this->_email = new cField('user_profile', 'user_profile', 'x__email', 'email', '`email`', '`email`', 200, -1, FALSE, '`email`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->_email->Sortable = TRUE; // Allow sort
-		$this->fields['email'] = &$this->_email;
+		// username
+		$this->username = new cField('user_profile', 'user_profile', 'x_username', 'username', '`username`', '`username`', 200, -1, FALSE, '`username`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->username->Sortable = TRUE; // Allow sort
+		$this->fields['username'] = &$this->username;
 
 		// mobile
 		$this->mobile = new cField('user_profile', 'user_profile', 'x_mobile', 'mobile', '`mobile`', '`mobile`', 200, -1, FALSE, '`mobile`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
@@ -115,10 +142,82 @@ class cuser_profile extends cTable {
 		$this->department->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['department'] = &$this->department;
 
-		// username
-		$this->username = new cField('user_profile', 'user_profile', 'x_username', 'username', '`username`', '`username`', 200, -1, FALSE, '`username`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->username->Sortable = TRUE; // Allow sort
-		$this->fields['username'] = &$this->username;
+		// home_address
+		$this->home_address = new cField('user_profile', 'user_profile', 'x_home_address', 'home_address', '`home_address`', '`home_address`', 200, -1, FALSE, '`home_address`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->home_address->Sortable = TRUE; // Allow sort
+		$this->fields['home_address'] = &$this->home_address;
+
+		// town_city
+		$this->town_city = new cField('user_profile', 'user_profile', 'x_town_city', 'town_city', '`town_city`', '`town_city`', 200, -1, FALSE, '`town_city`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->town_city->Sortable = TRUE; // Allow sort
+		$this->town_city->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->town_city->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->fields['town_city'] = &$this->town_city;
+
+		// state_origin
+		$this->state_origin = new cField('user_profile', 'user_profile', 'x_state_origin', 'state_origin', '`state_origin`', '`state_origin`', 200, -1, FALSE, '`state_origin`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->state_origin->Sortable = TRUE; // Allow sort
+		$this->state_origin->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->state_origin->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->fields['state_origin'] = &$this->state_origin;
+
+		// local_gra
+		$this->local_gra = new cField('user_profile', 'user_profile', 'x_local_gra', 'local_gra', '`local_gra`', '`local_gra`', 200, -1, FALSE, '`local_gra`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->local_gra->Sortable = TRUE; // Allow sort
+		$this->local_gra->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->local_gra->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->fields['local_gra'] = &$this->local_gra;
+
+		// next_kin
+		$this->next_kin = new cField('user_profile', 'user_profile', 'x_next_kin', 'next_kin', '`next_kin`', '`next_kin`', 200, -1, FALSE, '`next_kin`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->next_kin->Sortable = TRUE; // Allow sort
+		$this->fields['next_kin'] = &$this->next_kin;
+
+		// resident_nxt_kin
+		$this->resident_nxt_kin = new cField('user_profile', 'user_profile', 'x_resident_nxt_kin', 'resident_nxt_kin', '`resident_nxt_kin`', '`resident_nxt_kin`', 200, -1, FALSE, '`resident_nxt_kin`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->resident_nxt_kin->Sortable = TRUE; // Allow sort
+		$this->fields['resident_nxt_kin'] = &$this->resident_nxt_kin;
+
+		// nearest_bus_stop
+		$this->nearest_bus_stop = new cField('user_profile', 'user_profile', 'x_nearest_bus_stop', 'nearest_bus_stop', '`nearest_bus_stop`', '`nearest_bus_stop`', 200, -1, FALSE, '`nearest_bus_stop`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->nearest_bus_stop->Sortable = TRUE; // Allow sort
+		$this->fields['nearest_bus_stop'] = &$this->nearest_bus_stop;
+
+		// town_city_nxt_kin
+		$this->town_city_nxt_kin = new cField('user_profile', 'user_profile', 'x_town_city_nxt_kin', 'town_city_nxt_kin', '`town_city_nxt_kin`', '`town_city_nxt_kin`', 200, -1, FALSE, '`town_city_nxt_kin`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->town_city_nxt_kin->Sortable = TRUE; // Allow sort
+		$this->fields['town_city_nxt_kin'] = &$this->town_city_nxt_kin;
+
+		// email_nxt_kin
+		$this->email_nxt_kin = new cField('user_profile', 'user_profile', 'x_email_nxt_kin', 'email_nxt_kin', '`email_nxt_kin`', '`email_nxt_kin`', 200, -1, FALSE, '`email_nxt_kin`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->email_nxt_kin->Sortable = TRUE; // Allow sort
+		$this->fields['email_nxt_kin'] = &$this->email_nxt_kin;
+
+		// phone_nxt_kin
+		$this->phone_nxt_kin = new cField('user_profile', 'user_profile', 'x_phone_nxt_kin', 'phone_nxt_kin', '`phone_nxt_kin`', '`phone_nxt_kin`', 200, -1, FALSE, '`phone_nxt_kin`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->phone_nxt_kin->Sortable = TRUE; // Allow sort
+		$this->fields['phone_nxt_kin'] = &$this->phone_nxt_kin;
+
+		// qualification_level
+		$this->qualification_level = new cField('user_profile', 'user_profile', 'x_qualification_level', 'qualification_level', '`qualification_level`', '`qualification_level`', 200, -1, FALSE, '`qualification_level`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->qualification_level->Sortable = TRUE; // Allow sort
+		$this->qualification_level->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->qualification_level->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->qualification_level->OptionCount = 11;
+		$this->fields['qualification_level'] = &$this->qualification_level;
+
+		// qualification_grade
+		$this->qualification_grade = new cField('user_profile', 'user_profile', 'x_qualification_grade', 'qualification_grade', '`qualification_grade`', '`qualification_grade`', 200, -1, FALSE, '`qualification_grade`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->qualification_grade->Sortable = TRUE; // Allow sort
+		$this->qualification_grade->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->qualification_grade->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->qualification_grade->OptionCount = 10;
+		$this->fields['qualification_grade'] = &$this->qualification_grade;
+
+		// upload_of_credentcial
+		$this->upload_of_credentcial = new cField('user_profile', 'user_profile', 'x_upload_of_credentcial', 'upload_of_credentcial', '`upload_of_credentcial`', '`upload_of_credentcial`', 200, -1, TRUE, '`upload_of_credentcial`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'FILE');
+		$this->upload_of_credentcial->Sortable = TRUE; // Allow sort
+		$this->fields['upload_of_credentcial'] = &$this->upload_of_credentcial;
 
 		// password
 		$this->password = new cField('user_profile', 'user_profile', 'x_password', 'password', '`password`', '`password`', 200, -1, FALSE, '`password`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'PASSWORD');
@@ -688,13 +787,27 @@ class cuser_profile extends cTable {
 		$this->staff_id->setDbValue($rs->fields('staff_id'));
 		$this->last_name->setDbValue($rs->fields('last_name'));
 		$this->first_name->setDbValue($rs->fields('first_name'));
-		$this->gender->setDbValue($rs->fields('gender'));
-		$this->date_of_birth->setDbValue($rs->fields('date_of_birth'));
 		$this->_email->setDbValue($rs->fields('email'));
+		$this->gender->setDbValue($rs->fields('gender'));
+		$this->marital_status->setDbValue($rs->fields('marital_status'));
+		$this->date_of_birth->setDbValue($rs->fields('date_of_birth'));
+		$this->username->setDbValue($rs->fields('username'));
 		$this->mobile->setDbValue($rs->fields('mobile'));
 		$this->company->setDbValue($rs->fields('company'));
 		$this->department->setDbValue($rs->fields('department'));
-		$this->username->setDbValue($rs->fields('username'));
+		$this->home_address->setDbValue($rs->fields('home_address'));
+		$this->town_city->setDbValue($rs->fields('town_city'));
+		$this->state_origin->setDbValue($rs->fields('state_origin'));
+		$this->local_gra->setDbValue($rs->fields('local_gra'));
+		$this->next_kin->setDbValue($rs->fields('next_kin'));
+		$this->resident_nxt_kin->setDbValue($rs->fields('resident_nxt_kin'));
+		$this->nearest_bus_stop->setDbValue($rs->fields('nearest_bus_stop'));
+		$this->town_city_nxt_kin->setDbValue($rs->fields('town_city_nxt_kin'));
+		$this->email_nxt_kin->setDbValue($rs->fields('email_nxt_kin'));
+		$this->phone_nxt_kin->setDbValue($rs->fields('phone_nxt_kin'));
+		$this->qualification_level->setDbValue($rs->fields('qualification_level'));
+		$this->qualification_grade->setDbValue($rs->fields('qualification_grade'));
+		$this->upload_of_credentcial->Upload->DbValue = $rs->fields('upload_of_credentcial');
 		$this->password->setDbValue($rs->fields('password'));
 		$this->accesslevel->setDbValue($rs->fields('accesslevel'));
 		$this->status->setDbValue($rs->fields('status'));
@@ -713,13 +826,27 @@ class cuser_profile extends cTable {
 		// staff_id
 		// last_name
 		// first_name
-		// gender
-		// date_of_birth
 		// email
+		// gender
+		// marital_status
+		// date_of_birth
+		// username
 		// mobile
 		// company
 		// department
-		// username
+		// home_address
+		// town_city
+		// state_origin
+		// local_gra
+		// next_kin
+		// resident_nxt_kin
+		// nearest_bus_stop
+		// town_city_nxt_kin
+		// email_nxt_kin
+		// phone_nxt_kin
+		// qualification_level
+		// qualification_grade
+		// upload_of_credentcial
 		// password
 		// accesslevel
 		// status
@@ -741,6 +868,10 @@ class cuser_profile extends cTable {
 		$this->first_name->ViewValue = $this->first_name->CurrentValue;
 		$this->first_name->ViewCustomAttributes = "";
 
+		// email
+		$this->_email->ViewValue = $this->_email->CurrentValue;
+		$this->_email->ViewCustomAttributes = "";
+
 		// gender
 		if (strval($this->gender->CurrentValue) <> "") {
 			$this->gender->ViewValue = $this->gender->OptionCaption($this->gender->CurrentValue);
@@ -749,14 +880,22 @@ class cuser_profile extends cTable {
 		}
 		$this->gender->ViewCustomAttributes = "";
 
+		// marital_status
+		if (strval($this->marital_status->CurrentValue) <> "") {
+			$this->marital_status->ViewValue = $this->marital_status->OptionCaption($this->marital_status->CurrentValue);
+		} else {
+			$this->marital_status->ViewValue = NULL;
+		}
+		$this->marital_status->ViewCustomAttributes = "";
+
 		// date_of_birth
 		$this->date_of_birth->ViewValue = $this->date_of_birth->CurrentValue;
 		$this->date_of_birth->ViewValue = ew_FormatDateTime($this->date_of_birth->ViewValue, 7);
 		$this->date_of_birth->ViewCustomAttributes = "";
 
-		// email
-		$this->_email->ViewValue = $this->_email->CurrentValue;
-		$this->_email->ViewCustomAttributes = "";
+		// username
+		$this->username->ViewValue = $this->username->CurrentValue;
+		$this->username->ViewCustomAttributes = "";
 
 		// mobile
 		$this->mobile->ViewValue = $this->mobile->CurrentValue;
@@ -809,9 +948,127 @@ class cuser_profile extends cTable {
 		}
 		$this->department->ViewCustomAttributes = "";
 
-		// username
-		$this->username->ViewValue = $this->username->CurrentValue;
-		$this->username->ViewCustomAttributes = "";
+		// home_address
+		$this->home_address->ViewValue = $this->home_address->CurrentValue;
+		$this->home_address->ViewCustomAttributes = "";
+
+		// town_city
+		if (strval($this->town_city->CurrentValue) <> "") {
+			$sFilterWrk = "`code`" . ew_SearchString("=", $this->town_city->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `code`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `states_table`";
+		$sWhereWrk = "";
+		$this->town_city->LookupFilters = array("dx1" => '`state_descriptions`');
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->town_city, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->town_city->ViewValue = $this->town_city->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->town_city->ViewValue = $this->town_city->CurrentValue;
+			}
+		} else {
+			$this->town_city->ViewValue = NULL;
+		}
+		$this->town_city->ViewCustomAttributes = "";
+
+		// state_origin
+		if (strval($this->state_origin->CurrentValue) <> "") {
+			$sFilterWrk = "`code`" . ew_SearchString("=", $this->state_origin->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `code`, `state_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `states_table`";
+		$sWhereWrk = "";
+		$this->state_origin->LookupFilters = array("dx1" => '`state_descriptions`');
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->state_origin, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->state_origin->ViewValue = $this->state_origin->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->state_origin->ViewValue = $this->state_origin->CurrentValue;
+			}
+		} else {
+			$this->state_origin->ViewValue = NULL;
+		}
+		$this->state_origin->ViewCustomAttributes = "";
+
+		// local_gra
+		if (strval($this->local_gra->CurrentValue) <> "") {
+			$sFilterWrk = "`code`" . ew_SearchString("=", $this->local_gra->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `code`, `lga_descriptions` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `lga_states`";
+		$sWhereWrk = "";
+		$this->local_gra->LookupFilters = array("dx1" => '`lga_descriptions`');
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->local_gra, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->local_gra->ViewValue = $this->local_gra->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->local_gra->ViewValue = $this->local_gra->CurrentValue;
+			}
+		} else {
+			$this->local_gra->ViewValue = NULL;
+		}
+		$this->local_gra->ViewCustomAttributes = "";
+
+		// next_kin
+		$this->next_kin->ViewValue = $this->next_kin->CurrentValue;
+		$this->next_kin->ViewCustomAttributes = "";
+
+		// resident_nxt_kin
+		$this->resident_nxt_kin->ViewValue = $this->resident_nxt_kin->CurrentValue;
+		$this->resident_nxt_kin->ViewCustomAttributes = "";
+
+		// nearest_bus_stop
+		$this->nearest_bus_stop->ViewValue = $this->nearest_bus_stop->CurrentValue;
+		$this->nearest_bus_stop->ViewCustomAttributes = "";
+
+		// town_city_nxt_kin
+		$this->town_city_nxt_kin->ViewValue = $this->town_city_nxt_kin->CurrentValue;
+		$this->town_city_nxt_kin->ViewCustomAttributes = "";
+
+		// email_nxt_kin
+		$this->email_nxt_kin->ViewValue = $this->email_nxt_kin->CurrentValue;
+		$this->email_nxt_kin->ViewCustomAttributes = "";
+
+		// phone_nxt_kin
+		$this->phone_nxt_kin->ViewValue = $this->phone_nxt_kin->CurrentValue;
+		$this->phone_nxt_kin->ViewCustomAttributes = "";
+
+		// qualification_level
+		if (strval($this->qualification_level->CurrentValue) <> "") {
+			$this->qualification_level->ViewValue = $this->qualification_level->OptionCaption($this->qualification_level->CurrentValue);
+		} else {
+			$this->qualification_level->ViewValue = NULL;
+		}
+		$this->qualification_level->ViewCustomAttributes = "";
+
+		// qualification_grade
+		if (strval($this->qualification_grade->CurrentValue) <> "") {
+			$this->qualification_grade->ViewValue = $this->qualification_grade->OptionCaption($this->qualification_grade->CurrentValue);
+		} else {
+			$this->qualification_grade->ViewValue = NULL;
+		}
+		$this->qualification_grade->ViewCustomAttributes = "";
+
+		// upload_of_credentcial
+		$this->upload_of_credentcial->UploadPath = "uploads/";
+		if (!ew_Empty($this->upload_of_credentcial->Upload->DbValue)) {
+			$this->upload_of_credentcial->ViewValue = $this->upload_of_credentcial->Upload->DbValue;
+		} else {
+			$this->upload_of_credentcial->ViewValue = "";
+		}
+		$this->upload_of_credentcial->ViewCustomAttributes = "";
 
 		// password
 		$this->password->ViewValue = $Language->Phrase("PasswordMask");
@@ -876,20 +1133,30 @@ class cuser_profile extends cTable {
 		$this->first_name->HrefValue = "";
 		$this->first_name->TooltipValue = "";
 
+		// email
+		$this->_email->LinkCustomAttributes = "";
+		$this->_email->HrefValue = "";
+		$this->_email->TooltipValue = "";
+
 		// gender
 		$this->gender->LinkCustomAttributes = "";
 		$this->gender->HrefValue = "";
 		$this->gender->TooltipValue = "";
+
+		// marital_status
+		$this->marital_status->LinkCustomAttributes = "";
+		$this->marital_status->HrefValue = "";
+		$this->marital_status->TooltipValue = "";
 
 		// date_of_birth
 		$this->date_of_birth->LinkCustomAttributes = "";
 		$this->date_of_birth->HrefValue = "";
 		$this->date_of_birth->TooltipValue = "";
 
-		// email
-		$this->_email->LinkCustomAttributes = "";
-		$this->_email->HrefValue = "";
-		$this->_email->TooltipValue = "";
+		// username
+		$this->username->LinkCustomAttributes = "";
+		$this->username->HrefValue = "";
+		$this->username->TooltipValue = "";
 
 		// mobile
 		$this->mobile->LinkCustomAttributes = "";
@@ -906,10 +1173,71 @@ class cuser_profile extends cTable {
 		$this->department->HrefValue = "";
 		$this->department->TooltipValue = "";
 
-		// username
-		$this->username->LinkCustomAttributes = "";
-		$this->username->HrefValue = "";
-		$this->username->TooltipValue = "";
+		// home_address
+		$this->home_address->LinkCustomAttributes = "";
+		$this->home_address->HrefValue = "";
+		$this->home_address->TooltipValue = "";
+
+		// town_city
+		$this->town_city->LinkCustomAttributes = "";
+		$this->town_city->HrefValue = "";
+		$this->town_city->TooltipValue = "";
+
+		// state_origin
+		$this->state_origin->LinkCustomAttributes = "";
+		$this->state_origin->HrefValue = "";
+		$this->state_origin->TooltipValue = "";
+
+		// local_gra
+		$this->local_gra->LinkCustomAttributes = "";
+		$this->local_gra->HrefValue = "";
+		$this->local_gra->TooltipValue = "";
+
+		// next_kin
+		$this->next_kin->LinkCustomAttributes = "";
+		$this->next_kin->HrefValue = "";
+		$this->next_kin->TooltipValue = "";
+
+		// resident_nxt_kin
+		$this->resident_nxt_kin->LinkCustomAttributes = "";
+		$this->resident_nxt_kin->HrefValue = "";
+		$this->resident_nxt_kin->TooltipValue = "";
+
+		// nearest_bus_stop
+		$this->nearest_bus_stop->LinkCustomAttributes = "";
+		$this->nearest_bus_stop->HrefValue = "";
+		$this->nearest_bus_stop->TooltipValue = "";
+
+		// town_city_nxt_kin
+		$this->town_city_nxt_kin->LinkCustomAttributes = "";
+		$this->town_city_nxt_kin->HrefValue = "";
+		$this->town_city_nxt_kin->TooltipValue = "";
+
+		// email_nxt_kin
+		$this->email_nxt_kin->LinkCustomAttributes = "";
+		$this->email_nxt_kin->HrefValue = "";
+		$this->email_nxt_kin->TooltipValue = "";
+
+		// phone_nxt_kin
+		$this->phone_nxt_kin->LinkCustomAttributes = "";
+		$this->phone_nxt_kin->HrefValue = "";
+		$this->phone_nxt_kin->TooltipValue = "";
+
+		// qualification_level
+		$this->qualification_level->LinkCustomAttributes = "";
+		$this->qualification_level->HrefValue = "";
+		$this->qualification_level->TooltipValue = "";
+
+		// qualification_grade
+		$this->qualification_grade->LinkCustomAttributes = "";
+		$this->qualification_grade->HrefValue = "";
+		$this->qualification_grade->TooltipValue = "";
+
+		// upload_of_credentcial
+		$this->upload_of_credentcial->LinkCustomAttributes = "";
+		$this->upload_of_credentcial->HrefValue = "";
+		$this->upload_of_credentcial->HrefValue2 = $this->upload_of_credentcial->UploadPath . $this->upload_of_credentcial->Upload->DbValue;
+		$this->upload_of_credentcial->TooltipValue = "";
 
 		// password
 		$this->password->LinkCustomAttributes = "";
@@ -975,9 +1303,19 @@ class cuser_profile extends cTable {
 		$this->first_name->EditValue = $this->first_name->CurrentValue;
 		$this->first_name->PlaceHolder = ew_RemoveHtml($this->first_name->FldCaption());
 
+		// email
+		$this->_email->EditAttrs["class"] = "form-control";
+		$this->_email->EditCustomAttributes = "";
+		$this->_email->EditValue = $this->_email->CurrentValue;
+		$this->_email->PlaceHolder = ew_RemoveHtml($this->_email->FldCaption());
+
 		// gender
 		$this->gender->EditCustomAttributes = "";
 		$this->gender->EditValue = $this->gender->Options(FALSE);
+
+		// marital_status
+		$this->marital_status->EditCustomAttributes = "";
+		$this->marital_status->EditValue = $this->marital_status->Options(TRUE);
 
 		// date_of_birth
 		$this->date_of_birth->EditAttrs["class"] = "form-control";
@@ -985,11 +1323,11 @@ class cuser_profile extends cTable {
 		$this->date_of_birth->EditValue = ew_FormatDateTime($this->date_of_birth->CurrentValue, 7);
 		$this->date_of_birth->PlaceHolder = ew_RemoveHtml($this->date_of_birth->FldCaption());
 
-		// email
-		$this->_email->EditAttrs["class"] = "form-control";
-		$this->_email->EditCustomAttributes = "";
-		$this->_email->EditValue = $this->_email->CurrentValue;
-		$this->_email->PlaceHolder = ew_RemoveHtml($this->_email->FldCaption());
+		// username
+		$this->username->EditAttrs["class"] = "form-control";
+		$this->username->EditCustomAttributes = "";
+		$this->username->EditValue = $this->username->CurrentValue;
+		$this->username->PlaceHolder = ew_RemoveHtml($this->username->FldCaption());
 
 		// mobile
 		$this->mobile->EditAttrs["class"] = "form-control";
@@ -1005,11 +1343,81 @@ class cuser_profile extends cTable {
 		$this->department->EditAttrs["class"] = "form-control";
 		$this->department->EditCustomAttributes = "";
 
-		// username
-		$this->username->EditAttrs["class"] = "form-control";
-		$this->username->EditCustomAttributes = "";
-		$this->username->EditValue = $this->username->CurrentValue;
-		$this->username->PlaceHolder = ew_RemoveHtml($this->username->FldCaption());
+		// home_address
+		$this->home_address->EditAttrs["class"] = "form-control";
+		$this->home_address->EditCustomAttributes = "";
+		$this->home_address->EditValue = $this->home_address->CurrentValue;
+		$this->home_address->PlaceHolder = ew_RemoveHtml($this->home_address->FldCaption());
+
+		// town_city
+		$this->town_city->EditAttrs["class"] = "form-control";
+		$this->town_city->EditCustomAttributes = "";
+
+		// state_origin
+		$this->state_origin->EditAttrs["class"] = "form-control";
+		$this->state_origin->EditCustomAttributes = "";
+
+		// local_gra
+		$this->local_gra->EditAttrs["class"] = "form-control";
+		$this->local_gra->EditCustomAttributes = "";
+
+		// next_kin
+		$this->next_kin->EditAttrs["class"] = "form-control";
+		$this->next_kin->EditCustomAttributes = "";
+		$this->next_kin->EditValue = $this->next_kin->CurrentValue;
+		$this->next_kin->PlaceHolder = ew_RemoveHtml($this->next_kin->FldCaption());
+
+		// resident_nxt_kin
+		$this->resident_nxt_kin->EditAttrs["class"] = "form-control";
+		$this->resident_nxt_kin->EditCustomAttributes = "";
+		$this->resident_nxt_kin->EditValue = $this->resident_nxt_kin->CurrentValue;
+		$this->resident_nxt_kin->PlaceHolder = ew_RemoveHtml($this->resident_nxt_kin->FldCaption());
+
+		// nearest_bus_stop
+		$this->nearest_bus_stop->EditAttrs["class"] = "form-control";
+		$this->nearest_bus_stop->EditCustomAttributes = "";
+		$this->nearest_bus_stop->EditValue = $this->nearest_bus_stop->CurrentValue;
+		$this->nearest_bus_stop->PlaceHolder = ew_RemoveHtml($this->nearest_bus_stop->FldCaption());
+
+		// town_city_nxt_kin
+		$this->town_city_nxt_kin->EditAttrs["class"] = "form-control";
+		$this->town_city_nxt_kin->EditCustomAttributes = "";
+		$this->town_city_nxt_kin->EditValue = $this->town_city_nxt_kin->CurrentValue;
+		$this->town_city_nxt_kin->PlaceHolder = ew_RemoveHtml($this->town_city_nxt_kin->FldCaption());
+
+		// email_nxt_kin
+		$this->email_nxt_kin->EditAttrs["class"] = "form-control";
+		$this->email_nxt_kin->EditCustomAttributes = "";
+		$this->email_nxt_kin->EditValue = $this->email_nxt_kin->CurrentValue;
+		$this->email_nxt_kin->PlaceHolder = ew_RemoveHtml($this->email_nxt_kin->FldCaption());
+
+		// phone_nxt_kin
+		$this->phone_nxt_kin->EditAttrs["class"] = "form-control";
+		$this->phone_nxt_kin->EditCustomAttributes = "";
+		$this->phone_nxt_kin->EditValue = $this->phone_nxt_kin->CurrentValue;
+		$this->phone_nxt_kin->PlaceHolder = ew_RemoveHtml($this->phone_nxt_kin->FldCaption());
+
+		// qualification_level
+		$this->qualification_level->EditAttrs["class"] = "form-control";
+		$this->qualification_level->EditCustomAttributes = "";
+		$this->qualification_level->EditValue = $this->qualification_level->Options(TRUE);
+
+		// qualification_grade
+		$this->qualification_grade->EditAttrs["class"] = "form-control";
+		$this->qualification_grade->EditCustomAttributes = "";
+		$this->qualification_grade->EditValue = $this->qualification_grade->Options(TRUE);
+
+		// upload_of_credentcial
+		$this->upload_of_credentcial->EditAttrs["class"] = "form-control";
+		$this->upload_of_credentcial->EditCustomAttributes = "";
+		$this->upload_of_credentcial->UploadPath = "uploads/";
+		if (!ew_Empty($this->upload_of_credentcial->Upload->DbValue)) {
+			$this->upload_of_credentcial->EditValue = $this->upload_of_credentcial->Upload->DbValue;
+		} else {
+			$this->upload_of_credentcial->EditValue = "";
+		}
+		if (!ew_Empty($this->upload_of_credentcial->CurrentValue))
+				$this->upload_of_credentcial->Upload->FileName = $this->upload_of_credentcial->CurrentValue;
 
 		// password
 		$this->password->EditAttrs["class"] = "form-control";
@@ -1066,13 +1474,27 @@ class cuser_profile extends cTable {
 					if ($this->staff_id->Exportable) $Doc->ExportCaption($this->staff_id);
 					if ($this->last_name->Exportable) $Doc->ExportCaption($this->last_name);
 					if ($this->first_name->Exportable) $Doc->ExportCaption($this->first_name);
-					if ($this->gender->Exportable) $Doc->ExportCaption($this->gender);
-					if ($this->date_of_birth->Exportable) $Doc->ExportCaption($this->date_of_birth);
 					if ($this->_email->Exportable) $Doc->ExportCaption($this->_email);
+					if ($this->gender->Exportable) $Doc->ExportCaption($this->gender);
+					if ($this->marital_status->Exportable) $Doc->ExportCaption($this->marital_status);
+					if ($this->date_of_birth->Exportable) $Doc->ExportCaption($this->date_of_birth);
+					if ($this->username->Exportable) $Doc->ExportCaption($this->username);
 					if ($this->mobile->Exportable) $Doc->ExportCaption($this->mobile);
 					if ($this->company->Exportable) $Doc->ExportCaption($this->company);
 					if ($this->department->Exportable) $Doc->ExportCaption($this->department);
-					if ($this->username->Exportable) $Doc->ExportCaption($this->username);
+					if ($this->home_address->Exportable) $Doc->ExportCaption($this->home_address);
+					if ($this->town_city->Exportable) $Doc->ExportCaption($this->town_city);
+					if ($this->state_origin->Exportable) $Doc->ExportCaption($this->state_origin);
+					if ($this->local_gra->Exportable) $Doc->ExportCaption($this->local_gra);
+					if ($this->next_kin->Exportable) $Doc->ExportCaption($this->next_kin);
+					if ($this->resident_nxt_kin->Exportable) $Doc->ExportCaption($this->resident_nxt_kin);
+					if ($this->nearest_bus_stop->Exportable) $Doc->ExportCaption($this->nearest_bus_stop);
+					if ($this->town_city_nxt_kin->Exportable) $Doc->ExportCaption($this->town_city_nxt_kin);
+					if ($this->email_nxt_kin->Exportable) $Doc->ExportCaption($this->email_nxt_kin);
+					if ($this->phone_nxt_kin->Exportable) $Doc->ExportCaption($this->phone_nxt_kin);
+					if ($this->qualification_level->Exportable) $Doc->ExportCaption($this->qualification_level);
+					if ($this->qualification_grade->Exportable) $Doc->ExportCaption($this->qualification_grade);
+					if ($this->upload_of_credentcial->Exportable) $Doc->ExportCaption($this->upload_of_credentcial);
 					if ($this->password->Exportable) $Doc->ExportCaption($this->password);
 					if ($this->accesslevel->Exportable) $Doc->ExportCaption($this->accesslevel);
 					if ($this->status->Exportable) $Doc->ExportCaption($this->status);
@@ -1082,13 +1504,27 @@ class cuser_profile extends cTable {
 					if ($this->staff_id->Exportable) $Doc->ExportCaption($this->staff_id);
 					if ($this->last_name->Exportable) $Doc->ExportCaption($this->last_name);
 					if ($this->first_name->Exportable) $Doc->ExportCaption($this->first_name);
-					if ($this->gender->Exportable) $Doc->ExportCaption($this->gender);
-					if ($this->date_of_birth->Exportable) $Doc->ExportCaption($this->date_of_birth);
 					if ($this->_email->Exportable) $Doc->ExportCaption($this->_email);
+					if ($this->gender->Exportable) $Doc->ExportCaption($this->gender);
+					if ($this->marital_status->Exportable) $Doc->ExportCaption($this->marital_status);
+					if ($this->date_of_birth->Exportable) $Doc->ExportCaption($this->date_of_birth);
+					if ($this->username->Exportable) $Doc->ExportCaption($this->username);
 					if ($this->mobile->Exportable) $Doc->ExportCaption($this->mobile);
 					if ($this->company->Exportable) $Doc->ExportCaption($this->company);
 					if ($this->department->Exportable) $Doc->ExportCaption($this->department);
-					if ($this->username->Exportable) $Doc->ExportCaption($this->username);
+					if ($this->home_address->Exportable) $Doc->ExportCaption($this->home_address);
+					if ($this->town_city->Exportable) $Doc->ExportCaption($this->town_city);
+					if ($this->state_origin->Exportable) $Doc->ExportCaption($this->state_origin);
+					if ($this->local_gra->Exportable) $Doc->ExportCaption($this->local_gra);
+					if ($this->next_kin->Exportable) $Doc->ExportCaption($this->next_kin);
+					if ($this->resident_nxt_kin->Exportable) $Doc->ExportCaption($this->resident_nxt_kin);
+					if ($this->nearest_bus_stop->Exportable) $Doc->ExportCaption($this->nearest_bus_stop);
+					if ($this->town_city_nxt_kin->Exportable) $Doc->ExportCaption($this->town_city_nxt_kin);
+					if ($this->email_nxt_kin->Exportable) $Doc->ExportCaption($this->email_nxt_kin);
+					if ($this->phone_nxt_kin->Exportable) $Doc->ExportCaption($this->phone_nxt_kin);
+					if ($this->qualification_level->Exportable) $Doc->ExportCaption($this->qualification_level);
+					if ($this->qualification_grade->Exportable) $Doc->ExportCaption($this->qualification_grade);
+					if ($this->upload_of_credentcial->Exportable) $Doc->ExportCaption($this->upload_of_credentcial);
 					if ($this->password->Exportable) $Doc->ExportCaption($this->password);
 					if ($this->accesslevel->Exportable) $Doc->ExportCaption($this->accesslevel);
 					if ($this->status->Exportable) $Doc->ExportCaption($this->status);
@@ -1127,13 +1563,27 @@ class cuser_profile extends cTable {
 						if ($this->staff_id->Exportable) $Doc->ExportField($this->staff_id);
 						if ($this->last_name->Exportable) $Doc->ExportField($this->last_name);
 						if ($this->first_name->Exportable) $Doc->ExportField($this->first_name);
-						if ($this->gender->Exportable) $Doc->ExportField($this->gender);
-						if ($this->date_of_birth->Exportable) $Doc->ExportField($this->date_of_birth);
 						if ($this->_email->Exportable) $Doc->ExportField($this->_email);
+						if ($this->gender->Exportable) $Doc->ExportField($this->gender);
+						if ($this->marital_status->Exportable) $Doc->ExportField($this->marital_status);
+						if ($this->date_of_birth->Exportable) $Doc->ExportField($this->date_of_birth);
+						if ($this->username->Exportable) $Doc->ExportField($this->username);
 						if ($this->mobile->Exportable) $Doc->ExportField($this->mobile);
 						if ($this->company->Exportable) $Doc->ExportField($this->company);
 						if ($this->department->Exportable) $Doc->ExportField($this->department);
-						if ($this->username->Exportable) $Doc->ExportField($this->username);
+						if ($this->home_address->Exportable) $Doc->ExportField($this->home_address);
+						if ($this->town_city->Exportable) $Doc->ExportField($this->town_city);
+						if ($this->state_origin->Exportable) $Doc->ExportField($this->state_origin);
+						if ($this->local_gra->Exportable) $Doc->ExportField($this->local_gra);
+						if ($this->next_kin->Exportable) $Doc->ExportField($this->next_kin);
+						if ($this->resident_nxt_kin->Exportable) $Doc->ExportField($this->resident_nxt_kin);
+						if ($this->nearest_bus_stop->Exportable) $Doc->ExportField($this->nearest_bus_stop);
+						if ($this->town_city_nxt_kin->Exportable) $Doc->ExportField($this->town_city_nxt_kin);
+						if ($this->email_nxt_kin->Exportable) $Doc->ExportField($this->email_nxt_kin);
+						if ($this->phone_nxt_kin->Exportable) $Doc->ExportField($this->phone_nxt_kin);
+						if ($this->qualification_level->Exportable) $Doc->ExportField($this->qualification_level);
+						if ($this->qualification_grade->Exportable) $Doc->ExportField($this->qualification_grade);
+						if ($this->upload_of_credentcial->Exportable) $Doc->ExportField($this->upload_of_credentcial);
 						if ($this->password->Exportable) $Doc->ExportField($this->password);
 						if ($this->accesslevel->Exportable) $Doc->ExportField($this->accesslevel);
 						if ($this->status->Exportable) $Doc->ExportField($this->status);
@@ -1143,13 +1593,27 @@ class cuser_profile extends cTable {
 						if ($this->staff_id->Exportable) $Doc->ExportField($this->staff_id);
 						if ($this->last_name->Exportable) $Doc->ExportField($this->last_name);
 						if ($this->first_name->Exportable) $Doc->ExportField($this->first_name);
-						if ($this->gender->Exportable) $Doc->ExportField($this->gender);
-						if ($this->date_of_birth->Exportable) $Doc->ExportField($this->date_of_birth);
 						if ($this->_email->Exportable) $Doc->ExportField($this->_email);
+						if ($this->gender->Exportable) $Doc->ExportField($this->gender);
+						if ($this->marital_status->Exportable) $Doc->ExportField($this->marital_status);
+						if ($this->date_of_birth->Exportable) $Doc->ExportField($this->date_of_birth);
+						if ($this->username->Exportable) $Doc->ExportField($this->username);
 						if ($this->mobile->Exportable) $Doc->ExportField($this->mobile);
 						if ($this->company->Exportable) $Doc->ExportField($this->company);
 						if ($this->department->Exportable) $Doc->ExportField($this->department);
-						if ($this->username->Exportable) $Doc->ExportField($this->username);
+						if ($this->home_address->Exportable) $Doc->ExportField($this->home_address);
+						if ($this->town_city->Exportable) $Doc->ExportField($this->town_city);
+						if ($this->state_origin->Exportable) $Doc->ExportField($this->state_origin);
+						if ($this->local_gra->Exportable) $Doc->ExportField($this->local_gra);
+						if ($this->next_kin->Exportable) $Doc->ExportField($this->next_kin);
+						if ($this->resident_nxt_kin->Exportable) $Doc->ExportField($this->resident_nxt_kin);
+						if ($this->nearest_bus_stop->Exportable) $Doc->ExportField($this->nearest_bus_stop);
+						if ($this->town_city_nxt_kin->Exportable) $Doc->ExportField($this->town_city_nxt_kin);
+						if ($this->email_nxt_kin->Exportable) $Doc->ExportField($this->email_nxt_kin);
+						if ($this->phone_nxt_kin->Exportable) $Doc->ExportField($this->phone_nxt_kin);
+						if ($this->qualification_level->Exportable) $Doc->ExportField($this->qualification_level);
+						if ($this->qualification_grade->Exportable) $Doc->ExportField($this->qualification_grade);
+						if ($this->upload_of_credentcial->Exportable) $Doc->ExportField($this->upload_of_credentcial);
 						if ($this->password->Exportable) $Doc->ExportField($this->password);
 						if ($this->accesslevel->Exportable) $Doc->ExportField($this->accesslevel);
 						if ($this->status->Exportable) $Doc->ExportField($this->status);
@@ -1271,24 +1735,52 @@ class cuser_profile extends cTable {
 		$Email->ReplaceSender(EW_SENDER_EMAIL); // Replace Sender
 		$Email->ReplaceRecipient($sReceiverEmail); // Replace Recipient
 		if ($sBccEmail <> "") $Email->AddBcc($sBccEmail); // Add Bcc
+		$Email->ReplaceContent('<!--FieldCaption_staff_id-->', $this->staff_id->FldCaption());
+		$Email->ReplaceContent('<!--staff_id-->', ($row == NULL) ? strval($this->staff_id->FormValue) : $row['staff_id']);
 		$Email->ReplaceContent('<!--FieldCaption_last_name-->', $this->last_name->FldCaption());
 		$Email->ReplaceContent('<!--last_name-->', ($row == NULL) ? strval($this->last_name->FormValue) : $row['last_name']);
 		$Email->ReplaceContent('<!--FieldCaption_first_name-->', $this->first_name->FldCaption());
 		$Email->ReplaceContent('<!--first_name-->', ($row == NULL) ? strval($this->first_name->FormValue) : $row['first_name']);
-		$Email->ReplaceContent('<!--FieldCaption_gender-->', $this->gender->FldCaption());
-		$Email->ReplaceContent('<!--gender-->', ($row == NULL) ? strval($this->gender->FormValue) : $row['gender']);
-		$Email->ReplaceContent('<!--FieldCaption_date_of_birth-->', $this->date_of_birth->FldCaption());
-		$Email->ReplaceContent('<!--date_of_birth-->', ($row == NULL) ? strval($this->date_of_birth->FormValue) : $row['date_of_birth']);
 		$Email->ReplaceContent('<!--FieldCaption_email-->', $this->_email->FldCaption());
 		$Email->ReplaceContent('<!--email-->', ($row == NULL) ? strval($this->_email->FormValue) : $row['email']);
+		$Email->ReplaceContent('<!--FieldCaption_gender-->', $this->gender->FldCaption());
+		$Email->ReplaceContent('<!--gender-->', ($row == NULL) ? strval($this->gender->FormValue) : $row['gender']);
+		$Email->ReplaceContent('<!--FieldCaption_marital_status-->', $this->marital_status->FldCaption());
+		$Email->ReplaceContent('<!--marital_status-->', ($row == NULL) ? strval($this->marital_status->FormValue) : $row['marital_status']);
+		$Email->ReplaceContent('<!--FieldCaption_date_of_birth-->', $this->date_of_birth->FldCaption());
+		$Email->ReplaceContent('<!--date_of_birth-->', ($row == NULL) ? strval($this->date_of_birth->FormValue) : $row['date_of_birth']);
+		$Email->ReplaceContent('<!--FieldCaption_username-->', $this->username->FldCaption());
+		$Email->ReplaceContent('<!--username-->', ($row == NULL) ? strval($this->username->FormValue) : $row['username']);
 		$Email->ReplaceContent('<!--FieldCaption_mobile-->', $this->mobile->FldCaption());
 		$Email->ReplaceContent('<!--mobile-->', ($row == NULL) ? strval($this->mobile->FormValue) : $row['mobile']);
 		$Email->ReplaceContent('<!--FieldCaption_company-->', $this->company->FldCaption());
 		$Email->ReplaceContent('<!--company-->', ($row == NULL) ? strval($this->company->FormValue) : $row['company']);
 		$Email->ReplaceContent('<!--FieldCaption_department-->', $this->department->FldCaption());
 		$Email->ReplaceContent('<!--department-->', ($row == NULL) ? strval($this->department->FormValue) : $row['department']);
-		$Email->ReplaceContent('<!--FieldCaption_username-->', $this->username->FldCaption());
-		$Email->ReplaceContent('<!--username-->', ($row == NULL) ? strval($this->username->FormValue) : $row['username']);
+		$Email->ReplaceContent('<!--FieldCaption_home_address-->', $this->home_address->FldCaption());
+		$Email->ReplaceContent('<!--home_address-->', ($row == NULL) ? strval($this->home_address->FormValue) : $row['home_address']);
+		$Email->ReplaceContent('<!--FieldCaption_town_city-->', $this->town_city->FldCaption());
+		$Email->ReplaceContent('<!--town_city-->', ($row == NULL) ? strval($this->town_city->FormValue) : $row['town_city']);
+		$Email->ReplaceContent('<!--FieldCaption_state_origin-->', $this->state_origin->FldCaption());
+		$Email->ReplaceContent('<!--state_origin-->', ($row == NULL) ? strval($this->state_origin->FormValue) : $row['state_origin']);
+		$Email->ReplaceContent('<!--FieldCaption_local_gra-->', $this->local_gra->FldCaption());
+		$Email->ReplaceContent('<!--local_gra-->', ($row == NULL) ? strval($this->local_gra->FormValue) : $row['local_gra']);
+		$Email->ReplaceContent('<!--FieldCaption_next_kin-->', $this->next_kin->FldCaption());
+		$Email->ReplaceContent('<!--next_kin-->', ($row == NULL) ? strval($this->next_kin->FormValue) : $row['next_kin']);
+		$Email->ReplaceContent('<!--FieldCaption_resident_nxt_kin-->', $this->resident_nxt_kin->FldCaption());
+		$Email->ReplaceContent('<!--resident_nxt_kin-->', ($row == NULL) ? strval($this->resident_nxt_kin->FormValue) : $row['resident_nxt_kin']);
+		$Email->ReplaceContent('<!--FieldCaption_nearest_bus_stop-->', $this->nearest_bus_stop->FldCaption());
+		$Email->ReplaceContent('<!--nearest_bus_stop-->', ($row == NULL) ? strval($this->nearest_bus_stop->FormValue) : $row['nearest_bus_stop']);
+		$Email->ReplaceContent('<!--FieldCaption_town_city_nxt_kin-->', $this->town_city_nxt_kin->FldCaption());
+		$Email->ReplaceContent('<!--town_city_nxt_kin-->', ($row == NULL) ? strval($this->town_city_nxt_kin->FormValue) : $row['town_city_nxt_kin']);
+		$Email->ReplaceContent('<!--FieldCaption_email_nxt_kin-->', $this->email_nxt_kin->FldCaption());
+		$Email->ReplaceContent('<!--email_nxt_kin-->', ($row == NULL) ? strval($this->email_nxt_kin->FormValue) : $row['email_nxt_kin']);
+		$Email->ReplaceContent('<!--FieldCaption_phone_nxt_kin-->', $this->phone_nxt_kin->FldCaption());
+		$Email->ReplaceContent('<!--phone_nxt_kin-->', ($row == NULL) ? strval($this->phone_nxt_kin->FormValue) : $row['phone_nxt_kin']);
+		$Email->ReplaceContent('<!--FieldCaption_qualification_level-->', $this->qualification_level->FldCaption());
+		$Email->ReplaceContent('<!--qualification_level-->', ($row == NULL) ? strval($this->qualification_level->FormValue) : $row['qualification_level']);
+		$Email->ReplaceContent('<!--FieldCaption_qualification_grade-->', $this->qualification_grade->FldCaption());
+		$Email->ReplaceContent('<!--qualification_grade-->', ($row == NULL) ? strval($this->qualification_grade->FormValue) : $row['qualification_grade']);
 		$Email->ReplaceContent('<!--FieldCaption_password-->', $this->password->FldCaption());
 		$Email->ReplaceContent('<!--password-->', ($row == NULL) ? strval($this->password->FormValue) : $row['password']);
 		$sLoginID = ($row == NULL) ? $this->username->CurrentValue : $row['username'];

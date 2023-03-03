@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2023/2/14" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2023/3/3" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -618,6 +618,12 @@
   <project>
     <phrase id="bodytitle" value=" Online Leave Application" />
     <phrase id="footertext" value="&amp;copy;2023 HR Management. All rights reserved." />
+    <menu id="23">
+      <phrase id="menutext" value="lga states" />
+    </menu>
+    <menu id="24">
+      <phrase id="menutext" value="states table" />
+    </menu>
     <menu id="9">
       <phrase id="menutext" value="Home" />
     </menu>
@@ -777,6 +783,9 @@
     </table>
     <table id="user_profile">
       <phrase id="tblcaption" value="User Profile" />
+      <phrase id="tblpagecaption1" value="Staff Details" />
+      <phrase id="tblpagecaption2" value="Next of King Details" />
+      <phrase id="tblpagecaption3" value="Admin Action" />
       <field id="id">
         <phrase id="fldcaption" value="ID#" />
       </field>
@@ -789,6 +798,9 @@
       <field id="first_name">
         <phrase id="fldcaption" value="First Name" />
       </field>
+      <field id="_email">
+        <phrase id="fldcaption" value="Email" />
+      </field>
       <field id="gender">
         <phrase id="fldcaption" value="Gender" />
         <phrase id="fldtagvalue1" value="1" />
@@ -796,11 +808,24 @@
         <phrase id="fldtagvalue2" value="2" />
         <phrase id="fldtagcaption2" value="FEMALE" />
       </field>
+      <field id="marital_status">
+        <phrase id="fldcaption" value="marital status" />
+        <phrase id="fldtagvalue1" value="1" />
+        <phrase id="fldtagcaption1" value="Single" />
+        <phrase id="fldtagvalue2" value="2" />
+        <phrase id="fldtagcaption2" value="Married" />
+        <phrase id="fldtagvalue3" value="3" />
+        <phrase id="fldtagcaption3" value="Widow / widower" />
+        <phrase id="fldtagvalue4" value="4" />
+        <phrase id="fldtagcaption4" value="Divorced" />
+        <phrase id="fldtagvalue5" value="5" />
+        <phrase id="fldtagcaption5" value="Others" />
+      </field>
       <field id="date_of_birth">
         <phrase id="fldcaption" value="Date of Birth" />
       </field>
-      <field id="_email">
-        <phrase id="fldcaption" value="Email" />
+      <field id="username">
+        <phrase id="fldcaption" value="Username" />
       </field>
       <field id="mobile">
         <phrase id="fldcaption" value="Mobile" />
@@ -811,8 +836,86 @@
       <field id="department">
         <phrase id="fldcaption" value="Department" />
       </field>
-      <field id="username">
-        <phrase id="fldcaption" value="Username" />
+      <field id="home_address">
+        <phrase id="fldcaption" value="home address" />
+      </field>
+      <field id="town_city">
+        <phrase id="fldcaption" value="town city" />
+      </field>
+      <field id="state_origin">
+        <phrase id="fldcaption" value="state origin" />
+      </field>
+      <field id="local_gra">
+        <phrase id="fldcaption" value="local gra" />
+      </field>
+      <field id="next_kin">
+        <phrase id="fldcaption" value="Next Of king Name" />
+      </field>
+      <field id="resident_nxt_kin">
+        <phrase id="fldcaption" value="Resident of Next king" />
+      </field>
+      <field id="nearest_bus_stop">
+        <phrase id="fldcaption" value="Nearest Bus/Stop" />
+      </field>
+      <field id="town_city_nxt_kin">
+        <phrase id="fldcaption" value="Town/City of Next king" />
+      </field>
+      <field id="email_nxt_kin">
+        <phrase id="fldcaption" value="Email of Next king" />
+      </field>
+      <field id="phone_nxt_kin">
+        <phrase id="fldcaption" value="Phone of Next King" />
+      </field>
+      <field id="qualification_level">
+        <phrase id="fldcaption" value="Qualification Level" />
+        <phrase id="fldtagvalue1" value="1" />
+        <phrase id="fldtagcaption1" value="Grade II Teachers’ Certificate (TC-II)" />
+        <phrase id="fldtagvalue2" value="2" />
+        <phrase id="fldtagcaption2" value="Pivotal Teachers’ Certificate (PTC)" />
+        <phrase id="fldtagvalue3" value="3" />
+        <phrase id="fldtagcaption3" value="West African School Certificate (WASC)" />
+        <phrase id="fldtagvalue4" value="4" />
+        <phrase id="fldtagcaption4" value="National Business and Technical Examination Board (NABTEB) Certificate" />
+        <phrase id="fldtagvalue5" value="5" />
+        <phrase id="fldtagcaption5" value="Higher Islamic Studies Certificate (HISC)" />
+        <phrase id="fldtagvalue6" value="6" />
+        <phrase id="fldtagcaption6" value="National Examination Council (NECO)" />
+        <phrase id="fldtagvalue7" value="7" />
+        <phrase id="fldtagcaption7" value="General Certificate Examination (GCE)" />
+        <phrase id="fldtagvalue8" value="8" />
+        <phrase id="fldtagcaption8" value="Bachelor's Degree" />
+        <phrase id="fldtagvalue9" value="9" />
+        <phrase id="fldtagcaption9" value="Higher National Diploma (HND)" />
+        <phrase id="fldtagvalue10" value="10" />
+        <phrase id="fldtagcaption10" value="Master's Degree or  PhD" />
+        <phrase id="fldtagvalue11" value="11" />
+        <phrase id="fldtagcaption11" value="Professional Certificate" />
+      </field>
+      <field id="qualification_grade">
+        <phrase id="fldcaption" value="Qualification Grade" />
+        <phrase id="fldtagvalue1" value="1" />
+        <phrase id="fldtagcaption1" value="First Class Degree: 4.50 - 5.00" />
+        <phrase id="fldtagvalue2" value="2" />
+        <phrase id="fldtagcaption2" value="Second Class Degree(Upper): 3.5 -4.49" />
+        <phrase id="fldtagvalue3" value="3" />
+        <phrase id="fldtagcaption3" value="Second Class Degree(Lower): 2.40 - 3.49" />
+        <phrase id="fldtagvalue4" value="4" />
+        <phrase id="fldtagcaption4" value="Third Class Degree: 1.50 - 2.39" />
+        <phrase id="fldtagvalue5" value="5" />
+        <phrase id="fldtagcaption5" value="Pass Degree: 1.0 - 1.49" />
+        <phrase id="fldtagvalue6" value="6" />
+        <phrase id="fldtagcaption6" value="Lower Credit" />
+        <phrase id="fldtagvalue7" value="7" />
+        <phrase id="fldtagcaption7" value="Upper Credit" />
+        <phrase id="fldtagvalue8" value="9" />
+        <phrase id="fldtagcaption8" value="Pass" />
+        <phrase id="fldtagvalue9" value="10" />
+        <phrase id="fldtagcaption9" value="Distinction Grade" />
+        <phrase id="fldtagvalue10" value="11" />
+        <phrase id="fldtagcaption10" value="Merit Grade" />
+      </field>
+      <field id="upload_of_credentcial">
+        <phrase id="fldcaption" value="Upload of Credentcial" />
       </field>
       <field id="password">
         <phrase id="fldcaption" value="Password" />
@@ -922,6 +1025,27 @@
       </field>
       <field id="status">
         <phrase id="fldcaption" value="status" />
+      </field>
+    </table>
+    <table id="lga_states">
+      <phrase id="tblcaption" value="lga states" />
+      <field id="code">
+        <phrase id="fldcaption" value="code" />
+      </field>
+      <field id="lga_descriptions">
+        <phrase id="fldcaption" value="lga descriptions" />
+      </field>
+      <field id="state_code">
+        <phrase id="fldcaption" value="state code" />
+      </field>
+    </table>
+    <table id="states_table">
+      <phrase id="tblcaption" value="states table" />
+      <field id="code">
+        <phrase id="fldcaption" value="code" />
+      </field>
+      <field id="state_descriptions">
+        <phrase id="fldcaption" value="state descriptions" />
       </field>
     </table>
   </project>

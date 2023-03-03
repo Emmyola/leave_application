@@ -565,6 +565,7 @@ class cleave_form_add extends cleave_form {
 		$this->leave_id->CurrentValue = NULL;
 		$this->leave_id->OldValue = $this->leave_id->CurrentValue;
 		$this->date_created->CurrentValue = NULL;
+		$this->date_created->OldValue = $this->date_created->CurrentValue;
 		$this->time->CurrentValue = NULL;
 		$this->time->OldValue = $this->time->CurrentValue;
 		$this->staff_id->CurrentValue = NULL;
@@ -606,6 +607,7 @@ class cleave_form_add extends cleave_form {
 		$this->approver_comments->CurrentValue = NULL;
 		$this->approver_comments->OldValue = $this->approver_comments->CurrentValue;
 		$this->last_updated_date->CurrentValue = NULL;
+		$this->last_updated_date->OldValue = $this->last_updated_date->CurrentValue;
 	}
 
 	// Load form values
@@ -1994,6 +1996,10 @@ class cleave_form_add extends cleave_form {
 				$CustomError = "Replacement Staff Role Field Can not be Empty.";
 				return FALSE;
 			}
+			if($rs["initiator_action"] == 1 && date('N', strtotime(ew_UnFormatDateTime($rs["start_date"], 0))) >= 6) {
+				$CustomError = "Start-Date cannot fall on a weekend.";
+				return FALSE;
+			}
 		return TRUE;
 	}
 }
@@ -2181,6 +2187,7 @@ fleave_formadd.Lists["x_approver_action"].Options = <?php echo json_encode($leav
 // Write your client script here, no need to add script tags.
 var staff_ID = "<?php echo $_SESSION['Staff_ID'] ?>";
 $(document).ready(function(){
+	$("#x_start_date").val("");
 
 	//Company selected should be read only
 	//$("#x_company").attr('readonly',true);
@@ -2193,6 +2200,7 @@ $(document).ready(function(){
 	  		$("#x_no_of_days").val("");
 	  		$("#x_resumption_date").val("");
 	  		$('#daysmessage').html('');
+	  		$('#lnmessage').html('');
 			var leaveType = this.value;
 
 	  		//alert(leaveType);
@@ -2244,8 +2252,18 @@ $(document).ready(function(){
 		//var testing = (total_number_of_leave_collected == leave_duration ) alert('Exhausted Already') : 
 		// alert(total_number_of_leave_collected);
 		// exit;
-		// ==========My Codes=============
+		//=============number of working day in a week======
 
+		// for(var i = 0; started < ended; ) {
+		// 	if( started.getDay() > 0 && ended.getDay() < 6) i++;
+		// 		started.setDate(started.getDate()+1);
+		// 	}
+		// 	alert(i);
+
+			//document.getElementById("result").innerHTML = "Toggled String is " + str2;
+		//}
+
+		// ==========My Codes=============
 		var No_of_days = $("#x_no_of_days").val();
 		var sum_previous_current_duration = parseInt(No_of_days) + total_number_of_leave_collected;
 
@@ -2257,10 +2275,9 @@ $(document).ready(function(){
 			// if(No_of_days > leave_duration){
 			//alertify.alert('The Selected Number of Day for this Leave Type Cant Excceded:.' + ' ' + leave_duration + 'Days').set('title', 'Not permitted - Leave Type has Expired!');
 			//alert('The Selected Number of Day for this Leave Type Cant Excceded:.' + ' ' + leave_duration + 'Days');
+				//$('#daysmessage').html('The Number of Days for this Leave Type Can not Exceed:.'  + leave_duration + ' Days');
 
-				$('#daysmessage').html('The Number of Days for this Leave Type Can not Exceed:.'  + leave_duration + ' Days');
-
-				//alertify.alert('The Selected Number of Day for this Leave Type Cant Excceded:.' + ' ' + leave_duration + 'Days').set('title', 'Not permitted - Leave Type has Expired!');
+				alertify.alert('The Selected Number of Day for this Leave Type Cant Excceded:.' + ' ' + leave_duration + 'Days').set('title', 'Not permitted - Leave Type has Expired!');
 				$("#x_start_date").val("");
 				$("#x_end_date").val("");
 				$("#x_no_of_days").val("");
@@ -2858,6 +2875,7 @@ if (EW_DEBUG_ENABLED)
 
 // Write your table-specific startup script here
 // document.write("page loaded");
+
 
 </script>
 <?php include_once "footer.php" ?>

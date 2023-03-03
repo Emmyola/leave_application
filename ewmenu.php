@@ -2,6 +2,8 @@
 
 // Menu
 $RootMenu = new cMenu("RootMenu", TRUE);
+$RootMenu->AddMenuItem(23, "mi_lga_states", $Language->MenuPhrase("23", "MenuText"), "lga_stateslist.php", -1, "", AllowListMenu('{67DBC02E-FD20-415A-8CF5-94DD09C14F7A}lga_states'), FALSE, FALSE, "");
+$RootMenu->AddMenuItem(24, "mi_states_table", $Language->MenuPhrase("24", "MenuText"), "states_tablelist.php", -1, "", AllowListMenu('{67DBC02E-FD20-415A-8CF5-94DD09C14F7A}states_table'), FALSE, FALSE, "");
 $RootMenu->AddMenuItem(9, "mi_home_php", $Language->MenuPhrase("9", "MenuText"), "home.php", -1, "", AllowListMenu('{67DBC02E-FD20-415A-8CF5-94DD09C14F7A}home.php'), FALSE, TRUE, "far fa-home");
 $RootMenu->AddMenuItem(3, "mi_leave_form", $Language->MenuPhrase("3", "MenuText"), "leave_formlist.php", -1, "", AllowListMenu('{67DBC02E-FD20-415A-8CF5-94DD09C14F7A}leave_form'), FALSE, FALSE, "far fa-building");
 $RootMenu->AddMenuItem(19, "mci_Admin_Only", $Language->MenuPhrase("19", "MenuText"), "", -1, "", TRUE, FALSE, TRUE, "fa-sharp fa-solid fa-users");
