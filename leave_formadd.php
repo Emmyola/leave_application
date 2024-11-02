@@ -1996,10 +1996,10 @@ class cleave_form_add extends cleave_form {
 				$CustomError = "Replacement Staff Role Field Can not be Empty.";
 				return FALSE;
 			}
-			if($rs["initiator_action"] == 1 && date('N', strtotime(ew_UnFormatDateTime($rs["start_date"], 0))) >= 6) {
-				$CustomError = "Start-Date cannot fall on a weekend.";
-				return FALSE;
-			}
+			// if($rs["initiator_action"] == 1 && date('N', strtotime(ew_UnFormatDateTime($rs["start_date"], 0))) >= 6) {
+			// 	$CustomError = "Start-Date cannot fall on a weekend.";
+			// 	return FALSE;
+			// }
 		return TRUE;
 	}
 }
